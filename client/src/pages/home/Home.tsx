@@ -8,10 +8,11 @@ function Home() {
             <div className="home">
                 <img src={logo} />
                 <h2>Search something you never thought you needed.</h2>
-                <Link to="/register" className="primary-button">
+                <Link to="/register" className="primary-button link-button">
                     Create account
                 </Link>
-                <Link to="/login" className="primary-button">
+
+                <Link to="/login" className="primary-button link-button">
                     Login
                 </Link>
             </div>

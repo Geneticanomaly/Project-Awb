@@ -5,11 +5,16 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
+    overflow: hidden;
 }
 
 /* Font for the whole app */
 * {
     font-family: "Poppins", sans-serif;
+}
+
+h2 {
+    font-style: italic;
 }
 
 /*  Gradients
@@ -29,12 +34,32 @@ background: linear-gradient(45deg, #333333, #dd1818);
     padding: 12px 30px;
     transition: 1s ease;
     width: 200px;
+}
+
+.link-button {
+    max-width: 135px;
     text-decoration: none;
 }
 
 .primary-button:hover {
     background: linear-gradient(260deg, #333333, #dd1818);
     transition: 1s ease;
+}
+
+.secondary-button {
+    color: rgb(121, 119, 119);
+    background-color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: solid 2px rgb(121, 119, 119);
+    margin: 6px;
+}
+
+.secondary-button:hover {
 }
 
 /* :root {
