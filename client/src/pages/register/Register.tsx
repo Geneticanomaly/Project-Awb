@@ -1,13 +1,13 @@
 import Navbar from "../../components/navbar/Navbar";
 import "./Register.css";
-import AuthModalRegister from "../../components/authportal/AuthModalRegister";
+import AuthPortalRegister from "../../components/authportal/AuthPortalRegister";
 
 function Register() {
     return (
         <>
             <Navbar />
             <div className="register">
-                <AuthModalRegister />
+                <AuthPortalRegister />
             </div>
         </>
     );

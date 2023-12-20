@@ -14,3 +14,14 @@
     width: 400px;
     padding-bottom: 20px;
 }
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 420px) {
+    .home img {
+        width: 300px;
+    }
+    .home h2 {
+        font-size: 18px;
+    }
+}

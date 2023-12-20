@@ -1,13 +1,13 @@
 import Navbar from "../../components/navbar/Navbar";
 import "./Login.css";
-import AuthModalLogin from "../../components/authportal/AuthModalLogin";
+import AuthPortalLogin from "../../components/authportal/AuthPortalLogin";
 
 function Login() {
     return (
         <>
             <Navbar />
             <div className="login">
-                <AuthModalLogin />
+                <AuthPortalLogin />
             </div>
         </>
     );

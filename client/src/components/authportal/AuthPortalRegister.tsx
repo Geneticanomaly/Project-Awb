@@ -1,11 +1,16 @@
-import useState from "react";
 import {Link} from "react-router-dom";
-import "./AuthModal.css";
+import "./AuthPortal.css";
+import {useState} from "react";
 
-function AuthModalLogin() {
-    /* const [email, setEmail] = useState<string>("");
+/* type AuthModalProps = {
+    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}; */
+
+function AuthPortalRegister() {
+    const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [error, setError] = useState<string>(""); */
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [error, setError] = useState<string>("");
 
     const handleSubmit = () => {
         /* try {
@@ -24,7 +29,7 @@ function AuthModalLogin() {
                 ⓧ
             </Link>
             <div className="auth-container">
-                <h1>Login</h1>
+                <h1>Create Account</h1>
                 <span>
                     By clicking Submit, you agree to our terms. Learn how we process your data in
                     our Privacy Policy and Cookie Policy.
@@ -36,7 +41,7 @@ function AuthModalLogin() {
                         placeholder="Email..."
                         required={true}
                         className="form-input"
-                        /* onChange={(e) => setEmail(e.target.value)} */
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                         id="password"
@@ -44,11 +49,19 @@ function AuthModalLogin() {
                         placeholder="Password..."
                         required={true}
                         className="form-input"
-                        /* onChange={(e) => setPassword(e.target.value)} */
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <input
+                        id="password-confirm"
+                        type="password"
+                        placeholder="Confirm Password..."
+                        required={true}
+                        className="form-input"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                 </form>
 
-                <Link to="/app" className="primary-button button">
+                <Link to="/onboarding" className="primary-button button">
                     Submit
                 </Link>
                 <div className="line" />
@@ -58,4 +71,4 @@ function AuthModalLogin() {
     );
 }
 
-export default AuthModalLogin;
+export default AuthPortalRegister;

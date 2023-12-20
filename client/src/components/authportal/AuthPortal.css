@@ -2,7 +2,7 @@
     position: absolute;
     top: 175px;
     max-width: 360px;
-    padding: 40px;
+    padding: 20px 40px 40px 40px;
     height: 550px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
@@ -13,7 +13,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
+    margin-left: 20px;
 }
 
 .close-icon {
@@ -39,7 +40,6 @@
 } */
 
 .button {
-    margin-top: 15px;
     text-decoration: none;
 }
 
@@ -48,4 +48,43 @@
     width: 300px;
     background-color: rgb(177, 177, 177);
     margin-top: 20px;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 465px) {
+    .auth-modal {
+        max-width: 300px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .auth-modal {
+        max-width: 250px;
+        height: 500px;
+    }
+    .form-input {
+        width: 250px;
+    }
+    .line {
+        width: 250px;
+    }
+    .auth-container > h1 {
+        font-size: 20px;
+    }
+    .auth-container > span {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-height: 825px) {
+    .auth-modal {
+        top: 125px;
+    }
+}
+
+@media screen and (max-height: 770px) {
+    .auth-modal {
+        top: 100px;
+    }
 }
