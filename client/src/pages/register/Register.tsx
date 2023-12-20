@@ -1,5 +1,11 @@
+import Navbar from "../../components/navbar/Navbar";
+
 function Register() {
-    return <div>Register</div>;
+    return (
+        <>
+            <Navbar />
+        </>
+    );
 }
 
 export default Register;

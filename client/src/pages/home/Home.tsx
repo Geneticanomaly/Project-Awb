@@ -1,20 +1,19 @@
-import Navbar from "../../components/navbar/Navbar";
+import "./Home.css";
+import logo from "../../images/color-logo-tinder.png";
+import {Link} from "react-router-dom";
 
 function Home() {
-    const authToken = true;
-
-    const handleClick = () => {
-        console.log("I was clicked!");
-    };
-
     return (
         <>
-            <Navbar />
             <div className="home">
-                <h1>Swipe right</h1>
-                <button className="primary-button" onClick={handleClick}>
-                    {authToken ? "Signout" : "Create account"}
-                </button>
+                <img src={logo} />
+                <h2>Search something you never thought you needed.</h2>
+                <Link to="/register" className="primary-button">
+                    Create account
+                </Link>
+                <Link to="/login" className="primary-button">
+                    Login
+                </Link>
             </div>
         </>
     );
