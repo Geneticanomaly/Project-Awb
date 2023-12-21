@@ -4,12 +4,12 @@ import AuthPortalLogin from "../../components/authportal/AuthPortalLogin";
 
 function Login() {
     return (
-        <>
+        <div className="login-container">
             <Navbar />
             <div className="login">
                 <AuthPortalLogin />
             </div>
-        </>
+        </div>
     );
 }
 

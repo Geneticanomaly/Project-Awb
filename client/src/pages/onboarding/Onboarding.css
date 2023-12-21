@@ -1,3 +1,11 @@
+.onboarding-container {
+    overflow-x: hidden;
+}
+
+.onboarding {
+    padding-top: 75px;
+}
+
 .onboarding form {
     display: flex;
     justify-content: center;
@@ -71,6 +79,7 @@
     border: none;
     border-radius: 30px;
     transition: 1s ease;
+    margin-bottom: 20px;
 }
 
 .onboarding input[type="submit"]:hover {

@@ -1,4 +1,14 @@
+/* Navbar {
+    z-index: 2;
+} */
+
+.login-container {
+    overflow: hidden;
+    height: 100vh;
+}
+
 .login {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;

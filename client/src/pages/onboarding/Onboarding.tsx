@@ -1,11 +1,10 @@
 import "./Onboarding.css";
 import Navbar from "../../components/navbar/Navbar";
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import {useState, useEffect} from "react";
 
 function Onboarding() {
-    /* const pixelAmount: number = 570;
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth); */
+    const pixelAmount: number = 570;
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const [formData, setFormData] = useState({
         user_id: "",
@@ -37,8 +36,25 @@ function Onboarding() {
         console.log(formData);
     };
 
+    // Used for displaying the second section in the right place - Profile picture
+    // If windows size is smaller than 570px display everything in a column instead
+    useEffect(() => {
+        // Update the window width when the window is resized
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        // Attach the event listener
+        window.addEventListener("resize", handleResize);
+
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     return (
-        <>
+        <div className="onboarding-container">
             <Navbar />
             <div className="onboarding">
                 <h2>Fill out your information</h2>
@@ -165,30 +181,51 @@ function Onboarding() {
                             required={true}
                             onChange={handleChange}
                         />
+
+                        {windowWidth < pixelAmount && (
+                            <section>
+                                <label htmlFor="url">Profile picture</label>
+                                <input
+                                    type="url"
+                                    name="url"
+                                    id="url"
+                                    value={formData.url}
+                                    placeholder="Profile image"
+                                    required={true}
+                                    onChange={handleChange}
+                                />
+                                <div className="img-container">
+                                    <img src={formData.url} alt="Picture preview" />
+                                </div>
+                            </section>
+                        )}
+
                         <input type="submit" />
                         {/* <Link to="/dashboard" className="primary-button link-button btn">
                             Submit
                         </Link> */}
                     </section>
 
-                    <section>
-                        <label htmlFor="url">Profile picture</label>
-                        <input
-                            type="url"
-                            name="url"
-                            id="url"
-                            value={formData.url}
-                            placeholder="Profile image"
-                            required={true}
-                            onChange={handleChange}
-                        />
-                        <div className="img-container">
-                            <img src={formData.url} alt="Picture preview" />
-                        </div>
-                    </section>
+                    {windowWidth >= pixelAmount && (
+                        <section>
+                            <label htmlFor="url">Profile picture</label>
+                            <input
+                                type="url"
+                                name="url"
+                                id="url"
+                                value={formData.url}
+                                placeholder="Profile image"
+                                required={true}
+                                onChange={handleChange}
+                            />
+                            <div className="img-container">
+                                <img src={formData.url} alt="Picture preview" />
+                            </div>
+                        </section>
+                    )}
                 </form>
             </div>
-        </>
+        </div>
     );
 }
 

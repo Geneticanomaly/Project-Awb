@@ -10,6 +10,10 @@
     background: linear-gradient(45deg, #ffe4e4, #666666);
 }
 
+.home h2 {
+    margin: 0px 5px 0px 5px;
+}
+
 .home img {
     width: 400px;
     padding-bottom: 20px;
