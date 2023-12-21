@@ -6,8 +6,8 @@ function Onboarding() {
     const pixelAmount: number = 570;
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [imageOption, setImageOption] = useState({
-        link: false,
-        file: true,
+        link: true,
+        file: false,
     });
 
     const [formData, setFormData] = useState({
@@ -54,6 +54,7 @@ function Onboarding() {
         console.log(imageOption);
     };
 
+    // Save uploaded file to the formData set
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const imageUrl = URL.createObjectURL(e.target.files?.[0]);
@@ -166,6 +167,7 @@ function Onboarding() {
                         <label>Show me</label>
                         <div className="input-container">
                             <input
+                                className="show-me"
                                 type="radio"
                                 id="show_man"
                                 name="show_gender"
@@ -177,6 +179,7 @@ function Onboarding() {
                             <label htmlFor="show_man">Man</label>
 
                             <input
+                                className="show-me"
                                 type="radio"
                                 id="show_woman"
                                 name="show_gender"
@@ -188,6 +191,7 @@ function Onboarding() {
                             <label htmlFor="show_woman">Woman</label>
 
                             <input
+                                className="show-me"
                                 type="radio"
                                 id="show_everyone"
                                 name="show_gender"
@@ -213,16 +217,37 @@ function Onboarding() {
 
                         {windowWidth <= pixelAmount && (
                             <section>
-                                <label htmlFor="url">Profile picture</label>
-                                <input
-                                    type="url"
-                                    name="url"
-                                    id="url"
-                                    value={formData.url}
-                                    placeholder="Profile image"
-                                    required={true}
-                                    onChange={handleChange}
-                                />
+                                <div className="picture-container">
+                                    <label htmlFor="url">Profile picture</label>
+                                    <span className="btn" id="link" onClick={handleClick}>
+                                        Link
+                                    </span>
+                                    <span className="btn" id="file" onClick={handleClick}>
+                                        File
+                                    </span>
+                                </div>
+
+                                {imageOption.link ? (
+                                    <input
+                                        type="url"
+                                        name="url"
+                                        id="url"
+                                        value={formData.url}
+                                        placeholder="Profile image"
+                                        required={true}
+                                        onChange={handleChange}
+                                    />
+                                ) : (
+                                    <input
+                                        className="input-file"
+                                        type="file"
+                                        name="url"
+                                        id="file"
+                                        required={true}
+                                        onChange={handleFileChange}
+                                    />
+                                )}
+
                                 <div className="img-container">
                                     <img src={formData.url} alt="Picture preview" />
                                 </div>
