@@ -1,0 +1,98 @@
+.onboarding form {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.onboarding form section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.onboarding label {
+    font-weight: 500;
+    margin-right: auto;
+}
+
+.onboarding input {
+    width: 250px;
+    height: 40px;
+    border: 1px solid rgb(141, 141, 141);
+    outline: none;
+    border-radius: 8px;
+    padding-left: 15px;
+}
+
+.onboarding input:focus {
+    border: 1px solid rgb(197, 5, 53);
+}
+
+.onboarding form input::-webkit-outer-spin-button,
+.onboarding form input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.input-container input {
+    width: 70px;
+    text-align: center;
+    padding-left: 0px;
+    margin-right: 10px;
+}
+
+.input-container input[type="radio"] {
+    display: none;
+}
+
+.input-container label {
+    padding: 10px;
+    border: 1px solid rgb(141, 141, 141);
+    border-radius: 10px;
+}
+
+.input-container input[type="radio"]:checked + label {
+    border: 1px solid rgb(197, 5, 53);
+}
+
+.onboarding input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 15px;
+    background: linear-gradient(45deg, #333333, #dd1818);
+    border: none;
+    border-radius: 30px;
+    transition: 1s ease;
+}
+
+.onboarding input[type="submit"]:hover {
+    background: linear-gradient(260deg, #333333, #dd1818);
+    transition: 1s ease;
+}
+
+.img-container {
+    width: 270px;
+}
+
+.img-container img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 570px) {
+    .onboarding form {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}

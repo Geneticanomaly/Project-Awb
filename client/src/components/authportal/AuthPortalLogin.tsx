@@ -1,11 +1,11 @@
-import useState from "react";
 import {Link} from "react-router-dom";
 import "./AuthPortal.css";
+import {useState} from "react";
 
 function AuthPortalLogin() {
-    /* const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [error, setError] = useState<string>(""); */
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     const handleSubmit = () => {
         /* try {
@@ -36,7 +36,7 @@ function AuthPortalLogin() {
                         placeholder="Email..."
                         required={true}
                         className="form-input"
-                        /* onChange={(e) => setEmail(e.target.value)} */
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                         id="password"
@@ -44,7 +44,7 @@ function AuthPortalLogin() {
                         placeholder="Password..."
                         required={true}
                         className="form-input"
-                        /* onChange={(e) => setPassword(e.target.value)} */
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </form>
 
@@ -52,7 +52,7 @@ function AuthPortalLogin() {
                     Submit
                 </Link>
                 <div className="line" />
-                <h2>Get the app</h2>
+                <h2>Get chatting</h2>
             </div>
         </div>
     );

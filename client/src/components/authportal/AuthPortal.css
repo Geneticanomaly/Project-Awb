@@ -20,8 +20,14 @@
 .close-icon {
     float: right;
     font-size: 20px;
+    font-weight: 100;
+    color: black;
     cursor: pointer;
     text-decoration: none;
+}
+
+.close-icon:hover {
+    color: red;
 }
 
 .form {
@@ -33,11 +39,13 @@
 .form-input {
     width: 300px;
     height: 40px;
+    border: 1px solid black;
+    outline: none;
 }
 
-/* .form-input:active {
-    border: 1px solid blue;
-} */
+.form-input:focus {
+    border: 1px solid rgb(197, 5, 53);
+}
 
 .button {
     text-decoration: none;
@@ -56,6 +64,9 @@
     .auth-modal {
         max-width: 300px;
     }
+    .auth-container > h1 {
+        font-size: 24px;
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -68,9 +79,6 @@
     }
     .line {
         width: 250px;
-    }
-    .auth-container > h1 {
-        font-size: 20px;
     }
     .auth-container > span {
         font-size: 12px;
@@ -86,5 +94,11 @@
 @media screen and (max-height: 770px) {
     .auth-modal {
         top: 100px;
+    }
+}
+
+@media screen and (max-height: 675px) {
+    .auth-modal {
+        top: 90px;
     }
 }

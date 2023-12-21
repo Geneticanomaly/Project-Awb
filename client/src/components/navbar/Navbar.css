@@ -5,8 +5,7 @@
     width: 100vw;
     height: 75px;
     z-index: 2;
-    /* background: linear-gradient(45deg, #aa5656, #ff3939); */
-    border-bottom: 1px solid rgb(219, 219, 219);
+    border-bottom: 1px solid rgb(154, 154, 154);
 }
 
 .logo-container {

@@ -65,7 +65,7 @@ function AuthPortalRegister() {
                     Submit
                 </Link>
                 <div className="line" />
-                <h2>Get the app</h2>
+                <h2>Get started</h2>
             </div>
         </div>
     );
