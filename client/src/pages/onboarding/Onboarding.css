@@ -3,19 +3,23 @@
 }
 
 .onboarding {
-    padding-top: 75px;
+    padding-top: 100px;
 }
 
 .onboarding form {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
 }
 
 .onboarding form section {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.onboarding form section:nth-child(1) {
+    margin-top: 4px;
 }
 
 .onboarding label {
@@ -65,6 +69,10 @@
     border-radius: 10px;
 }
 
+.input-container input[type="radio"]:nth-child(1) + label {
+    margin-right: 5px;
+}
+
 .input-container input[type="radio"]:checked + label {
     border: 1px solid rgb(197, 5, 53);
 }
@@ -87,6 +95,17 @@
     transition: 1s ease;
 }
 
+.picture-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.picture-container button {
+    border: 1px solid gray;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
 .img-container {
     width: 270px;
 }
@@ -96,9 +115,34 @@
     border-radius: 10px;
 }
 
+.onboarding input[type="file"] {
+    padding: 0;
+    width: 200px;
+    border: none;
+}
+
+span {
+    margin-right: 7px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 3px 5px;
+    background-color: gainsboro;
+    cursor: pointer;
+}
+
 /* MEDIA QUERIES */
 
+@media screen and (max-width: 620px) {
+    .onboarding form {
+        gap: 20px;
+    }
+}
+
 @media screen and (max-width: 570px) {
+    .onboarding {
+        padding-top: 75px;
+    }
     .onboarding form {
         flex-direction: column;
         justify-content: center;

@@ -5,6 +5,10 @@ import {useState, useEffect} from "react";
 function Onboarding() {
     const pixelAmount: number = 570;
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [imageOption, setImageOption] = useState({
+        link: false,
+        file: true,
+    });
 
     const [formData, setFormData] = useState({
         user_id: "",
@@ -22,8 +26,9 @@ function Onboarding() {
         matches: [],
     });
 
-    const handleSubmit = () => {
-        console.log("Submitted");
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log("Submitted", formData);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +38,30 @@ function Onboarding() {
             ...prevState,
             [e.target.name]: e.target.value,
         }));
+        console.log(formData);
+    };
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log("Clicked");
+        const target = e.target as HTMLButtonElement;
+
+        setImageOption((prevState) => ({
+            ...prevState,
+            link: target.id === "link",
+            file: target.id === "file",
+        }));
+
+        console.log(imageOption);
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const imageUrl = URL.createObjectURL(e.target.files?.[0]);
+            setFormData((prevState) => ({
+                ...prevState,
+                url: imageUrl,
+            }));
+        }
         console.log(formData);
     };
 
@@ -182,7 +211,7 @@ function Onboarding() {
                             onChange={handleChange}
                         />
 
-                        {windowWidth < pixelAmount && (
+                        {windowWidth <= pixelAmount && (
                             <section>
                                 <label htmlFor="url">Profile picture</label>
                                 <input
@@ -206,18 +235,39 @@ function Onboarding() {
                         </Link> */}
                     </section>
 
-                    {windowWidth >= pixelAmount && (
+                    {windowWidth > pixelAmount && (
                         <section>
-                            <label htmlFor="url">Profile picture</label>
-                            <input
-                                type="url"
-                                name="url"
-                                id="url"
-                                value={formData.url}
-                                placeholder="Profile image"
-                                required={true}
-                                onChange={handleChange}
-                            />
+                            <div className="picture-container">
+                                <label htmlFor="url">Profile picture</label>
+                                <span className="btn" id="link" onClick={handleClick}>
+                                    Link
+                                </span>
+                                <span className="btn" id="file" onClick={handleClick}>
+                                    File
+                                </span>
+                            </div>
+
+                            {imageOption.link ? (
+                                <input
+                                    type="url"
+                                    name="url"
+                                    id="url"
+                                    value={formData.url}
+                                    placeholder="Profile image"
+                                    required={true}
+                                    onChange={handleChange}
+                                />
+                            ) : (
+                                <input
+                                    className="input-file"
+                                    type="file"
+                                    name="url"
+                                    id="file"
+                                    required={true}
+                                    onChange={handleFileChange}
+                                />
+                            )}
+
                             <div className="img-container">
                                 <img src={formData.url} alt="Picture preview" />
                             </div>
