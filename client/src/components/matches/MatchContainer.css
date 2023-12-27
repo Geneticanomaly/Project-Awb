@@ -58,14 +58,11 @@
 
 /* MEADIA QUERIES */
 
-@media screen and (max-width: 720px) {
-    /* .matches {
-        width: 50%;
-    } */
-}
+/* @media screen and (max-width: 720px) {
+} */
 
-@media screen and (max-width: 630px) {
+@media screen and (max-width: 550px) {
     .matches {
-        width: 40%;
+        width: 45%;
     }
 }

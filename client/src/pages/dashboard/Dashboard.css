@@ -11,8 +11,6 @@
     align-items: center;
     padding-top: 60px;
     height: 100vh;
-    /* border: 1px solid rgb(177, 36, 36); */
-    /* padding-top: 100px; */
 }
 
 .dashboard {
@@ -25,7 +23,7 @@
     align-items: center;
     display: flex;
     position: relative;
-    margin-top: 700px;
+    margin-top: 680px;
 }
 
 .button-container button {
@@ -83,10 +81,6 @@
 /* MEADIA QUERIES */
 
 @media screen and (max-width: 720px) {
-    /* .swipe-container {
-        width: 50%;
-    } */
-
     .card-container {
         width: 300px;
         height: 600px;
@@ -101,10 +95,23 @@
         margin-top: 650px;
     }
 }
-
+/* 
 @media screen and (max-width: 630px) {
     .swipe-container {
         width: 60%;
+    }
+} */
+
+@media screen and (max-width: 550px) {
+    .swipe-container {
+        width: 55%;
+    }
+    .card-container {
+        width: 250px;
+    }
+
+    .card {
+        width: 250px;
     }
 }
 
