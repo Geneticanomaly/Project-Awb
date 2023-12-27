@@ -46,9 +46,13 @@ function MatchContainer() {
                 </section>
             </header>
             <div className="matches-container">
-                {characters.map((character) => (
-                    <MatchCard name={character.name} img={character.url} />
-                ))}
+                {characters.length > 0 ? (
+                    characters.map((character, index) => (
+                        <MatchCard key={index} name={character.name} img={character.url} />
+                    ))
+                ) : (
+                    <p>No matches</p>
+                )}
             </div>
         </div>
     );

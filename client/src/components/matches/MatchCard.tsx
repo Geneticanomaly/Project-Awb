@@ -9,7 +9,10 @@ type MatchProps = {
 function MatchCard({name, img}: MatchProps) {
     return (
         <div className="match-card">
-            <img src={img} />
+            <Link className="link" to="/profile/:userId">
+                <img src={img} />
+            </Link>
+
             <div className="info-container">
                 <p>Something</p>
                 <p>{name}</p>

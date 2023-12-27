@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     width: 40%;
+    border-right: 1px solid rgb(177, 36, 36);
 }
 
 .matches-header {
@@ -55,5 +56,16 @@
     color: white;
 }
 
-.matches-container {
+/* MEADIA QUERIES */
+
+@media screen and (max-width: 720px) {
+    /* .matches {
+        width: 50%;
+    } */
+}
+
+@media screen and (max-width: 630px) {
+    .matches {
+        width: 40%;
+    }
 }
