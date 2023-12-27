@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import MatchCard from './MatchCard';
 import './MatchContainer.css';
 import {FaPeopleArrows} from 'react-icons/fa';
@@ -31,8 +32,18 @@ function MatchContainer() {
     return (
         <div className="matches">
             <header className="matches-header">
-                <h2>Matches</h2>
-                <FaPeopleArrows className="header-icon" size={30} />
+                <section className="profile-container">
+                    <Link className="link" to="/profile/:userId">
+                        <img src="https://i.imgur.com/dmwjVjG.jpeg" />
+                    </Link>
+                    <Link className="link" to="/profile/:userId">
+                        <h2>Richard Hendricks</h2>
+                    </Link>
+                </section>
+                <section className="title">
+                    <h2>Matches</h2>
+                    <FaPeopleArrows className="header-icon" size={30} />
+                </section>
             </header>
             <div className="matches-container">
                 {characters.map((character) => (

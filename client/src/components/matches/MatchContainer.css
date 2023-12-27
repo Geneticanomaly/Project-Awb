@@ -7,16 +7,47 @@
 
 .matches-header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     background: linear-gradient(45deg, #333333, #dd1818);
-    padding-top: 75px;
-    height: 100px;
+    padding-top: 15px;
+    height: 145px;
 }
 
-.matches-header h2 {
+.profile-container {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.profile-container h2 {
     color: white;
     margin-left: 10px;
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.profile-container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 15px;
+    aspect-ratio: 1 / 1;
+}
+
+.title {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.title h2 {
+    color: white;
+    margin-left: 15px;
 }
 
 .header-icon {

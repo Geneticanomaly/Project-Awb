@@ -42,7 +42,7 @@ function Dashboard() {
 
     return (
         <div className="dashboard-container">
-            {<Navbar authToken={true} />}
+            {/* <Navbar authToken={true} /> */}
             <div className="dashboard">
                 <MatchContainer />
                 <div className="swipe-container">
