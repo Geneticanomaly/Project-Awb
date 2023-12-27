@@ -1,6 +1,6 @@
-import "./Onboarding.css";
-import Navbar from "../../components/navbar/Navbar";
-import {useState, useEffect} from "react";
+import './Onboarding.css';
+import Navbar from '../../components/navbar/Navbar';
+import {useState, useEffect} from 'react';
 
 function Onboarding() {
     const pixelAmount: number = 570;
@@ -11,24 +11,24 @@ function Onboarding() {
     });
 
     const [formData, setFormData] = useState({
-        user_id: "",
-        email: "",
-        password: "",
-        first_name: "",
-        last_name: "",
-        dob_day: "",
-        dob_month: "",
-        dob_year: "",
-        gender: "",
-        show_gender: "",
-        about: "",
-        url: "",
+        user_id: '',
+        email: '',
+        password: '',
+        first_name: '',
+        last_name: '',
+        dob_day: '',
+        dob_month: '',
+        dob_year: '',
+        gender: '',
+        show_gender: '',
+        about: '',
+        url: '',
         matches: [],
     });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Submitted", formData);
+        console.log('Submitted', formData);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,13 +42,13 @@ function Onboarding() {
     };
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log("Clicked");
+        console.log('Clicked');
         const target = e.target as HTMLButtonElement;
 
         setImageOption((prevState) => ({
             ...prevState,
-            link: target.id === "link",
-            file: target.id === "file",
+            link: target.id === 'link',
+            file: target.id === 'file',
         }));
 
         console.log(imageOption);
@@ -75,17 +75,17 @@ function Onboarding() {
         };
 
         // Attach the event listener
-        window.addEventListener("resize", handleResize);
+        window.addEventListener('resize', handleResize);
 
         // Clean up the event listener on component unmount
         return () => {
-            window.removeEventListener("resize", handleResize);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
     return (
         <div className="onboarding-container">
-            <Navbar />
+            <Navbar authToken={false} />
             <div className="onboarding">
                 <h2>Fill out your information</h2>
                 <form onSubmit={handleSubmit}>
@@ -148,7 +148,7 @@ function Onboarding() {
                                 name="gender"
                                 value="man"
                                 required={true}
-                                checked={formData.gender === "man"}
+                                checked={formData.gender === 'man'}
                                 onChange={handleChange}
                             />
                             <label htmlFor="gender_man">Man</label>
@@ -159,7 +159,7 @@ function Onboarding() {
                                 name="gender"
                                 value="woman"
                                 required={true}
-                                checked={formData.gender === "woman"}
+                                checked={formData.gender === 'woman'}
                                 onChange={handleChange}
                             />
                             <label htmlFor="gender_woman">Woman</label>
@@ -173,7 +173,7 @@ function Onboarding() {
                                 name="show_gender"
                                 value="man"
                                 required={true}
-                                checked={formData.show_gender === "man"}
+                                checked={formData.show_gender === 'man'}
                                 onChange={handleChange}
                             />
                             <label htmlFor="show_man">Man</label>
@@ -185,7 +185,7 @@ function Onboarding() {
                                 name="show_gender"
                                 value="woman"
                                 required={true}
-                                checked={formData.show_gender === "woman"}
+                                checked={formData.show_gender === 'woman'}
                                 onChange={handleChange}
                             />
                             <label htmlFor="show_woman">Woman</label>
@@ -197,7 +197,7 @@ function Onboarding() {
                                 name="show_gender"
                                 value="everyone"
                                 required={true}
-                                checked={formData.show_gender === "everyone"}
+                                checked={formData.show_gender === 'everyone'}
                                 onChange={handleChange}
                             />
                             <label htmlFor="show_everyone">Everyone</label>

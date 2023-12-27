@@ -1,11 +1,11 @@
-import {Link} from "react-router-dom";
-import "./AuthPortal.css";
-import {useState} from "react";
+import {Link} from 'react-router-dom';
+import './AuthPortal.css';
+import {useState} from 'react';
 
 function AuthPortalLogin() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = () => {
         /* try {
@@ -48,7 +48,7 @@ function AuthPortalLogin() {
                     />
                 </form>
 
-                <Link to="/app" className="primary-button button">
+                <Link to="/dashboard" className="primary-button button">
                     Submit
                 </Link>
                 <div className="line" />

@@ -17,6 +17,11 @@
     margin-left: 20px;
 }
 
+.auth-container span {
+    background-color: white;
+    border: none;
+}
+
 .close-icon {
     float: right;
     font-size: 20px;

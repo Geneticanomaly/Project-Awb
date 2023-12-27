@@ -1,16 +1,21 @@
-import {Link} from "react-router-dom";
-import "./AuthPortal.css";
-import {useState} from "react";
+import {Link} from 'react-router-dom';
+import './AuthPortal.css';
+import {useState} from 'react';
 
 /* type AuthModalProps = {
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }; */
 
 function AuthPortalRegister() {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [error, setError] = useState<string>("");
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
+    /* const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        confirmPassword:
+    }) */
+    const [error, setError] = useState<string>('');
 
     const handleSubmit = () => {
         /* try {
