@@ -21,17 +21,22 @@ function AuthPortalRegister() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
             if (password !== confirmPassword) {
+                console.log("Passwords don't match");
                 setError('Passwords need to match');
                 return;
             } else {
                 // api call
-                await createUser(email, password);
-                navigate('/onboarding');
+                console.log(email, password, confirmPassword);
+                const response = await createUser(email, password);
+                console.log('My Response:', response);
+
+                if (response.status === 201) navigate('/onboarding');
             }
-            console.log('make a post request to database');
+            /* console.log('make a post request to database'); */
         } catch (error) {
             console.log(error);
         }
@@ -48,7 +53,7 @@ function AuthPortalRegister() {
                     By clicking Submit, you agree to our terms. Learn how we process your data in
                     our Privacy Policy and Cookie Policy.
                 </span>
-                <form className="form" onSubmit={handleSubmit}>
+                <form className="form" onSubmit={(e) => handleSubmit(e)}>
                     <input
                         id="email"
                         type="email"

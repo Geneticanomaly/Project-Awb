@@ -101,6 +101,9 @@
     .form-input {
         width: 250px;
     }
+    .form input[type='submit'] {
+        width: 270px;
+    }
     .line {
         width: 250px;
     }
