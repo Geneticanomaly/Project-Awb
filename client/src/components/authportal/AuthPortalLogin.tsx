@@ -46,13 +46,20 @@ function AuthPortalLogin() {
                         className="form-input"
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <input type="submit" className="primary-button button" />
                 </form>
 
-                <Link to="/dashboard" className="primary-button button">
+                {/* <Link to="/dashboard" className="primary-button button">
                     Submit
-                </Link>
+                </Link> */}
                 <div className="line" />
-                <h2>Get chatting</h2>
+                {/* <h2>Get chatting</h2> */}
+                <div className="link-container">
+                    <Link className="link" to="/register">
+                        <span>New around here? Sign up!</span>
+                    </Link>
+                    <span>Forgot password?</span>
+                </div>
             </div>
         </div>
     );

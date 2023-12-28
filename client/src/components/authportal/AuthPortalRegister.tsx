@@ -1,6 +1,8 @@
 import {Link} from 'react-router-dom';
 import './AuthPortal.css';
 import {useState} from 'react';
+import {createUser} from '../../api/createUser';
+import {useNavigate} from 'react-router-dom';
 
 /* type AuthModalProps = {
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,15 +19,22 @@ function AuthPortalRegister() {
     }) */
     const [error, setError] = useState<string>('');
 
-    const handleSubmit = () => {
-        /* try {
-            if (isSignUp && (password !== confirmPassword)) {
-                setError("Passwords need to match");
+    const navigate = useNavigate();
+
+    const handleSubmit = async () => {
+        try {
+            if (password !== confirmPassword) {
+                setError('Passwords need to match');
+                return;
+            } else {
+                // api call
+                await createUser(email, password);
+                navigate('/onboarding');
             }
-            console.log("make a post request to database")
+            console.log('make a post request to database');
         } catch (error) {
             console.log(error);
-        } */
+        }
     };
 
     return (
@@ -64,11 +73,12 @@ function AuthPortalRegister() {
                         className="form-input"
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+                    <input type="submit" className="primary-button button" />
                 </form>
 
-                <Link to="/onboarding" className="primary-button button">
+                {/* <Link to="/onboarding" className="primary-button button">
                     Submit
-                </Link>
+                </Link> */}
                 <div className="line" />
                 <h2>Get started</h2>
             </div>
