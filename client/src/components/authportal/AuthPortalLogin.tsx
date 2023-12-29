@@ -1,21 +1,32 @@
 import {Link} from 'react-router-dom';
 import './AuthPortal.css';
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useCookies} from 'react-cookie';
+import loginUser from '../../api/loginUser';
 
 function AuthPortalLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
 
-    const handleSubmit = () => {
-        /* try {
-            if (isSignUp && (password !== confirmPassword)) {
-                setError("Passwords need to match");
-            }
-            console.log("make a post request to database")
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const response = await loginUser(email, password);
+
+            setCookie('UserId', response.id);
+            setCookie('AuthToken', response.token);
+
+            console.log('My Response:', response);
+
+            if (response.status === 201) navigate('/dashboard');
         } catch (error) {
             console.log(error);
-        } */
+        }
     };
 
     return (
@@ -29,7 +40,7 @@ function AuthPortalLogin() {
                     By clicking Submit, you agree to our terms. Learn how we process your data in
                     our Privacy Policy and Cookie Policy.
                 </span>
-                <form className="form" onSubmit={handleSubmit}>
+                <form className="form" onSubmit={(e) => handleSubmit(e)}>
                     <input
                         id="email"
                         type="email"
@@ -49,9 +60,6 @@ function AuthPortalLogin() {
                     <input type="submit" className="primary-button button" />
                 </form>
 
-                {/* <Link to="/dashboard" className="primary-button button">
-                    Submit
-                </Link> */}
                 <div className="line" />
                 {/* <h2>Get chatting</h2> */}
                 <div className="link-container">

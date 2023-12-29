@@ -1,5 +1,5 @@
 import TinderCard from 'react-tinder-card';
-import {useState, useRef, useMemo} from 'react';
+import {useState, useRef, useMemo, useEffect} from 'react';
 import './Dashboard.css';
 import MatchContainer from '../../components/matches/MatchContainer';
 import React from 'react';
@@ -71,6 +71,16 @@ function Dashboard() {
             await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
         }
     };
+
+    useEffect(() => {
+        // Disable overflow when the Dashboard page mounts
+        document.body.classList.add('body-overflow-hidden');
+
+        // Remove the the overflow on dismount
+        return () => {
+            document.body.classList.remove('body-overflow-hidden');
+        };
+    }, []);
 
     return (
         <div className="dashboard-container">

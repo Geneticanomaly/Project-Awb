@@ -4,6 +4,7 @@ import {config} from 'dotenv';
 import cors from 'cors';
 import registerUser from './controllers/registerUser';
 import getUsers from './controllers/getUsers';
+import loginUser from './controllers/loginUser';
 
 /* import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -28,6 +29,8 @@ app.get('/', (req: Request, res: Response) => {
 
 // Upon success -> Create new user
 app.post('/register', registerUser);
+
+app.post('/login', loginUser);
 
 // Fetch all users
 app.get('/users', getUsers);

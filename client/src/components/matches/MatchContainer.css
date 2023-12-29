@@ -58,9 +58,6 @@
 
 /* MEADIA QUERIES */
 
-/* @media screen and (max-width: 720px) {
-} */
-
 @media screen and (max-width: 550px) {
     .matches {
         width: 45%;

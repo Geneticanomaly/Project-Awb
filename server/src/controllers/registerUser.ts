@@ -14,6 +14,7 @@ async function registerUser(req: Request, res: Response) {
         const database = client.db('app-data');
         const users = database.collection('users');
 
+        // Find a specific user based on email
         const userEmail = await users.findOne({email: req.body.email});
 
         // If given Email doesn't exist create a new user
@@ -37,10 +38,14 @@ async function registerUser(req: Request, res: Response) {
             };
 
             // Configure a jsonwebtoken
-            const token = jwt.sign(jwtPayload, process.env.SECRET as string, {expiresIn: 60 * 24});
-            console.log('User created');
-
-            return res.status(201).json({status: 201, createdUser, token: token});
+            jwt.sign(
+                jwtPayload,
+                process.env.SECRET as string,
+                {expiresIn: 60 * 24},
+                (err, token) => {
+                    return res.status(201).json({status: 201, createdUser, token: token});
+                }
+            );
         } else {
             console.log('Email already in use');
             return res.status(403).json('Email already in use');

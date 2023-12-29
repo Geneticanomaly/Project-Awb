@@ -3,6 +3,7 @@ import './AuthPortal.css';
 import {useState} from 'react';
 import {createUser} from '../../api/createUser';
 import {useNavigate} from 'react-router-dom';
+import {useCookies} from 'react-cookie';
 
 /* type AuthModalProps = {
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +19,7 @@ function AuthPortalRegister() {
         confirmPassword:
     }) */
     const [error, setError] = useState<string>('');
+    const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
 
     const navigate = useNavigate();
 
@@ -34,9 +36,11 @@ function AuthPortalRegister() {
                 const response = await createUser(email, password);
                 console.log('My Response:', response);
 
+                setCookie('UserId', response.createdUser.insertedId);
+                setCookie('AuthToken', response.token);
+
                 if (response.status === 201) navigate('/onboarding');
             }
-            /* console.log('make a post request to database'); */
         } catch (error) {
             console.log(error);
         }
