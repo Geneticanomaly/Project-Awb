@@ -30,6 +30,7 @@ app.get('/', (req: Request, res: Response) => {
 // Upon success -> Create new user
 app.post('/register', registerUser);
 
+// Upon success -> Open app
 app.post('/login', loginUser);
 
 // Fetch all users

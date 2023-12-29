@@ -7,8 +7,6 @@ async function loginUser(email: string, password: string) {
         body: JSON.stringify({email: email, password: password}),
     });
 
-    /* console.log('HELLO', await res.json()); */
-
     return res.json();
 }
 
