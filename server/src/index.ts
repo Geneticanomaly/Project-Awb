@@ -5,6 +5,7 @@ import cors from 'cors';
 import registerUser from './controllers/registerUser';
 import getUsers from './controllers/getUsers';
 import loginUser from './controllers/loginUser';
+import updateUser from './controllers/updateUser';
 
 /* import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -32,6 +33,8 @@ app.post('/register', registerUser);
 
 // Upon success -> Open app
 app.post('/login', loginUser);
+
+app.put('/user', updateUser);
 
 // Fetch all users
 app.get('/users', getUsers);

@@ -1,6 +1,9 @@
 import './Onboarding.css';
 import Navbar from '../../components/navbar/Navbar';
 import {useState, useEffect} from 'react';
+import {useCookies} from 'react-cookie';
+import updateUser from '../../api/updateUser';
+import {useNavigate} from 'react-router-dom';
 
 function Onboarding() {
     const pixelAmount: number = 570;
@@ -9,11 +12,9 @@ function Onboarding() {
         link: true,
         file: false,
     });
-
+    const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
     const [formData, setFormData] = useState({
-        user_id: '',
-        email: '',
-        password: '',
+        user_id: cookies.UserId,
         first_name: '',
         last_name: '',
         dob_day: '',
@@ -26,9 +27,18 @@ function Onboarding() {
         matches: [],
     });
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Submitted', formData);
+
+        // call updateUser.ts
+        const response = await updateUser(formData);
+        console.log(response);
+        // If 201 navigate to dashboard
+        if (response.status === 201) navigate('/dashboard');
+        // else error
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

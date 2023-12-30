@@ -36,7 +36,7 @@ function AuthPortalRegister() {
                 const response = await createUser(email, password);
                 console.log('My Response:', response);
 
-                setCookie('UserId', response.createdUser.insertedId);
+                setCookie('UserId', response.user_id);
                 setCookie('AuthToken', response.token);
 
                 if (response.status === 201) navigate('/onboarding');

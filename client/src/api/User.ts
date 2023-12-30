@@ -1,29 +1,13 @@
 export type User = {
-    id: string;
-    password: string;
+    user_id: string;
     first_name: string;
     last_name: string;
-    dob_day: number;
-    dob_month: number;
-    dob_year: number;
+    dob_day: string;
+    dob_month: string;
+    dob_year: string;
     gender: string;
-    gender_interest: string;
-    email: string;
-    url1: string;
+    show_gender: string;
     about: string;
+    url: string;
     matches: string[];
 };
-
-/* userId: String,
-password: String,
-first_name: String,
-last_name: String,
-dob_day: Number,
-dob_month: Number,
-dob_year: Number,
-gender: String,
-gender_interest: String,
-email: String,
-url1: String,
-about: String,
-matches: [String], */

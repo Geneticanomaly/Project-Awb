@@ -43,7 +43,9 @@ async function registerUser(req: Request, res: Response) {
                 process.env.SECRET as string,
                 {expiresIn: 60 * 24},
                 (err, token) => {
-                    return res.status(201).json({status: 201, createdUser, token: token});
+                    return res
+                        .status(201)
+                        .json({status: 201, user_id: userData.user_id, token: token});
                 }
             );
         } else {
