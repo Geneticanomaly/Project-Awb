@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import MatchCard from './MatchCard';
 import './MatchContainer.css';
 import {FaPeopleArrows} from 'react-icons/fa';
+import {User} from '../../api/getUser';
 
 const db = [
     {
@@ -26,7 +27,11 @@ const db = [
     },
 ];
 
-function MatchContainer() {
+type MatchContainerProps = {
+    user?: User;
+};
+
+function MatchContainer({user}: MatchContainerProps) {
     const characters = db;
 
     return (
@@ -34,10 +39,12 @@ function MatchContainer() {
             <header className="matches-header">
                 <section className="profile-container">
                     <Link className="link" to="/profile/:userId">
-                        <img src="https://i.imgur.com/dmwjVjG.jpeg" />
+                        <img src={user?.url} />
                     </Link>
                     <Link className="link" to="/profile/:userId">
-                        <h2>Richard Hendricks</h2>
+                        <h2>
+                            {user?.first_name} {user?.last_name}
+                        </h2>
                     </Link>
                 </section>
                 <section className="title">

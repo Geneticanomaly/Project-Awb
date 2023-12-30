@@ -33,12 +33,10 @@ function Onboarding() {
         e.preventDefault();
         console.log('Submitted', formData);
 
-        // call updateUser.ts
         const response = await updateUser(formData);
         console.log(response);
         // If 201 navigate to dashboard
         if (response.status === 201) navigate('/dashboard');
-        // else error
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

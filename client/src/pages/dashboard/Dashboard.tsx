@@ -6,6 +6,8 @@ import React from 'react';
 
 import {IoMdClose} from 'react-icons/io';
 import {FaHeart} from 'react-icons/fa';
+import {getUser, User} from '../../api/getUser';
+import {useCookies} from 'react-cookie';
 
 const db = [
     {
@@ -31,6 +33,8 @@ const db = [
 ];
 
 function Dashboard() {
+    const [user, setUser] = useState<User>();
+    const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
     const [currentIndex, setCurrentIndex] = useState<number>(db.length - 1);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
     // used for outOfFrame closure
@@ -82,10 +86,20 @@ function Dashboard() {
         };
     }, []);
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const newUser = await getUser(cookies.UserId);
+            setUser(newUser);
+            console.log('MY NEW USER:', newUser);
+        };
+
+        fetchUserData();
+    }, [cookies.UserId]);
+
     return (
         <div className="dashboard-container">
             <div className="dashboard">
-                <MatchContainer />
+                <MatchContainer user={user} />
                 <div className="swipe-container">
                     <div className="card-container">
                         {db.length > 0 ? (
