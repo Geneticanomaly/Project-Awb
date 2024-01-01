@@ -8,45 +8,24 @@ import {IoMdClose} from 'react-icons/io';
 import {FaHeart} from 'react-icons/fa';
 import {getUser, User} from '../../api/getUser';
 import {useCookies} from 'react-cookie';
-
-const db = [
-    {
-        name: 'Richard Hendricks',
-        url: 'https://i.imgur.com/oPj4A8u.jpeg',
-    },
-    {
-        name: 'Erlich Bachman',
-        url: 'https://i.imgur.com/Q9WPlWA.jpeg',
-    },
-    {
-        name: 'Monica Hall',
-        url: 'https://i.imgur.com/MWAcQRM.jpeg',
-    },
-    {
-        name: 'Jared Dunn',
-        url: 'https://i.imgur.com/OckVkRo.jpeg',
-    },
-    {
-        name: 'Dinesh Chugtai',
-        url: 'https://i.imgur.com/dmwjVjG.jpeg',
-    },
-];
+import {getUsersByGender} from '../../api/getUsersByGender';
 
 function Dashboard() {
     const [user, setUser] = useState<User>();
+    const [usersByGender, setUsersByGender] = useState<User[]>([]);
     const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
-    const [currentIndex, setCurrentIndex] = useState<number>(db.length - 1);
+    const [currentIndex, setCurrentIndex] = useState<number>(usersByGender.length - 1);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
     // used for outOfFrame closure
     const currentIndexRef = useRef<number>(currentIndex);
 
     const childRefs = useMemo(
         () =>
-            Array(db.length)
+            Array(usersByGender.length)
                 .fill(0)
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .map(() => React.createRef<any>()),
-        []
+        [usersByGender.length]
     );
 
     const updateCurrentIndex = (val: number) => {
@@ -70,7 +49,7 @@ function Dashboard() {
     };
 
     const swipe = async (dir: string) => {
-        if (canSwipe && currentIndex < db.length) {
+        if (canSwipe && currentIndex < usersByGender.length) {
             console.log('Swiped to the ' + dir);
             await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
         }
@@ -93,8 +72,15 @@ function Dashboard() {
             console.log('MY NEW USER:', newUser);
         };
 
+        const fetchUsersByGender = async () => {
+            const newUsers = await getUsersByGender(user?.show_gender);
+            setUsersByGender(newUsers);
+            console.log('Users by gender:', newUsers);
+        };
+
         fetchUserData();
-    }, [cookies.UserId]);
+        fetchUsersByGender();
+    }, [cookies.UserId, user?.show_gender]);
 
     return (
         <div className="dashboard-container">
@@ -102,26 +88,28 @@ function Dashboard() {
                 <MatchContainer user={user} />
                 <div className="swipe-container">
                     <div className="card-container">
-                        {db.length > 0 ? (
-                            db.map((character, index) => (
-                                <TinderCard
-                                    ref={childRefs[index]}
-                                    className="swipe"
-                                    key={character.name}
-                                    onSwipe={(dir) => swiped(dir, character.name, index)}
-                                    onCardLeftScreen={() => outOfFrame(character.name, index)}
+                        {usersByGender?.map((character, index) => (
+                            <TinderCard
+                                ref={childRefs[index]}
+                                className="swipe"
+                                key={character.user_id}
+                                onSwipe={(dir) =>
+                                    swiped(dir, character.first_name + character.last_name, index)
+                                }
+                                onCardLeftScreen={() =>
+                                    outOfFrame(character.first_name + character.last_name, index)
+                                }
+                            >
+                                <div
+                                    style={{backgroundImage: 'url(' + character.url + ')'}}
+                                    className="card"
                                 >
-                                    <div
-                                        style={{backgroundImage: 'url(' + character.url + ')'}}
-                                        className="card"
-                                    >
-                                        <h3>{character.name}</h3>
-                                    </div>
-                                </TinderCard>
-                            ))
-                        ) : (
-                            <p>Out of possible dating candidates...</p>
-                        )}
+                                    <h3>
+                                        {character.first_name} {character.last_name}
+                                    </h3>
+                                </div>
+                            </TinderCard>
+                        ))}
                         <div className="button-container">
                             <button onClick={() => swipe('left')}>
                                 <IoMdClose

@@ -7,6 +7,7 @@ import getUsers from './controllers/getUsers';
 import loginUser from './controllers/loginUser';
 import updateUser from './controllers/updateUser';
 import getUser from './controllers/getUser';
+import getUsersByGender from './controllers/getUsersByGender';
 
 /* import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -38,6 +39,8 @@ app.post('/login', loginUser);
 app.put('/user', updateUser);
 
 app.get('/user/:userId', getUser);
+
+app.get('/gendered-users/:gender', getUsersByGender);
 
 // Fetch all users
 app.get('/users', getUsers);
