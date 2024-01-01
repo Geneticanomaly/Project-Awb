@@ -8,6 +8,8 @@ import loginUser from './controllers/loginUser';
 import updateUser from './controllers/updateUser';
 import getUser from './controllers/getUser';
 import getUsersByGender from './controllers/getUsersByGender';
+import addMatch from './controllers/addMatch';
+import getMatchedUsers from './controllers/getMatchedUsers';
 
 /* import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -41,6 +43,10 @@ app.put('/user', updateUser);
 app.get('/user/:userId', getUser);
 
 app.get('/gendered-users/:gender', getUsersByGender);
+
+app.put('/addmatch', addMatch);
+
+app.get('/matchedUsers/:userIds', getMatchedUsers);
 
 // Fetch all users
 app.get('/users', getUsers);

@@ -1,14 +1,14 @@
 import TinderCard from 'react-tinder-card';
-import {useState, useRef, useMemo, useEffect} from 'react';
+import React, {useState, useRef, useMemo, useEffect} from 'react';
 import './Dashboard.css';
 import MatchContainer from '../../components/matches/MatchContainer';
-import React from 'react';
 
 import {IoMdClose} from 'react-icons/io';
 import {FaHeart} from 'react-icons/fa';
-import {getUser, User} from '../../api/getUser';
 import {useCookies} from 'react-cookie';
+import {getUser, User} from '../../api/getUser';
 import {getUsersByGender} from '../../api/getUsersByGender';
+import {addMatch} from '../../api/addMatch';
 
 function Dashboard() {
     const [user, setUser] = useState<User>();
@@ -35,9 +35,15 @@ function Dashboard() {
 
     const canSwipe = currentIndex >= 0;
 
+    const updateMatches = async (matchedUserId: string) => {
+        addMatch(cookies.UserId, matchedUserId);
+    };
+
     // set last direction and decrease current index
-    const swiped = (direction: string, nameToDelete: string, index: number) => {
-        console.log('removing: ' + nameToDelete);
+    const swiped = (direction: string, swipedUserId: string, index: number) => {
+        if (direction === 'right') {
+            updateMatches(swipedUserId);
+        }
         setLastDirection(direction);
         updateCurrentIndex(index - 1);
     };
@@ -54,6 +60,13 @@ function Dashboard() {
             await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
         }
     };
+
+    const matchedUserIds = user?.matches.map(({user_id}) => user_id).concat(cookies.UserId);
+
+    // Filter the users
+    const filteredGenderedUsers = usersByGender?.filter(
+        (user) => !matchedUserIds?.includes(user.user_id)
+    );
 
     useEffect(() => {
         // Disable overflow when the Dashboard page mounts
@@ -82,30 +95,30 @@ function Dashboard() {
         fetchUsersByGender();
     }, [cookies.UserId, user?.show_gender]);
 
+    console.log(user);
+
     return (
         <div className="dashboard-container">
             <div className="dashboard">
                 <MatchContainer user={user} />
                 <div className="swipe-container">
                     <div className="card-container">
-                        {usersByGender?.map((character, index) => (
+                        {filteredGenderedUsers?.map((user, index) => (
                             <TinderCard
                                 ref={childRefs[index]}
                                 className="swipe"
-                                key={character.user_id}
-                                onSwipe={(dir) =>
-                                    swiped(dir, character.first_name + character.last_name, index)
-                                }
+                                key={user.user_id}
+                                onSwipe={(dir) => swiped(dir, user.user_id, index)}
                                 onCardLeftScreen={() =>
-                                    outOfFrame(character.first_name + character.last_name, index)
+                                    outOfFrame(user.first_name + user.last_name, index)
                                 }
                             >
                                 <div
-                                    style={{backgroundImage: 'url(' + character.url + ')'}}
+                                    style={{backgroundImage: 'url(' + user.url + ')'}}
                                     className="card"
                                 >
                                     <h3>
-                                        {character.first_name} {character.last_name}
+                                        {user.first_name} {user.last_name}
                                     </h3>
                                 </div>
                             </TinderCard>
