@@ -24,7 +24,6 @@ function Onboarding() {
         show_gender: '',
         about: '',
         url: '',
-        swiped_right: [],
         matches: [],
     });
 

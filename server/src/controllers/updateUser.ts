@@ -25,7 +25,6 @@ async function updateUser(req: Request, res: Response) {
                 show_gender: formData.show_gender,
                 about: formData.about,
                 url: formData.url,
-                swiped_right: formData.swiped_right,
                 matches: formData.matches,
             },
         };

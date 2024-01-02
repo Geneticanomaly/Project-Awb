@@ -8,7 +8,7 @@ import {FaHeart} from 'react-icons/fa';
 import {useCookies} from 'react-cookie';
 import {getUser, User} from '../../api/getUser';
 import {getUsersByGender} from '../../api/getUsersByGender';
-import {addSwiped} from '../../api/addSwiped';
+import {addMatch} from '../../api/addMatch';
 
 function Dashboard() {
     const [user, setUser] = useState<User>();
@@ -37,14 +37,14 @@ function Dashboard() {
 
     const canSwipe = currentIndex >= 0;
 
-    const updateSwipedRight = async (matchedUserId: string) => {
-        addSwiped(cookies.UserId, matchedUserId);
+    const updateMatches = async (matchedUserId: string) => {
+        addMatch(cookies.UserId, matchedUserId);
     };
 
     // set last direction and decrease current index
     const swiped = (direction: string, swipedUserId: string, index: number) => {
         if (direction === 'right') {
-            updateSwipedRight(swipedUserId);
+            updateMatches(swipedUserId);
         }
         setLastDirection(direction);
         updateCurrentIndex(index - 1);
@@ -63,13 +63,11 @@ function Dashboard() {
         }
     };
 
-    const swipedUserIds = user?.swiped_right
-        .map(({user_id}: string) => user_id)
-        .concat(cookies.UserId);
+    const matchedUserIds = user?.matches.map(({user_id}) => user_id).concat(cookies.UserId);
 
     // Filter the users
     const filteredGenderedUsers = usersByGender?.filter(
-        (user) => !swipedUserIds?.includes(user.user_id)
+        (user) => !matchedUserIds?.includes(user.user_id)
     );
 
     useEffect(() => {
@@ -107,6 +105,7 @@ function Dashboard() {
     }
 
     console.log(user);
+    console.log(typeof user?.matches);
 
     return (
         <div className="dashboard-container">

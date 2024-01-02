@@ -9,12 +9,7 @@ import updateUser from './controllers/updateUser';
 import getUser from './controllers/getUser';
 import getUsersByGender from './controllers/getUsersByGender';
 import getMatchedUsers from './controllers/getMatchedUsers';
-import addSwiped from './controllers/addSwiped';
-
-/* import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import {v4 as uuidv4} from 'uuid';
-import {MongoClient} from 'mongodb'; */
+import addMatch from './controllers/addMatch';
 
 config();
 
@@ -44,7 +39,7 @@ app.get('/user/:userId', getUser);
 
 app.get('/gendered-users/:gender', getUsersByGender);
 
-app.put('/addmatch', addSwiped);
+app.put('/addmatch', addMatch);
 
 app.get('/matchedUsers/:userIds', getMatchedUsers);
 

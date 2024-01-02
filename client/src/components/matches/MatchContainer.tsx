@@ -14,24 +14,28 @@ function MatchContainer({user}: MatchContainerProps) {
     const [matchedUsers, setMatchedUsers] = useState<User[]>([]);
 
     // Wrapping this in useMemo disabled an infinite loop with the useEffect hook
-    /* const matchedUserIds = useMemo(() => {
+    const matchedUserIds = useMemo(() => {
         return user?.matches?.map(({user_id}) => user_id) || [];
-    }, [user]); */
+    }, [user]);
 
-    const matchedUserIds = user?.matches?.map(({user_id}) => user_id);
+    /* const matchedUserIds = user?.matches?.map(({user_id}) => user_id); */
 
     useEffect(() => {
         const fetchMatchedUsers = async () => {
             try {
                 const matchedUsers = await getMatchedUsers(matchedUserIds);
                 setMatchedUsers(matchedUsers);
-                console.log('Matched Users:', matchedUsers);
             } catch (error) {
                 console.error('Error fetching MatchContainer data:', error);
             }
         };
         fetchMatchedUsers();
     }, [matchedUserIds]);
+
+    const filteredMatchedProfiles = matchedUsers?.filter(
+        (matchedUsers) =>
+            matchedUsers.matches.filter((profile) => profile.user_id == user?.user_id).length > 0
+    );
 
     return (
         <div className="matches">
@@ -52,7 +56,7 @@ function MatchContainer({user}: MatchContainerProps) {
                 </section>
             </header>
             <div className="matches-container">
-                {matchedUsers?.map((match, index) => (
+                {filteredMatchedProfiles?.map((match, index) => (
                     <MatchCard
                         key={index}
                         name={match.first_name + ' ' + match.last_name}
