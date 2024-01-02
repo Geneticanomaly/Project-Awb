@@ -11,6 +11,7 @@ type FormData = {
     show_gender: string;
     about: string;
     url: string;
+    swiped_right: string[];
     matches: string[];
 };
 

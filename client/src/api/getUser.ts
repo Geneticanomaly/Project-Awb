@@ -12,6 +12,7 @@ export type User = {
     first_name: string;
     gender: string;
     last_name: string;
+    swiped_right: [string];
     matches: [string];
     show_gender: string;
     url: string;

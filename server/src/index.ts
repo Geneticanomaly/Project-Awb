@@ -8,8 +8,8 @@ import loginUser from './controllers/loginUser';
 import updateUser from './controllers/updateUser';
 import getUser from './controllers/getUser';
 import getUsersByGender from './controllers/getUsersByGender';
-import addMatch from './controllers/addMatch';
 import getMatchedUsers from './controllers/getMatchedUsers';
+import addSwiped from './controllers/addSwiped';
 
 /* import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -44,7 +44,7 @@ app.get('/user/:userId', getUser);
 
 app.get('/gendered-users/:gender', getUsersByGender);
 
-app.put('/addmatch', addMatch);
+app.put('/addmatch', addSwiped);
 
 app.get('/matchedUsers/:userIds', getMatchedUsers);
 

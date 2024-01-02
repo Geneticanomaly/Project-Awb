@@ -8,7 +8,7 @@ import {FaHeart} from 'react-icons/fa';
 import {useCookies} from 'react-cookie';
 import {getUser, User} from '../../api/getUser';
 import {getUsersByGender} from '../../api/getUsersByGender';
-import {addMatch} from '../../api/addMatch';
+import {addSwiped} from '../../api/addSwiped';
 
 function Dashboard() {
     const [user, setUser] = useState<User>();
@@ -16,6 +16,8 @@ function Dashboard() {
     const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
     const [currentIndex, setCurrentIndex] = useState<number>(usersByGender.length - 1);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
+    const [loading, setLoading] = useState(true);
+
     // used for outOfFrame closure
     const currentIndexRef = useRef<number>(currentIndex);
 
@@ -35,14 +37,14 @@ function Dashboard() {
 
     const canSwipe = currentIndex >= 0;
 
-    const updateMatches = async (matchedUserId: string) => {
-        addMatch(cookies.UserId, matchedUserId);
+    const updateSwipedRight = async (matchedUserId: string) => {
+        addSwiped(cookies.UserId, matchedUserId);
     };
 
     // set last direction and decrease current index
     const swiped = (direction: string, swipedUserId: string, index: number) => {
         if (direction === 'right') {
-            updateMatches(swipedUserId);
+            updateSwipedRight(swipedUserId);
         }
         setLastDirection(direction);
         updateCurrentIndex(index - 1);
@@ -61,11 +63,13 @@ function Dashboard() {
         }
     };
 
-    const matchedUserIds = user?.matches.map(({user_id}) => user_id).concat(cookies.UserId);
+    const swipedUserIds = user?.swiped_right
+        .map(({user_id}: string) => user_id)
+        .concat(cookies.UserId);
 
     // Filter the users
     const filteredGenderedUsers = usersByGender?.filter(
-        (user) => !matchedUserIds?.includes(user.user_id)
+        (user) => !swipedUserIds?.includes(user.user_id)
     );
 
     useEffect(() => {
@@ -79,21 +83,28 @@ function Dashboard() {
     }, []);
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            const newUser = await getUser(cookies.UserId);
-            setUser(newUser);
-            console.log('MY NEW USER:', newUser);
+        const fetchData = async () => {
+            try {
+                const newUser = await getUser(cookies.UserId);
+                setUser(newUser);
+
+                const newUsers = await getUsersByGender(newUser?.show_gender);
+                setUsersByGender(newUsers);
+
+                setLoading(false); // Set loading to false once data is fetched
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false); // Set loading to false in case of an error
+            }
         };
 
-        const fetchUsersByGender = async () => {
-            const newUsers = await getUsersByGender(user?.show_gender);
-            setUsersByGender(newUsers);
-            console.log('Users by gender:', newUsers);
-        };
-
-        fetchUserData();
-        fetchUsersByGender();
+        fetchData();
     }, [cookies.UserId, user?.show_gender]);
+
+    // Render loading indicator or return null for TinderCard components during loading
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     console.log(user);
 

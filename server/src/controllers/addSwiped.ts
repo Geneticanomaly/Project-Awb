@@ -1,10 +1,10 @@
 import {Request, Response} from 'express';
 import {MongoClient} from 'mongodb';
 
-async function addMatch(req: Request, res: Response) {
+async function addSwiped(req: Request, res: Response) {
     const client = new MongoClient(process.env.MONGO_URL as string);
     const userId = req.body.userId;
-    const matchedUserId = req.body.matchedUserId;
+    const swipedUserId = req.body.swipedUserId;
 
     try {
         await client.connect();
@@ -12,7 +12,7 @@ async function addMatch(req: Request, res: Response) {
         const users = database.collection('users');
 
         const updatedData = {
-            $push: {matches: {user_id: matchedUserId}},
+            $push: {swiped_right: {user_id: swipedUserId}},
         };
 
         const updatedUser = await users.updateOne({user_id: userId}, updatedData);
@@ -23,4 +23,4 @@ async function addMatch(req: Request, res: Response) {
     }
 }
 
-export default addMatch;
+export default addSwiped;
