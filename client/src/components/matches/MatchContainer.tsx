@@ -37,6 +37,8 @@ function MatchContainer({user}: MatchContainerProps) {
             matchedUsers.matches.filter((profile) => profile.user_id == user?.user_id).length > 0
     );
 
+    console.log('MatchContainer reloaded');
+
     return (
         <div className="matches">
             <header className="matches-header">

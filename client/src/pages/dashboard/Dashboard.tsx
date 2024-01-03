@@ -18,6 +18,8 @@ function Dashboard() {
     const [lastDirection, setLastDirection] = useState<string | undefined>();
     const [loading, setLoading] = useState(true);
 
+    const [reloadMatchContainer, setReloadMatchContainer] = useState(false);
+
     // used for outOfFrame closure
     const currentIndexRef = useRef<number>(currentIndex);
 
@@ -45,6 +47,8 @@ function Dashboard() {
     const swiped = (direction: string, swipedUserId: string, index: number) => {
         if (direction === 'right') {
             updateMatches(swipedUserId);
+            // Reload the useEffect hook for user searching - in case there is a new match
+            setReloadMatchContainer(true);
         }
         setLastDirection(direction);
         updateCurrentIndex(index - 1);
@@ -97,7 +101,11 @@ function Dashboard() {
         };
 
         fetchData();
-    }, [cookies.UserId, user?.show_gender]);
+
+        if (reloadMatchContainer) {
+            setReloadMatchContainer(false);
+        }
+    }, [cookies.UserId, user?.show_gender, reloadMatchContainer]);
 
     // Render loading indicator or return null for TinderCard components during loading
     if (loading) {
@@ -105,7 +113,7 @@ function Dashboard() {
     }
 
     console.log(user);
-    console.log(typeof user?.matches);
+    /* console.log(typeof user?.matches); */
 
     return (
         <div className="dashboard-container">
