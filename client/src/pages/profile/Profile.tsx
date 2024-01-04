@@ -19,8 +19,11 @@ function Profile() {
             const response = await getUser(userId);
             setUser(response);
         };
-        fetchUserData();
-        console.log('Fetch user data based on id!');
+        // Run the fetchUserData only when showModal is false
+        if (!showModal) {
+            fetchUserData();
+            console.log('Fetch user data based on id!');
+        }
     }, [userId, showModal]);
 
     console.log(user);

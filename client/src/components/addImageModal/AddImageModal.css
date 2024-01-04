@@ -97,3 +97,23 @@
 .image-close-icon:hover {
     color: red;
 }
+
+@media screen and (max-width: 500px) {
+    .image-modal {
+        height: 500px;
+        width: 300px;
+    }
+
+    .image-modal-container img {
+        height: 375px;
+    }
+}
+
+@media screen and (max-width: 410px) {
+    .image-modal {
+        width: 250px;
+    }
+    .image-modal-container img {
+        width: 250px;
+    }
+}
