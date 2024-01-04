@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import './Profile.css';
 import {FaFileUpload} from 'react-icons/fa';
+import AddImageModal from '../../components/addImageModal/AddImageModal';
 
 const db = [
     {
@@ -26,6 +27,7 @@ const db = [
 function Profile() {
     const [user, setUser] = useState<User>();
     const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     // Access the userId parameter from the URL
     const {userId} = useParams<{userId: string}>();
@@ -53,7 +55,7 @@ function Profile() {
             </div>
 
             {/* <input type="file" id="upload-image" className="custom-file-input" /> */}
-            <button className="profile-add-image">
+            <button className="profile-add-image" onClick={() => setShowModal(true)}>
                 <div className="img-btn-container">
                     <FaFileUpload className="file-upload-image" />
                     Add images
@@ -74,6 +76,7 @@ function Profile() {
             ) : (
                 <p className="image-msg">This profile has no images...</p>
             )}
+            {showModal && <AddImageModal setShowModal={setShowModal} />}
         </div>
     );
 }
