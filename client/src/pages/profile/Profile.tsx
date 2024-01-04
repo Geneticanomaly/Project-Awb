@@ -6,24 +6,6 @@ import './Profile.css';
 import {FaFileUpload} from 'react-icons/fa';
 import AddImageModal from '../../components/addImageModal/AddImageModal';
 
-const db = [
-    {
-        url: 'https://i.imgur.com/oPj4A8u.jpeg',
-    },
-    {
-        url: 'https://i.imgur.com/Q9WPlWA.jpeg',
-    },
-    {
-        url: 'https://i.imgur.com/MWAcQRM.jpeg',
-    },
-    {
-        url: 'https://i.imgur.com/OckVkRo.jpeg',
-    },
-    {
-        url: 'https://i.imgur.com/dmwjVjG.jpeg',
-    },
-];
-
 function Profile() {
     const [user, setUser] = useState<User>();
     const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
@@ -39,7 +21,7 @@ function Profile() {
         };
         fetchUserData();
         console.log('Fetch user data based on id!');
-    }, [userId]);
+    }, [userId, showModal]);
 
     console.log(user);
 
@@ -54,29 +36,34 @@ function Profile() {
                 </div>
             </div>
 
-            {/* <input type="file" id="upload-image" className="custom-file-input" /> */}
-            <button className="profile-add-image" onClick={() => setShowModal(true)}>
-                <div className="img-btn-container">
-                    <FaFileUpload className="file-upload-image" />
-                    Add images
-                </div>
-            </button>
+            {user?.user_id === cookies.UserId && (
+                <button className="profile-add-image" onClick={() => setShowModal(true)}>
+                    <div className="img-btn-container">
+                        <FaFileUpload className="file-upload-image" />
+                        Add images
+                    </div>
+                </button>
+            )}
 
             <div className="about">
                 <h2>About me</h2>
                 <p>{user?.about}</p>
             </div>
             <div className="line" />
-            {db.length > 0 ? (
+            {user?.images?.length > 0 ? (
                 <section className="images-container">
-                    {db.map((image, index) => (
-                        <img key={index} src={image.url} />
+                    {user?.images?.map((image, index) => (
+                        <img
+                            key={index}
+                            src={`data:image/jpeg;base64,${image.image}`}
+                            alt={`Image ${index}`}
+                        />
                     ))}
                 </section>
             ) : (
                 <p className="image-msg">This profile has no images...</p>
             )}
-            {showModal && <AddImageModal setShowModal={setShowModal} />}
+            {showModal && <AddImageModal userId={user?.user_id} setShowModal={setShowModal} />}
         </div>
     );
 }

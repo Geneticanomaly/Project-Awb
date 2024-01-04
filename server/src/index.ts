@@ -10,6 +10,7 @@ import getUser from './controllers/getUser';
 import getUsersByGender from './controllers/getUsersByGender';
 import getMatchedUsers from './controllers/getMatchedUsers';
 import addMatch from './controllers/addMatch';
+import addImage from './controllers/addImage';
 
 config();
 
@@ -42,6 +43,8 @@ app.get('/gendered-users/:gender', getUsersByGender);
 app.put('/addmatch', addMatch);
 
 app.get('/matchedUsers/:userIds', getMatchedUsers);
+
+app.post('/profile/:userId/addImage', addImage);
 
 // Fetch all users
 app.get('/users', getUsers);
