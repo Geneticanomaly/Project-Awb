@@ -9,6 +9,7 @@ import {useCookies} from 'react-cookie';
 import {getUser, User} from '../../api/getUser';
 import {getUsersByGender} from '../../api/getUsersByGender';
 import {addMatch} from '../../api/addMatch';
+import MobileNav from '../../components/navbar/mobile/MobileNav';
 
 function Dashboard() {
     const [user, setUser] = useState<User>();
@@ -17,7 +18,9 @@ function Dashboard() {
     const [currentIndex, setCurrentIndex] = useState<number>(1);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
     const [loading, setLoading] = useState(true);
-    const [prevMatches, setPrevMatches] = useState<[]>([]);
+
+    const pixelAmount: number = 500;
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const [reloadMatchContainer, setReloadMatchContainer] = useState(false);
 
@@ -118,6 +121,23 @@ function Dashboard() {
         };
     }, []);
 
+    // Used for only displaying swipe container.
+    // If windows size is smaller than 500px display everything in a column instead
+    useEffect(() => {
+        // Update the window width when the window is resized
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        // Attach the event listener
+        window.addEventListener('resize', handleResize);
+
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     // Render loading indicator or return null for TinderCard components during loading
     if (loading) {
         return <p>Loading...</p>;
@@ -128,10 +148,12 @@ function Dashboard() {
 
     return (
         <div className="dashboard-container">
+            {windowWidth < pixelAmount && <MobileNav />}
             <div className="dashboard">
-                <MatchContainer user={user} />
+                {windowWidth >= pixelAmount && <MatchContainer user={user} />}
                 <div className="swipe-container">
                     <div className="card-container">
+                        {windowWidth < pixelAmount && <p>Swipe away!</p>}
                         {filteredGenderedUsers?.map((user, index) => (
                             <TinderCard
                                 ref={childRefs[index]}

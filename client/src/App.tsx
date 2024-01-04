@@ -1,11 +1,12 @@
-import "./App.css";
-import Home from "./pages/home/Home";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
-import Profile from "./pages/profile/Profile";
-import Dashboard from "./pages/dashboard/Dashboard";
-import Onboarding from "./pages/onboarding/Onboarding";
+import './App.css';
+import Home from './pages/home/Home';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Login from './pages/login/Login';
+import Register from './pages/register/Register';
+import Profile from './pages/profile/Profile';
+import Dashboard from './pages/dashboard/Dashboard';
+import Onboarding from './pages/onboarding/Onboarding';
+import MatchContainer from './components/matches/MatchContainer';
 
 function App() {
     return (
@@ -28,6 +29,9 @@ function App() {
                 </Routes>
                 <Routes>
                     <Route path="/profile/:userId" element={<Profile />} />
+                </Routes>
+                <Routes>
+                    <Route path="/matches" element={<MatchContainer />} />
                 </Routes>
             </Router>
         </>

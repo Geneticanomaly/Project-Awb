@@ -12,7 +12,7 @@ function Onboarding() {
         link: true,
         file: false,
     });
-    const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
+    const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [formData, setFormData] = useState({
         user_id: cookies.UserId,
         first_name: '',

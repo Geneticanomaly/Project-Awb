@@ -1,0 +1,30 @@
+.mobile-nav {
+    position: fixed;
+
+    width: 100vw;
+    height: 75px;
+    z-index: 100;
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(154, 154, 154);
+}
+
+.mobile-nav-img-container {
+    padding-right: 5%;
+    padding-left: 5%;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mobile-nav-profile {
+    color: rgb(112, 112, 112);
+}
+
+.mobile-nav-matches {
+    color: rgb(112, 112, 112);
+}
+
+.mobile-nav-img {
+    width: 30px;
+}

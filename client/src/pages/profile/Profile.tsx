@@ -8,7 +8,7 @@ import AddImageModal from '../../components/addImageModal/AddImageModal';
 
 function Profile() {
     const [user, setUser] = useState<User>();
-    const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
+    const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [showModal, setShowModal] = useState<boolean>(false);
 
     // Access the userId parameter from the URL
