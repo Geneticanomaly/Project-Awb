@@ -37,16 +37,16 @@ function MatchContainer({user}: MatchContainerProps) {
             matchedUsers.matches.filter((profile) => profile.user_id == user?.user_id).length > 0
     );
 
-    console.log('MatchContainer reloaded');
+    /* console.log('MatchContainer reloaded'); */
 
     return (
         <div className="matches">
             <header className="matches-header">
                 <section className="profile-container">
-                    <Link className="link" to="/profile/:userId">
+                    <Link className="link" to={`/profile/${user?.user_id}`}>
                         <img src={user?.url} />
                     </Link>
-                    <Link className="link" to="/profile/:userId">
+                    <Link className="link" to={`/profile/${user?.user_id}`}>
                         <h2>
                             {user?.first_name} {user?.last_name}
                         </h2>
@@ -61,6 +61,7 @@ function MatchContainer({user}: MatchContainerProps) {
                 {filteredMatchedProfiles?.map((match, index) => (
                     <MatchCard
                         key={index}
+                        userId={match.user_id}
                         name={match.first_name + ' ' + match.last_name}
                         img={match.url}
                     />

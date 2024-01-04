@@ -18,7 +18,7 @@ export type User = {
     url: string;
 };
 
-export async function getUser(userId: string): Promise<User> {
+export async function getUser(userId: string | undefined): Promise<User> {
     const res = await fetch(`${API_URL}/user/${userId}`);
     return res.json();
 }

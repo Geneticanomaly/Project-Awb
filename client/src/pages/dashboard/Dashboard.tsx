@@ -14,9 +14,10 @@ function Dashboard() {
     const [user, setUser] = useState<User>();
     const [usersByGender, setUsersByGender] = useState<User[]>([]);
     const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
-    const [currentIndex, setCurrentIndex] = useState<number>(usersByGender.length - 1);
+    const [currentIndex, setCurrentIndex] = useState<number>(1);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
     const [loading, setLoading] = useState(true);
+    const [prevMatches, setPrevMatches] = useState<[]>([]);
 
     const [reloadMatchContainer, setReloadMatchContainer] = useState(false);
 
@@ -45,6 +46,7 @@ function Dashboard() {
 
     // set last direction and decrease current index
     const swiped = (direction: string, swipedUserId: string, index: number) => {
+        console.log('HELLo');
         if (direction === 'right') {
             updateMatches(swipedUserId);
             // Reload the useEffect hook for user searching - in case there is a new match
@@ -61,9 +63,13 @@ function Dashboard() {
     };
 
     const swipe = async (dir: string) => {
-        if (canSwipe && currentIndex < usersByGender.length) {
+        console.log('currentIndex:', currentIndex);
+        console.log('canSwipe:', canSwipe);
+        console.log('filteredGenderedUsers:', filteredGenderedUsers);
+
+        if (canSwipe && currentIndex < filteredGenderedUsers.length) {
             console.log('Swiped to the ' + dir);
-            await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+            await childRefs[currentIndex].current.swipe(dir);
         }
     };
 
@@ -73,16 +79,6 @@ function Dashboard() {
     const filteredGenderedUsers = usersByGender?.filter(
         (user) => !matchedUserIds?.includes(user.user_id)
     );
-
-    useEffect(() => {
-        // Disable overflow when the Dashboard page mounts
-        document.body.classList.add('body-overflow-hidden');
-
-        // Remove the the overflow on dismount
-        return () => {
-            document.body.classList.remove('body-overflow-hidden');
-        };
-    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -107,12 +103,27 @@ function Dashboard() {
         }
     }, [cookies.UserId, user?.show_gender, reloadMatchContainer]);
 
+    useEffect(() => {
+        // Update currentIndex when filteredGenderedUsers changes
+        setCurrentIndex(filteredGenderedUsers.length - 1);
+    }, [filteredGenderedUsers]);
+
+    useEffect(() => {
+        // Disable overflow when the Dashboard page mounts
+        document.body.classList.add('body-overflow-hidden');
+
+        // Remove the the overflow on dismount
+        return () => {
+            document.body.classList.remove('body-overflow-hidden');
+        };
+    }, []);
+
     // Render loading indicator or return null for TinderCard components during loading
     if (loading) {
         return <p>Loading...</p>;
     }
 
-    console.log(user);
+    /* console.log(user); */
     /* console.log(typeof user?.matches); */
 
     return (
