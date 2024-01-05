@@ -1,0 +1,53 @@
+.input-message {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    background-color: rgb(241, 241, 241);
+}
+
+.input-attach-icon {
+    margin-left: 10px;
+    width: 25px;
+}
+
+.input-message input[type='text'] {
+    margin-left: 10px;
+    padding-left: 10px;
+    height: 40px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.send {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.send-button {
+    border: 1px solid white;
+    border-radius: 30px;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: rgb(255, 72, 102);
+    color: white;
+    transition: 200ms ease;
+}
+
+.send-button:hover {
+    border: 1px solid rgb(255, 72, 102);
+    background-color: white;
+    color: rgb(255, 72, 102);
+    transition: 200ms ease;
+}
+
+.send label {
+    margin-top: 5px;
+    cursor: pointer;
+}

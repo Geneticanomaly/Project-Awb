@@ -43,6 +43,10 @@ background: linear-gradient(45deg, #333333, #dd1818);
     text-decoration: none;
 }
 
+.link-icon {
+    color: rgb(80, 80, 80);
+}
+
 .primary-button:hover {
     background: linear-gradient(260deg, #333333, #dd1818);
     transition: 1s ease;

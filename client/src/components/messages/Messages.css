@@ -1,0 +1,19 @@
+.messages {
+    background-color: rgb(201, 201, 201);
+    height: calc(100% - 121px);
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.messages::-webkit-scrollbar {
+    width: 7px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background: rgb(114, 114, 114);
+    border-radius: 10px;
+}
+
+.messages::-webkit-scrollbar-corner {
+    background-repeat: no-repeat;
+}

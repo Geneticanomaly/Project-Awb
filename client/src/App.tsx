@@ -7,6 +7,7 @@ import Profile from './pages/profile/Profile';
 import Dashboard from './pages/dashboard/Dashboard';
 import Onboarding from './pages/onboarding/Onboarding';
 import MatchContainer from './components/matches/MatchContainer';
+import Chat from './pages/chat/Chat';
 
 function App() {
     return (
@@ -32,6 +33,9 @@ function App() {
                 </Routes>
                 <Routes>
                     <Route path="/matches" element={<MatchContainer />} />
+                </Routes>
+                <Routes>
+                    <Route path="/chat/:userId" element={<Chat />} />
                 </Routes>
             </Router>
         </>
