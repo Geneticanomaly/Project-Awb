@@ -16,9 +16,9 @@ export type User = {
     images?: [string];
 };
 
-export type UserMessages = {
+export type UserMessage = {
     from_userId: string;
     to_userId: string;
-    message: string | File;
+    message: string;
     timestamp: string;
 };

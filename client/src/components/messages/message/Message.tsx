@@ -1,15 +1,38 @@
 import './Message.css';
 
-function Message() {
+type MessageProps = {
+    message: string;
+    timestamp: string;
+    isCurrentUser: boolean;
+};
+
+function Message({message, timestamp, isCurrentUser}: MessageProps) {
+    const messageClass = isCurrentUser ? 'message owner' : 'message';
+    const isStringMessage = typeof message === 'string';
+    console.log(timestamp);
+
+    const dateTime = new Date(timestamp);
+    const localTime = new Date(dateTime.getTime() + dateTime.getTimezoneOffset() * 60000);
+
+    const time = localTime.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    });
+
     return (
-        <div className="message owner">
+        <div className={messageClass}>
             <div className="message-info">
                 <img src="https://i.imgur.com/Q9WPlWA.jpeg" className="message-profile-img" />
-                <p>Just now</p>
+                <p>{time}</p>
             </div>
             <div className="message-content">
-                <p className="sent-message">Hello</p>
-                {<img src="https://i.imgur.com/Q9WPlWA.jpeg" className="message-content-img" />}
+                {isStringMessage ? (
+                    <p className="sent-message">{message}</p>
+                ) : (
+                    <img src={message} className="message-content-img" />
+                )}
+                {/* <img src="https://i.imgur.com/Q9WPlWA.jpeg" className="message-content-img" /> */}
             </div>
         </div>
     );

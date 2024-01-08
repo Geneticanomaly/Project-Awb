@@ -8,18 +8,11 @@ import {Link, useParams} from 'react-router-dom';
 import {getUsersChat} from '../../api/getUsersChat';
 import {useEffect, useState} from 'react';
 import {useCookies} from 'react-cookie';
-import {UserMessages} from '../../../typings';
-
-// type UserMessages = {
-//     from_userId: string;
-//     to_userId: string;
-//     message: string | File;
-//     timestamp: string;
-// };
+import {UserMessage} from '../../../typings';
 
 function Chat() {
-    const [currentUserMessages, setCurrentUserMessages] = useState<UserMessages[]>([]);
-    const [otherUserMessages, setOtherUserMessages] = useState<UserMessages[]>([]);
+    const [currentUserMessages, setCurrentUserMessages] = useState<UserMessage[]>([]);
+    const [otherUserMessages, setOtherUserMessages] = useState<UserMessage[]>([]);
 
     // Access the userId parameter from the URL
     const {userId} = useParams<{userId: string}>();
