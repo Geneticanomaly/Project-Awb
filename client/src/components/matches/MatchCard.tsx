@@ -19,7 +19,7 @@ function MatchCard({name, img, userId}: MatchProps) {
                 <p>{name}</p>
             </div>
 
-            <Link className="btn-link" to="/chat">
+            <Link className="btn-link" to={`/chat/${userId}`}>
                 <button>Chat</button>
             </Link>
         </div>

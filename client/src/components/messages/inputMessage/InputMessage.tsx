@@ -1,11 +1,11 @@
 import './InputMessage.css';
 import {CiImageOn} from 'react-icons/ci';
-import {IoMdAttach} from 'react-icons/io';
+import {HiOutlineMicrophone} from 'react-icons/hi2';
 
 function InputMessage() {
     return (
         <div className="input-message">
-            <IoMdAttach size={25} className="input-attach-icon" />
+            <HiOutlineMicrophone size={25} className="input-voice-icon" />
             <input type="text" placeholder="Type something..." />
             <div className="send">
                 <input type="file" style={{display: 'none'}} id="file" />

@@ -1,7 +1,13 @@
+import {UserMessages} from '../../../typings';
 import './Messages.css';
 import Message from './message/Message';
 
-function Messages() {
+type MessagesProps = {
+    currentUserMessages: UserMessages[];
+    otherUserMessages: UserMessages[];
+};
+
+function Messages({currentUserMessages, otherUserMessages}: MessagesProps) {
     return (
         <div className="messages">
             <Message />

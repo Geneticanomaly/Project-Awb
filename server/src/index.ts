@@ -11,6 +11,7 @@ import getUsersByGender from './controllers/getUsersByGender';
 import getMatchedUsers from './controllers/getMatchedUsers';
 import addMatch from './controllers/addMatch';
 import addImage from './controllers/addImage';
+import getUsersChat from './controllers/getUsersChat';
 
 config();
 
@@ -45,6 +46,9 @@ app.put('/addmatch', addMatch);
 app.get('/matchedUsers/:userIds', getMatchedUsers);
 
 app.post('/profile/:userId/addImage', addImage);
+
+// Get chat messages between two userIds
+app.get('/chat/:userId/:loggedUserId', getUsersChat);
 
 // Fetch all users
 app.get('/users', getUsers);

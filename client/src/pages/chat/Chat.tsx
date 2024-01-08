@@ -4,9 +4,43 @@ import {MdMoreVert} from 'react-icons/md';
 import {IoIosArrowBack} from 'react-icons/io';
 import Messages from '../../components/messages/Messages';
 import InputMessage from '../../components/messages/inputMessage/InputMessage';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
+import {getUsersChat} from '../../api/getUsersChat';
+import {useEffect, useState} from 'react';
+import {useCookies} from 'react-cookie';
+import {UserMessages} from '../../../typings';
+
+// type UserMessages = {
+//     from_userId: string;
+//     to_userId: string;
+//     message: string | File;
+//     timestamp: string;
+// };
 
 function Chat() {
+    const [currentUserMessages, setCurrentUserMessages] = useState<UserMessages[]>([]);
+    const [otherUserMessages, setOtherUserMessages] = useState<UserMessages[]>([]);
+
+    // Access the userId parameter from the URL
+    const {userId} = useParams<{userId: string}>();
+
+    const [cookies] = useCookies(['UserId', 'AuthToken']);
+
+    useEffect(() => {
+        const getCurrentUserMessages = async () => {
+            const response = await getUsersChat(userId, cookies.UserId);
+            setCurrentUserMessages(response);
+            console.log('Current User Chat:', response);
+        };
+        const getOtherUserMessages = async () => {
+            const response = await getUsersChat(cookies.UserId, userId);
+            setOtherUserMessages(response);
+            console.log('Other User Chat:', response);
+        };
+        getCurrentUserMessages();
+        getOtherUserMessages();
+    }, [cookies.UserId, userId]);
+
     return (
         <>
             <div className="chat-background"></div>
@@ -25,7 +59,10 @@ function Chat() {
                         <MdMoreVert size={20} />
                     </div>
                 </header>
-                <Messages />
+                <Messages
+                    currentUserMessages={currentUserMessages}
+                    otherUserMessages={otherUserMessages}
+                />
                 <InputMessage />
             </div>
         </>
