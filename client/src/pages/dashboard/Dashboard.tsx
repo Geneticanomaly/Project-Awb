@@ -6,10 +6,11 @@ import MatchContainer from '../../components/matches/MatchContainer';
 import {IoMdClose} from 'react-icons/io';
 import {FaHeart} from 'react-icons/fa';
 import {useCookies} from 'react-cookie';
-import {getUser, User} from '../../api/getUser';
+import {getUser} from '../../api/getUser';
 import {getUsersByGender} from '../../api/getUsersByGender';
 import {addMatch} from '../../api/addMatch';
 import MobileNav from '../../components/navbar/mobile/MobileNav';
+import {User} from '../../../typings';
 
 function Dashboard() {
     const [user, setUser] = useState<User>();

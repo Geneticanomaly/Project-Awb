@@ -1,10 +1,11 @@
 import {useCookies} from 'react-cookie';
-import {User, getUser} from '../../api/getUser';
+import {getUser} from '../../api/getUser';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import './Profile.css';
 import {FaFileUpload} from 'react-icons/fa';
 import AddImageModal from '../../components/addImageModal/AddImageModal';
+import {User} from '../../../typings';
 
 function Profile() {
     const [user, setUser] = useState<User>();

@@ -93,7 +93,7 @@ function Onboarding() {
 
     return (
         <div className="onboarding-container">
-            <Navbar authToken={false} />
+            <Navbar />
             <div className="onboarding">
                 <h2>Fill out your information</h2>
                 <form onSubmit={handleSubmit}>

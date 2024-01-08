@@ -3,11 +3,9 @@ import './Login.css';
 import AuthPortalLogin from '../../components/authportal/AuthPortalLogin';
 
 function Login() {
-    const authToken = false;
-
     return (
         <div className="login-container">
-            <Navbar authToken={authToken} />
+            <Navbar />
             <div className="login">
                 <AuthPortalLogin />
             </div>

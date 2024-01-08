@@ -3,11 +3,9 @@ import './Register.css';
 import AuthPortalRegister from '../../components/authportal/AuthPortalRegister';
 
 function Register() {
-    const authToken = false;
-
     return (
         <div className="register-container">
-            <Navbar authToken={authToken} />
+            <Navbar />
             <div className="register">
                 <AuthPortalRegister />
             </div>
