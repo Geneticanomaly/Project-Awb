@@ -8,22 +8,24 @@ type MessagesProps = {
 };
 
 function Messages({currentUserMessages, otherUserMessages}: MessagesProps) {
+    // Merge both message arrays to one.
+    const allMessages = [...currentUserMessages, ...otherUserMessages];
+
+    // Sort the messages by time
+    const sortedMessages = allMessages.sort(
+        (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    );
+
+    console.log(sortedMessages);
+
     return (
         <div className="messages">
-            {currentUserMessages.map((message, index) => (
+            {sortedMessages.map((message, index) => (
                 <Message
                     key={index}
                     message={message.message}
                     timestamp={message.timestamp}
-                    isCurrentUser={true}
-                />
-            ))}
-            {otherUserMessages.map((message, index) => (
-                <Message
-                    key={index}
-                    message={message.message}
-                    timestamp={message.timestamp}
-                    isCurrentUser={false}
+                    isCurrentUser={currentUserMessages.includes(message)}
                 />
             ))}
         </div>
