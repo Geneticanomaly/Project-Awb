@@ -9,7 +9,7 @@ async function getUsersByGender(req: Request, res: Response) {
         await client.connect();
         const database = client.db('app-data');
         const users = database.collection('users');
-        console.log('HELLO', gender);
+
         const returnedUsers = await users.find({gender: gender}).toArray();
         return res.status(201).json(returnedUsers);
     } finally {

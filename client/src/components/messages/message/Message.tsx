@@ -9,7 +9,7 @@ type MessageProps = {
 function Message({message, timestamp, isCurrentUser}: MessageProps) {
     const messageClass = isCurrentUser ? 'message owner' : 'message';
     const isStringMessage = typeof message === 'string';
-    console.log(timestamp);
+    // console.log(timestamp);
 
     const dateTime = new Date(timestamp);
     const localTime = new Date(dateTime.getTime() + dateTime.getTimezoneOffset() * 60000);

@@ -23,16 +23,18 @@ function Chat() {
         const getCurrentUserMessages = async () => {
             const response = await getUsersChat(userId, cookies.UserId);
             setCurrentUserMessages(response);
-            console.log('Current User Chat:', response);
+            // console.log('Current User Chat:', response);
         };
         const getOtherUserMessages = async () => {
             const response = await getUsersChat(cookies.UserId, userId);
             setOtherUserMessages(response);
-            console.log('Other User Chat:', response);
+            // console.log('Other User Chat:', response);
         };
         getCurrentUserMessages();
         getOtherUserMessages();
     }, [cookies.UserId, userId]);
+
+    // console.log(userId);
 
     return (
         <>
@@ -56,7 +58,7 @@ function Chat() {
                     currentUserMessages={currentUserMessages}
                     otherUserMessages={otherUserMessages}
                 />
-                <InputMessage />
+                <InputMessage otherUserId={userId} currentUserId={cookies.UserId} />
             </div>
         </>
     );

@@ -12,6 +12,7 @@ import getMatchedUsers from './controllers/getMatchedUsers';
 import addMatch from './controllers/addMatch';
 import addImage from './controllers/addImage';
 import getUsersChat from './controllers/getUsersChat';
+import addMessage from './controllers/addMessage';
 
 config();
 
@@ -49,6 +50,8 @@ app.post('/profile/:userId/addImage', addImage);
 
 // Get chat messages between two userIds
 app.get('/chat/:userId/:loggedUserId', getUsersChat);
+
+app.post('/chat/addMessage', addMessage);
 
 // Fetch all users
 app.get('/users', getUsers);

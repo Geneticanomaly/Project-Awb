@@ -6,9 +6,6 @@ async function getUsersChat(req: Request, res: Response) {
     const currentUserId = req.params.loggedUserId;
     const chattingUserId = req.params.userId;
 
-    console.log('Marianne:', currentUserId);
-    console.log('Thomas:', chattingUserId);
-
     try {
         await client.connect();
         const database = client.db('app-data');

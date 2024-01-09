@@ -16,7 +16,7 @@ function Dashboard() {
     const [user, setUser] = useState<User>();
     const [usersByGender, setUsersByGender] = useState<User[]>([]);
     const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
-    const [currentIndex, setCurrentIndex] = useState<number>(1);
+    const [currentIndex, setCurrentIndex] = useState<number>(2);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
     const [loading, setLoading] = useState(true);
 
@@ -50,13 +50,13 @@ function Dashboard() {
 
     // set last direction and decrease current index
     const swiped = (direction: string, swipedUserId: string, index: number) => {
-        console.log('HELLo');
         if (direction === 'right') {
             updateMatches(swipedUserId);
             // Reload the useEffect hook for user searching - in case there is a new match
             setReloadMatchContainer(true);
         }
         setLastDirection(direction);
+        console.log('INDEX:', index);
         updateCurrentIndex(index - 1);
     };
 
@@ -108,23 +108,15 @@ function Dashboard() {
     }, [cookies.UserId, user?.show_gender, reloadMatchContainer]);
 
     useEffect(() => {
-        // Update currentIndex when filteredGenderedUsers changes
-        setCurrentIndex(filteredGenderedUsers.length - 1);
+        if (filteredGenderedUsers) {
+            setCurrentIndex(filteredGenderedUsers.length - 1);
+        }
     }, [filteredGenderedUsers]);
 
     useEffect(() => {
         // Disable overflow when the Dashboard page mounts
         document.body.classList.add('body-overflow-hidden');
 
-        // Remove the the overflow on dismount
-        return () => {
-            document.body.classList.remove('body-overflow-hidden');
-        };
-    }, []);
-
-    // Used for only displaying swipe container.
-    // If windows size is smaller than 500px display everything in a column instead
-    useEffect(() => {
         // Update the window width when the window is resized
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
@@ -135,6 +127,7 @@ function Dashboard() {
 
         // Clean up the event listener on component unmount
         return () => {
+            document.body.classList.remove('body-overflow-hidden');
             window.removeEventListener('resize', handleResize);
         };
     }, []);

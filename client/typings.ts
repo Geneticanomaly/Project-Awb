@@ -22,3 +22,7 @@ export type UserMessage = {
     message: string;
     timestamp: string;
 };
+
+// export type Messages = {
+//     messages: UserMessage;
+// }
