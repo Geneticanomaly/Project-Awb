@@ -113,6 +113,12 @@
     }
 }
 
+@media screen and (max-width: 700px) {
+    .profile-info h2 {
+        font-size: 12px;
+    }
+}
+
 @media screen and (max-width: 550px) {
     .profile-info-container img {
         width: 150px;
@@ -136,7 +142,7 @@
     }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 465px) {
     .profile-page-container {
         width: 100vw;
     }

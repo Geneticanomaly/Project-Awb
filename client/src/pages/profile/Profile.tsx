@@ -11,6 +11,7 @@ function Profile() {
     const [user, setUser] = useState<User>();
     const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [date, setDate] = useState<string>('');
 
     // Access the userId parameter from the URL
     const {userId} = useParams<{userId: string}>();
@@ -34,7 +35,7 @@ function Profile() {
             <div className="profile-info-container">
                 <img src={user?.url} />
                 <div className="profile-info">
-                    <h2>Registration date</h2>
+                    <h2>Registered: {user?.registration_date.split('T')[0]}</h2>
                     <h2>{user?.email}</h2>
                     <h2>{user?.first_name + ' ' + user?.last_name}</h2>
                 </div>

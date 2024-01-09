@@ -9,10 +9,12 @@ import {getUsersChat} from '../../api/getUsersChat';
 import {useEffect, useState} from 'react';
 import {useCookies} from 'react-cookie';
 import {UserMessage} from '../../../typings';
+import {addMessage} from '../../api/addMessage';
 
 function Chat() {
     const [currentUserMessages, setCurrentUserMessages] = useState<UserMessage[]>([]);
     const [otherUserMessages, setOtherUserMessages] = useState<UserMessage[]>([]);
+    const [refreshMessages, setRefreshMessages] = useState(false);
 
     // Access the userId parameter from the URL
     const {userId} = useParams<{userId: string}>();
@@ -32,9 +34,13 @@ function Chat() {
         };
         getCurrentUserMessages();
         getOtherUserMessages();
-    }, [cookies.UserId, userId]);
+    }, [cookies.UserId, userId, refreshMessages]);
 
-    // console.log(userId);
+    const handleSendMessage = async (messageContent: string, formattedDate: string) => {
+        await addMessage(cookies.UserId, userId, messageContent, formattedDate);
+        // After sending a message, setRefreshMessages to true to trigger a refresh
+        setRefreshMessages((prev) => !prev);
+    };
 
     return (
         <>
@@ -58,7 +64,7 @@ function Chat() {
                     currentUserMessages={currentUserMessages}
                     otherUserMessages={otherUserMessages}
                 />
-                <InputMessage otherUserId={userId} currentUserId={cookies.UserId} />
+                <InputMessage handleSendMessage={handleSendMessage} />
             </div>
         </>
     );

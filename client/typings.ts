@@ -13,6 +13,7 @@ export type User = {
     matches: [string];
     show_gender: string;
     url: string;
+    registration_date: string;
     images?: [string];
 };
 

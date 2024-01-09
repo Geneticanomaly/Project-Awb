@@ -2,32 +2,23 @@ import './InputMessage.css';
 import {CiImageOn} from 'react-icons/ci';
 import {HiOutlineMicrophone} from 'react-icons/hi2';
 import {useState} from 'react';
-import {addMessage} from '../../../api/addMessage';
 
 type InputMessageProps = {
-    otherUserId: string | undefined;
-    currentUserId: string;
+    handleSendMessage: (messageContent: string, formattedDate: string) => Promise<void>;
 };
 
-function InputMessage({otherUserId, currentUserId}: InputMessageProps) {
+function InputMessage({handleSendMessage}: InputMessageProps) {
     const [messageContent, setMessageContent] = useState<string | undefined>();
 
     const currentDate = new Date();
     const currentTime = new Date(currentDate.getTime() - currentDate.getTimezoneOffset() * 60000);
-    // This will give you a string in the "YYYY-MM-DDTHH:mm:ss.sssZ" format
     const formattedDate = currentTime.toISOString();
 
     const handleMessageSend = async () => {
         if (messageContent) {
-            const sentMessage = await addMessage(
-                currentUserId,
-                otherUserId,
-                messageContent,
-                formattedDate
-            );
-            console.log(sentMessage);
+            await handleSendMessage(messageContent, formattedDate);
+            setMessageContent('');
         }
-        // setMessageContent('');
     };
 
     return (
@@ -36,6 +27,7 @@ function InputMessage({otherUserId, currentUserId}: InputMessageProps) {
             <input
                 type="text"
                 placeholder="Type something..."
+                value={messageContent}
                 onChange={(e) => setMessageContent(e.target.value)}
             />
             <div className="send">

@@ -5,10 +5,6 @@ import {createUser} from '../../api/createUser';
 import {useNavigate} from 'react-router-dom';
 import {useCookies} from 'react-cookie';
 
-/* type AuthModalProps = {
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-}; */
-
 function AuthPortalRegister() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -85,9 +81,6 @@ function AuthPortalRegister() {
                     <input type="submit" className="primary-button button" />
                 </form>
 
-                {/* <Link to="/onboarding" className="primary-button button">
-                    Submit
-                </Link> */}
                 <div className="line" />
                 <h2>Get started</h2>
             </div>

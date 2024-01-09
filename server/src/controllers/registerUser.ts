@@ -26,6 +26,7 @@ async function registerUser(req: Request, res: Response) {
                 user_id: uuidv4(),
                 email: req.body.email,
                 password: hash,
+                registration_date: req.body.date,
             };
             console.log('Creating user');
 
