@@ -5,7 +5,7 @@ import AuthPortalLogin from '../../components/authportal/AuthPortalLogin';
 function Login() {
     return (
         <div className="login-container">
-            <Navbar isInProfilePage={false} />
+            <Navbar isInProfilePage={false} userId={''} />
             <div className="login">
                 <AuthPortalLogin />
             </div>

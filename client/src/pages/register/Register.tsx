@@ -5,7 +5,7 @@ import AuthPortalRegister from '../../components/authportal/AuthPortalRegister';
 function Register() {
     return (
         <div className="register-container">
-            <Navbar isInProfilePage={false} />
+            <Navbar isInProfilePage={false} userId={''} />
             <div className="register">
                 <AuthPortalRegister />
             </div>

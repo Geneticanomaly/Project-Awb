@@ -1,6 +1,6 @@
-import "./Home.css";
-import logo from "../../images/color-logo-tinder.png";
-import {Link} from "react-router-dom";
+import './Home.css';
+import logo from '../../images/color-logo-tinder.png';
+import {Link} from 'react-router-dom';
 
 function Home() {
     return (

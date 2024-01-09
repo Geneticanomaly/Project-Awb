@@ -32,7 +32,7 @@ function Profile() {
 
     return (
         <>
-            <Navbar isInProfilePage={true} />
+            <Navbar isInProfilePage={true} userId={userId} />
             <div className="profile-page-container">
                 <div className="profile-info-container">
                     <img src={user?.url} />

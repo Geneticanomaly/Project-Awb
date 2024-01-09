@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import MatchCard from './MatchCard';
 import './MatchContainer.css';
 import {FaPeopleArrows} from 'react-icons/fa';
-import {User} from '../../api/getUser';
+import {User} from '../../../typings';
 import {useState, useEffect, useMemo} from 'react';
 import {getMatchedUsers} from '../../api/getMatchedUsers';
 
