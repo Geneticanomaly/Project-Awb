@@ -10,6 +10,7 @@ type InputMessageProps = {
 function InputMessage({handleSendMessage}: InputMessageProps) {
     const [messageContent, setMessageContent] = useState<string | undefined>();
 
+    // Get current Finnish time
     const currentDate = new Date();
     const currentTime = new Date(currentDate.getTime() - currentDate.getTimezoneOffset() * 60000);
     const formattedDate = currentTime.toISOString();

@@ -3,6 +3,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    padding-top: 75px;
 }
 
 .profile-info-container {
@@ -45,6 +46,7 @@
     background-color: rgb(255, 72, 102);
     color: white;
     transition: 200ms ease;
+    margin-top: 50px;
 }
 
 .profile-add-image:hover {
@@ -93,6 +95,7 @@
     display: grid;
     gap: 10px;
     grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 10px;
 }
 
 .images-container img {
@@ -104,6 +107,10 @@
 
 .image-msg {
     text-align: center;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 @media screen and (max-width: 1024px) {
@@ -172,10 +179,6 @@
 }
 
 @media screen and (max-width: 430px) {
-    /* .profile-page-container {
-        width: 95vw;
-    } */
-
     .profile-info-container img {
         height: 125px;
         width: 125px;
