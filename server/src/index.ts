@@ -13,8 +13,6 @@ import addMatch from './controllers/addMatch';
 import addImage from './controllers/addImage';
 import getUsersChat from './controllers/getUsersChat';
 import addMessage from './controllers/addMessage';
-import {createServer} from 'http';
-import {Server} from 'socket.io';
 
 config();
 
