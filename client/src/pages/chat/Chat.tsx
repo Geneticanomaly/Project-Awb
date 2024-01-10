@@ -8,10 +8,12 @@ import {Link, useParams} from 'react-router-dom';
 import {getUsersChat} from '../../api/getUsersChat';
 import {useEffect, useState} from 'react';
 import {useCookies} from 'react-cookie';
-import {UserMessage} from '../../../typings';
+import {User, UserMessage} from '../../../typings';
 import {addMessage} from '../../api/addMessage';
+import {getUser} from '../../api/getUser';
 
 function Chat() {
+    const [otherUser, setOtherUser] = useState<User>();
     const [currentUserMessages, setCurrentUserMessages] = useState<UserMessage[]>([]);
     const [otherUserMessages, setOtherUserMessages] = useState<UserMessage[]>([]);
     const [refreshMessages, setRefreshMessages] = useState(false);
@@ -22,16 +24,22 @@ function Chat() {
     const [cookies] = useCookies(['UserId', 'AuthToken']);
 
     useEffect(() => {
+        const getOtherUser = async () => {
+            // Get the other user's information for header
+            const response = await getUser(userId);
+            setOtherUser(response);
+        };
         const getCurrentUserMessages = async () => {
+            // Get the logged in user's chat messages
             const response = await getUsersChat(userId, cookies.UserId);
             setCurrentUserMessages(response);
-            // console.log('Current User Chat:', response);
         };
         const getOtherUserMessages = async () => {
+            // Get the other user's chat messages
             const response = await getUsersChat(cookies.UserId, userId);
             setOtherUserMessages(response);
-            // console.log('Other User Chat:', response);
         };
+        getOtherUser();
         getCurrentUserMessages();
         getOtherUserMessages();
     }, [cookies.UserId, userId, refreshMessages]);
@@ -48,8 +56,10 @@ function Chat() {
             <div className="chat-container">
                 <header className="chat-header">
                     <div className="chat-header-profile">
-                        <img src="https://i.imgur.com/Q9WPlWA.jpeg" className="chat-header-img" />
-                        <p>Thomas Kaatranen</p>
+                        <img src={otherUser?.url} className="chat-header-img" />
+                        <p>
+                            {otherUser?.first_name} {otherUser?.last_name}
+                        </p>
                     </div>
 
                     <div className="chat-header-icons">
