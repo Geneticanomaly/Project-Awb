@@ -8,8 +8,11 @@ import Dashboard from './pages/dashboard/Dashboard';
 import Onboarding from './pages/onboarding/Onboarding';
 import MatchContainer from './components/matches/MatchContainer';
 import Chat from './pages/chat/Chat';
+import {useCookies} from 'react-cookie';
 
 function App() {
+    const [cookies] = useCookies(['UserId', 'AuthToken']);
+
     return (
         <>
             <Router>
@@ -20,22 +23,36 @@ function App() {
                     <Route path="/register" element={<Register />} />
                 </Routes>
                 <Routes>
-                    <Route path="/onboarding" element={<Onboarding />} />
+                    {cookies.AuthToken == undefined && (
+                        <Route path="/onboarding" element={<Onboarding />} />
+                    )}
                 </Routes>
                 <Routes>
                     <Route path="/login" element={<Login />} />
                 </Routes>
                 <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    {cookies.AuthToken == undefined && (
+                        <Route path="/dashboard" element={<Dashboard />} />
+                    )}
                 </Routes>
                 <Routes>
-                    <Route path="/profile/:userId" element={<Profile />} />
+                    {cookies.AuthToken == undefined && (
+                        <Route path="/profile/:userId" element={<Profile />} />
+                    )}
                 </Routes>
                 <Routes>
-                    <Route path="/matches" element={<MatchContainer />} />
+                    {
+                        (cookies.AuthToken = undefined && (
+                            <Route path="/matches" element={<MatchContainer />} />
+                        ))
+                    }
                 </Routes>
                 <Routes>
-                    <Route path="/chat/:userId" element={<Chat />} />
+                    {
+                        (cookies.AuthToken = undefined && (
+                            <Route path="/chat/:userId" element={<Chat />} />
+                        ))
+                    }
                 </Routes>
             </Router>
         </>

@@ -93,7 +93,7 @@ function Onboarding() {
 
     return (
         <div className="onboarding-container">
-            <Navbar />
+            <Navbar isInProfilePage={false} userId={cookies.UserId} />
             <div className="onboarding">
                 <h2>Fill out your information</h2>
                 <form onSubmit={handleSubmit}>

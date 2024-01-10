@@ -14,6 +14,16 @@ function Navbar({isInProfilePage, userId}: NavbarProps) {
 
     const [cookies, removeCookies] = useCookies(['UserId', 'AuthToken']);
 
+    const authToken = cookies.AuthToken;
+
+    const handleLogout = () => {
+        if (authToken) {
+            removeCookies('AuthToken', undefined);
+            removeCookies('UserId', undefined);
+            navigate('/');
+        }
+    };
+
     return (
         <nav className="nav">
             {!isInProfilePage ? (
@@ -27,7 +37,11 @@ function Navbar({isInProfilePage, userId}: NavbarProps) {
                         className="nav-back-btn"
                         onClick={() => navigate(-1)}
                     />
-                    {userId == cookies.UserId && <button className="logout-btn">Logout</button>}
+                    {userId == cookies.UserId && (
+                        <button className="logout-btn" onClick={handleLogout}>
+                            Logout
+                        </button>
+                    )}
                 </div>
             )}
         </nav>
