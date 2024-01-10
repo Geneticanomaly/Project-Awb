@@ -1,15 +1,17 @@
+import {User} from '../../../../typings';
 import './Message.css';
 
 type MessageProps = {
     message: string;
     timestamp: string;
+    currentUser: User | undefined;
+    otherUser: User | undefined;
     isCurrentUser: boolean;
 };
 
-function Message({message, timestamp, isCurrentUser}: MessageProps) {
+function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: MessageProps) {
     const messageClass = isCurrentUser ? 'message owner' : 'message';
     const isStringMessage = typeof message === 'string';
-    // console.log(timestamp);
 
     const dateTime = new Date(timestamp);
     const localTime = new Date(dateTime.getTime() + dateTime.getTimezoneOffset() * 60000);
@@ -23,7 +25,10 @@ function Message({message, timestamp, isCurrentUser}: MessageProps) {
     return (
         <div className={messageClass}>
             <div className="message-info">
-                <img src="https://i.imgur.com/Q9WPlWA.jpeg" className="message-profile-img" />
+                <img
+                    src={isCurrentUser ? currentUser?.url : otherUser?.url}
+                    className="message-profile-img"
+                />
                 <p>{time}</p>
             </div>
             <div className="message-content">

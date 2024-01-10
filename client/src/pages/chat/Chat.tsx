@@ -13,6 +13,7 @@ import {addMessage} from '../../api/addMessage';
 import {getUser} from '../../api/getUser';
 
 function Chat() {
+    const [currentUser, setCurrentUser] = useState<User>();
     const [otherUser, setOtherUser] = useState<User>();
     const [currentUserMessages, setCurrentUserMessages] = useState<UserMessage[]>([]);
     const [otherUserMessages, setOtherUserMessages] = useState<UserMessage[]>([]);
@@ -24,11 +25,22 @@ function Chat() {
     const [cookies] = useCookies(['UserId', 'AuthToken']);
 
     useEffect(() => {
+        // Get the current user's information for message component
+        const getCurrentUser = async () => {
+            const response = await getUser(cookies.UserId);
+            setCurrentUser(response);
+        };
         const getOtherUser = async () => {
-            // Get the other user's information for header
+            // Get the other user's information for header and message component
             const response = await getUser(userId);
             setOtherUser(response);
+            console.log('hello');
         };
+        getCurrentUser();
+        getOtherUser();
+    }, [cookies.UserId, userId]);
+
+    useEffect(() => {
         const getCurrentUserMessages = async () => {
             // Get the logged in user's chat messages
             const response = await getUsersChat(userId, cookies.UserId);
@@ -39,7 +51,7 @@ function Chat() {
             const response = await getUsersChat(cookies.UserId, userId);
             setOtherUserMessages(response);
         };
-        getOtherUser();
+
         getCurrentUserMessages();
         getOtherUserMessages();
     }, [cookies.UserId, userId, refreshMessages]);
@@ -71,6 +83,8 @@ function Chat() {
                     </div>
                 </header>
                 <Messages
+                    currentUser={currentUser}
+                    otherUser={otherUser}
                     currentUserMessages={currentUserMessages}
                     otherUserMessages={otherUserMessages}
                 />
