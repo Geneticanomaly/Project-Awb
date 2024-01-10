@@ -11,17 +11,24 @@ async function addImage(req: Request, res: Response) {
     const image = req.file;
 
     try {
+        // Connect to the database
         await client.connect();
         const database = client.db('app-data');
+
+        // Get the database collection users
         const users = database.collection('users');
+
+        // Push the sent image to images array.
         const updatedData = {
             $push: {images: {image: image!.buffer.toString('base64')}},
         };
 
+        // Update the user with a specific user ID
         const updatedUser = await users.updateOne({user_id: userId}, updatedData);
 
         return res.status(201).json(updatedUser);
     } finally {
+        // Close the connection to the client afterwards
         await client.close();
     }
 }

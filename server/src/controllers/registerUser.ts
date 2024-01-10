@@ -12,6 +12,8 @@ async function registerUser(req: Request, res: Response) {
         // Connect to database
         await client.connect();
         const database = client.db('app-data');
+
+        // Get the database collection users
         const users = database.collection('users');
 
         // Find a specific user based on email
@@ -54,6 +56,7 @@ async function registerUser(req: Request, res: Response) {
             return res.status(403).json('Email already in use');
         }
     } finally {
+        // Close the connection to the client afterwards
         await client.close();
     }
 }

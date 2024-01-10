@@ -7,12 +7,16 @@ async function updateUser(req: Request, res: Response) {
     const formData = req.body.formData;
 
     try {
+        // Connect to the database
         await client.connect();
         const database = client.db('app-data');
+
+        // Get the database collection users
         const users = database.collection('users');
 
         console.log(formData.user_id);
 
+        // Create a set to be inserted into the database
         const updatedData = {
             $set: {
                 user_id: formData.user_id,
@@ -28,12 +32,15 @@ async function updateUser(req: Request, res: Response) {
                 matches: formData.matches,
             },
         };
+
+        // Update a user with the set data based on the provided user Id
         const updatedUser = await users.updateOne({user_id: formData.user_id}, updatedData);
 
         console.log('User data updated', updatedUser);
 
         return res.status(201).json({status: 201, updateUser: updatedUser});
     } finally {
+        // Close the connection to the client afterwards
         await client.close();
     }
 }

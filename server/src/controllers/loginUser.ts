@@ -11,6 +11,8 @@ async function loginUser(req: Request, res: Response) {
         // Connect to database
         await client.connect();
         const database = client.db('app-data');
+
+        //Get the database collection users
         const users = database.collection('users');
 
         // Find a specific user based on email
@@ -45,6 +47,7 @@ async function loginUser(req: Request, res: Response) {
             }
         });
     } finally {
+        // Close the connection to the client afterwards
         await client.close();
     }
 }

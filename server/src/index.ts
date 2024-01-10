@@ -36,21 +36,28 @@ app.post('/register', registerUser);
 // Upon success -> Open app
 app.post('/login', loginUser);
 
+// Update a specific user
 app.put('/user', updateUser);
 
+// Get user based on a specific user ID
 app.get('/user/:userId', getUser);
 
+// Get users by their gender
 app.get('/gendered-users/:gender', getUsersByGender);
 
+// Add a match for a user
 app.put('/addmatch', addMatch);
 
+// Get all the matched users of specific user based on user ID
 app.get('/matchedUsers/:userIds', getMatchedUsers);
 
+// Add an image to the user's images array
 app.post('/profile/:userId/addImage', addImage);
 
 // Get chat messages between two userIds
 app.get('/chat/:userId/:loggedUserId', getUsersChat);
 
+// Add a new message to the database
 app.post('/chat/addMessage', addMessage);
 
 // Fetch all users
