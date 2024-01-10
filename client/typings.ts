@@ -10,11 +10,11 @@ export type User = {
     first_name: string;
     gender: string;
     last_name: string;
-    matches: [string];
+    matches: {user_id: string}[];
     show_gender: string;
     url: string;
     registration_date: string;
-    images?: [string];
+    images?: {image: string}[];
 };
 
 export type UserMessage = {
@@ -23,7 +23,3 @@ export type UserMessage = {
     message: string;
     timestamp: string;
 };
-
-// export type Messages = {
-//     messages: UserMessage;
-// }

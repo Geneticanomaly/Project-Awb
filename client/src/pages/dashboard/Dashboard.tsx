@@ -2,7 +2,6 @@ import TinderCard from 'react-tinder-card';
 import React, {useState, useRef, useMemo, useEffect} from 'react';
 import './Dashboard.css';
 import MatchContainer from '../../components/matches/MatchContainer';
-
 import {IoMdClose} from 'react-icons/io';
 import {FaHeart} from 'react-icons/fa';
 import {useCookies} from 'react-cookie';
@@ -11,12 +10,13 @@ import {getUsersByGender} from '../../api/getUsersByGender';
 import {addMatch} from '../../api/addMatch';
 import MobileNav from '../../components/navbar/mobile/MobileNav';
 import {User} from '../../../typings';
+import {useNavigate} from 'react-router-dom';
 
 function Dashboard() {
     const [user, setUser] = useState<User>();
     const [usersByGender, setUsersByGender] = useState<User[]>([]);
-    const [cookies, setCookie, removeCookie] = useCookies(['UserId', 'AuthToken']);
-    const [currentIndex, setCurrentIndex] = useState<number>(2);
+    const [cookies] = useCookies(['UserId', 'AuthToken']);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
     const [loading, setLoading] = useState(true);
 
@@ -24,6 +24,8 @@ function Dashboard() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const [reloadMatchContainer, setReloadMatchContainer] = useState(false);
+
+    const navigate = useNavigate();
 
     // used for outOfFrame closure
     const currentIndexRef = useRef<number>(currentIndex);
@@ -48,7 +50,7 @@ function Dashboard() {
         addMatch(cookies.UserId, matchedUserId);
     };
 
-    // set last direction and decrease current index
+    // Set last direction and decrease current index
     const swiped = (direction: string, swipedUserId: string, index: number) => {
         if (direction === 'right') {
             updateMatches(swipedUserId);
@@ -85,6 +87,12 @@ function Dashboard() {
     );
 
     useEffect(() => {
+        if (filteredGenderedUsers) {
+            setCurrentIndex(filteredGenderedUsers.length - 1);
+        }
+    }, [filteredGenderedUsers]);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const newUser = await getUser(cookies.UserId);
@@ -108,12 +116,6 @@ function Dashboard() {
     }, [cookies.UserId, user?.show_gender, reloadMatchContainer]);
 
     useEffect(() => {
-        if (filteredGenderedUsers) {
-            setCurrentIndex(filteredGenderedUsers.length - 1);
-        }
-    }, [filteredGenderedUsers]);
-
-    useEffect(() => {
         // Disable overflow when the Dashboard page mounts
         document.body.classList.add('body-overflow-hidden');
 
@@ -134,11 +136,12 @@ function Dashboard() {
 
     // Render loading indicator or return null for TinderCard components during loading
     if (loading) {
+        // If AuthToken does not exist or is undefined restrict access
+        if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
+            navigate('/');
+        }
         return <p>Loading...</p>;
     }
-
-    /* console.log(user); */
-    /* console.log(typeof user?.matches); */
 
     return (
         <div className="dashboard-container">

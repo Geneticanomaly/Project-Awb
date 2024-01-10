@@ -7,26 +7,35 @@ import {FaFileUpload} from 'react-icons/fa';
 import AddImageModal from '../../components/addImageModal/AddImageModal';
 import {User} from '../../../typings';
 import Navbar from '../../components/navbar/Navbar';
+import {useNavigate} from 'react-router-dom';
 
 function Profile() {
     const [user, setUser] = useState<User>();
     const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [showModal, setShowModal] = useState<boolean>(false);
 
+    const navigate = useNavigate();
+
     // Access the userId parameter from the URL
     const {userId} = useParams<{userId: string}>();
 
     useEffect(() => {
         const fetchUserData = async () => {
-            const response = await getUser(userId);
-            setUser(response);
+            // If AuthToken does not exist or is undefined restrict access
+            if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
+                navigate('/');
+            } else {
+                const response = await getUser(userId);
+                setUser(response);
+            }
         };
+
         // Run the fetchUserData only when showModal is false
         if (!showModal) {
             fetchUserData();
             console.log('Fetch user data based on id!');
         }
-    }, [userId, showModal]);
+    }, [userId, showModal, cookies.AuthToken, navigate]);
 
     console.log(user);
 
@@ -57,7 +66,7 @@ function Profile() {
                     <p>{user?.about}</p>
                 </div>
                 <div className="line" />
-                {user?.images?.length > 0 ? (
+                {user?.images && user?.images?.length > 0 ? (
                     <section className="images-container">
                         {user?.images?.map((image, index) => (
                             <img

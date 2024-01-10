@@ -11,6 +11,7 @@ import {useCookies} from 'react-cookie';
 import {User, UserMessage} from '../../../typings';
 import {addMessage} from '../../api/addMessage';
 import {getUser} from '../../api/getUser';
+import {useNavigate} from 'react-router-dom';
 
 function Chat() {
     const [currentUser, setCurrentUser] = useState<User>();
@@ -18,6 +19,8 @@ function Chat() {
     const [currentUserMessages, setCurrentUserMessages] = useState<UserMessage[]>([]);
     const [otherUserMessages, setOtherUserMessages] = useState<UserMessage[]>([]);
     const [refreshMessages, setRefreshMessages] = useState(false);
+
+    const navigate = useNavigate();
 
     // Access the userId parameter from the URL
     const {userId} = useParams<{userId: string}>();
@@ -34,11 +37,16 @@ function Chat() {
             // Get the other user's information for header and message component
             const response = await getUser(userId);
             setOtherUser(response);
-            console.log('hello');
         };
-        getCurrentUser();
-        getOtherUser();
-    }, [cookies.UserId, userId]);
+
+        // If AuthToken does not exist or is undefined restrict access
+        if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
+            navigate('/');
+        } else {
+            getCurrentUser();
+            getOtherUser();
+        }
+    }, [cookies.AuthToken, cookies.UserId, navigate, userId]);
 
     useEffect(() => {
         const getCurrentUserMessages = async () => {

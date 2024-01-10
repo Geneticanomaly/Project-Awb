@@ -23,36 +23,22 @@ function App() {
                     <Route path="/register" element={<Register />} />
                 </Routes>
                 <Routes>
-                    {cookies.AuthToken == undefined && (
-                        <Route path="/onboarding" element={<Onboarding />} />
-                    )}
+                    {cookies.AuthToken && <Route path="/onboarding" element={<Onboarding />} />}
                 </Routes>
                 <Routes>
                     <Route path="/login" element={<Login />} />
                 </Routes>
                 <Routes>
-                    {cookies.AuthToken == undefined && (
-                        <Route path="/dashboard" element={<Dashboard />} />
-                    )}
+                    {cookies.AuthToken && <Route path="/dashboard" element={<Dashboard />} />}
                 </Routes>
                 <Routes>
-                    {cookies.AuthToken == undefined && (
-                        <Route path="/profile/:userId" element={<Profile />} />
-                    )}
+                    {cookies.AuthToken && <Route path="/profile/:userId" element={<Profile />} />}
                 </Routes>
                 <Routes>
-                    {
-                        (cookies.AuthToken = undefined && (
-                            <Route path="/matches" element={<MatchContainer />} />
-                        ))
-                    }
+                    {cookies.AuthToken && <Route path="/matches" element={<MatchContainer />} />}
                 </Routes>
                 <Routes>
-                    {
-                        (cookies.AuthToken = undefined && (
-                            <Route path="/chat/:userId" element={<Chat />} />
-                        ))
-                    }
+                    {cookies.AuthToken && <Route path="/chat/:userId" element={<Chat />} />}
                 </Routes>
             </Router>
         </>
