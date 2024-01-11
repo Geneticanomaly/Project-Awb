@@ -39,6 +39,7 @@
 .chat-header-img {
     width: 45px;
     height: 45px;
+    margin-top: 8px;
     border-radius: 50%;
     aspect-ratio: 1 / 1;
 }

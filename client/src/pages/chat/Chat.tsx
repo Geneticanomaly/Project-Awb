@@ -76,10 +76,12 @@ function Chat() {
             <div className="chat-container">
                 <header className="chat-header">
                     <div className="chat-header-profile">
-                        <img
-                            src={`data:image/jpeg;base64,${otherUser?.url}`}
-                            className="chat-header-img"
-                        />
+                        <Link className="link" to={`/profile/${userId}`}>
+                            <img
+                                src={`data:image/jpeg;base64,${otherUser?.url}`}
+                                className="chat-header-img"
+                            />
+                        </Link>
                         <p>
                             {otherUser?.first_name} {otherUser?.last_name}
                         </p>

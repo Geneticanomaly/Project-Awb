@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import {User} from '../../../../typings';
 import './Message.css';
 
@@ -25,14 +26,19 @@ function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: Me
     return (
         <div className={messageClass}>
             <div className="message-info">
-                <img
-                    src={
-                        isCurrentUser
-                            ? `data:image/jpeg;base64,${currentUser?.url}`
-                            : `data:image/jpeg;base64,${otherUser?.url}`
-                    }
-                    className="message-profile-img"
-                />
+                <Link
+                    className="link"
+                    to={`/profile/${isCurrentUser ? currentUser?.user_id : otherUser?.user_id}`}
+                >
+                    <img
+                        src={
+                            isCurrentUser
+                                ? `data:image/jpeg;base64,${currentUser?.url}`
+                                : `data:image/jpeg;base64,${otherUser?.url}`
+                        }
+                        className="message-profile-img"
+                    />
+                </Link>
                 <p>{time}</p>
             </div>
             <div className="message-content">
