@@ -4,14 +4,12 @@ import {useState, useEffect} from 'react';
 import {useCookies} from 'react-cookie';
 import {updateUser} from '../../api/updateUser';
 import {useNavigate} from 'react-router-dom';
+import {FaFileUpload} from 'react-icons/fa';
 
 function Onboarding() {
     const pixelAmount: number = 570;
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [imageOption, setImageOption] = useState({
-        link: true,
-        file: false,
-    });
+
     const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [formData, setFormData] = useState({
         user_id: cookies.UserId,
@@ -74,29 +72,12 @@ function Onboarding() {
         console.log(formData);
     };
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('Clicked');
-        const target = e.target as HTMLButtonElement;
-
-        setImageOption((prevState) => ({
-            ...prevState,
-            link: target.id === 'link',
-            file: target.id === 'file',
-        }));
-
-        console.log(imageOption);
-    };
-
     // Save uploaded file to the formData set
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const selectedFile = e.target.files[0];
             setImageUrl(URL.createObjectURL(selectedFile));
             setFile(selectedFile);
-            // setFormData((prevState) => ({
-            //     ...prevState,
-            //     url: selectedFile,
-            // }));
         }
         console.log(formData);
     };
@@ -251,74 +232,12 @@ function Onboarding() {
                         />
 
                         {windowWidth <= pixelAmount && (
-                            <section>
-                                <div className="picture-container">
-                                    <label htmlFor="url">Profile picture</label>
-                                    <span className="btn" id="link" onClick={handleClick}>
-                                        Link
-                                    </span>
-                                    <span className="btn" id="file" onClick={handleClick}>
-                                        File
-                                    </span>
-                                </div>
-
-                                {imageOption.link ? (
-                                    <input
-                                        type="url"
-                                        name="url"
-                                        id="url"
-                                        value={imageUrl}
-                                        placeholder="Profile image"
-                                        required={true}
-                                        onChange={handleChange}
-                                    />
-                                ) : (
-                                    <input
-                                        className="input-file"
-                                        type="file"
-                                        name="url"
-                                        id="file"
-                                        required={true}
-                                        onChange={handleFileChange}
-                                    />
-                                )}
-
-                                <div className="img-container">
-                                    <img src={imageUrl} alt="Picture preview" />
-                                </div>
-                            </section>
-                        )}
-
-                        <input type="submit" />
-                        {/* <Link to="/dashboard" className="primary-button link-button btn">
-                            Submit
-                        </Link> */}
-                    </section>
-
-                    {windowWidth > pixelAmount && (
-                        <section>
-                            <div className="picture-container">
-                                <label htmlFor="url">Profile picture</label>
-                                <span className="btn" id="link" onClick={handleClick}>
-                                    Link
-                                </span>
-                                <span className="btn" id="file" onClick={handleClick}>
-                                    File
-                                </span>
-                            </div>
-
-                            {imageOption.link ? (
+                            <section className="add-profile-image">
+                                <label htmlFor="file">
+                                    <FaFileUpload size={15} /> Upload Image
+                                </label>
                                 <input
-                                    type="url"
-                                    name="url"
-                                    id="url"
-                                    value={imageUrl}
-                                    placeholder="Profile image"
-                                    required={true}
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                <input
+                                    style={{display: 'none'}}
                                     className="input-file"
                                     type="file"
                                     name="url"
@@ -326,8 +245,30 @@ function Onboarding() {
                                     required={true}
                                     onChange={handleFileChange}
                                 />
-                            )}
+                                <div className="img-container">
+                                    <img src={imageUrl} alt="Picture preview" />
+                                </div>
+                            </section>
+                        )}
 
+                        <input type="submit" />
+                    </section>
+
+                    {windowWidth > pixelAmount && (
+                        <section className="add-profile-image">
+                            <label htmlFor="file">
+                                <FaFileUpload size={15} />
+                                Upload image
+                            </label>
+                            <input
+                                style={{display: 'none'}}
+                                className="input-file"
+                                type="file"
+                                name="url"
+                                id="file"
+                                required={true}
+                                onChange={handleFileChange}
+                            />
                             <div className="img-container">
                                 <img src={imageUrl} alt="Picture preview" />
                             </div>

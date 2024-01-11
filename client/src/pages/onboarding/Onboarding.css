@@ -22,6 +22,10 @@
     margin-top: 4px;
 }
 
+/* .add-profile-image {
+    align-items: center;
+} */
+
 .onboarding label {
     font-weight: 500;
     margin-right: auto;
@@ -125,6 +129,29 @@
     border: none;
 }
 
+.add-profile-image label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    margin-top: 40px;
+    margin-left: 27.5%;
+    margin-bottom: 5px;
+    background-color: white;
+    color: gray;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    transition: 200ms ease;
+}
+
+.add-profile-image label:hover {
+    border: 1px solid rgb(197, 5, 53);
+    color: rgb(197, 5, 53);
+    transition: 200ms ease;
+}
+
 span {
     margin-right: 7px;
     font-size: 14px;
@@ -144,6 +171,9 @@ span {
     .img-container {
         width: 270px;
     }
+    .add-profile-image label {
+        margin-left: 22.5%;
+    }
 }
 
 @media screen and (max-width: 620px) {
@@ -161,4 +191,11 @@ span {
         justify-content: center;
         align-items: center;
     }
+    .add-profile-image label {
+        margin-top: 5px;
+    }
 }
+
+/* @media screen and (max-width: 570px) {
+
+} */
