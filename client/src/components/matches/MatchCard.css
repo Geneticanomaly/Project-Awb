@@ -101,3 +101,15 @@
         padding-left: 5px;
     }
 }
+
+/* Increase some sizes when in mobile view */
+
+@media screen and (max-width: 499px) {
+    .match-card button {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+    .match-card p:nth-child(2) {
+        font-size: 12px;
+    }
+}

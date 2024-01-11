@@ -145,7 +145,7 @@ function Dashboard() {
 
     return (
         <div className="dashboard-container">
-            {windowWidth < pixelAmount && <MobileNav />}
+            {windowWidth < pixelAmount && <MobileNav isInMatchesView={false} />}
             <div className="dashboard">
                 {windowWidth >= pixelAmount && <MatchContainer user={user} />}
                 <div className="swipe-container">

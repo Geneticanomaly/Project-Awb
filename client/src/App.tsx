@@ -6,7 +6,7 @@ import Register from './pages/register/Register';
 import Profile from './pages/profile/Profile';
 import Dashboard from './pages/dashboard/Dashboard';
 import Onboarding from './pages/onboarding/Onboarding';
-import MatchContainer from './components/matches/MatchContainer';
+import MobileMatchContainer from './components/matches/mobile/MobileMatchContainer';
 import Chat from './pages/chat/Chat';
 import {useCookies} from 'react-cookie';
 
@@ -35,7 +35,9 @@ function App() {
                     {cookies.AuthToken && <Route path="/profile/:userId" element={<Profile />} />}
                 </Routes>
                 <Routes>
-                    {cookies.AuthToken && <Route path="/matches" element={<MatchContainer />} />}
+                    {cookies.AuthToken && (
+                        <Route path="/matches" element={<MobileMatchContainer />} />
+                    )}
                 </Routes>
                 <Routes>
                     {cookies.AuthToken && <Route path="/chat/:userId" element={<Chat />} />}
