@@ -2,7 +2,7 @@ import './Onboarding.css';
 import Navbar from '../../components/navbar/Navbar';
 import {useState, useEffect} from 'react';
 import {useCookies} from 'react-cookie';
-import updateUser from '../../api/updateUser';
+import {updateUser} from '../../api/updateUser';
 import {useNavigate} from 'react-router-dom';
 
 function Onboarding() {
@@ -23,18 +23,43 @@ function Onboarding() {
         gender: '',
         show_gender: '',
         about: '',
-        url: '',
-        matches: [],
     });
+
+    const [imageUrl, setImageUrl] = useState<string>();
+    const [file, setFile] = useState<File | null>();
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Submitted', formData);
+        const formDataSchema = new FormData();
 
-        const response = await updateUser(formData);
+        formDataSchema.append('user_id', formData.user_id);
+
+        formDataSchema.append('first_name', formData.first_name);
+
+        formDataSchema.append('last_name', formData.last_name);
+
+        formDataSchema.append('dob_day', formData.dob_day);
+
+        formDataSchema.append('dob_month', formData.dob_month);
+
+        formDataSchema.append('dob_year', formData.dob_year);
+
+        formDataSchema.append('gender', formData.gender);
+
+        formDataSchema.append('show_gender', formData.show_gender);
+
+        formDataSchema.append('about', formData.about);
+
+        if (file) {
+            formDataSchema.append('file', file);
+        }
+
+        const response = await updateUser(formDataSchema);
         console.log(response);
+
         // If 201 navigate to dashboard
         if (response.status === 201) navigate('/dashboard');
     };
@@ -64,12 +89,14 @@ function Onboarding() {
 
     // Save uploaded file to the formData set
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const imageUrl = URL.createObjectURL(e.target.files?.[0]);
-            setFormData((prevState) => ({
-                ...prevState,
-                url: imageUrl,
-            }));
+        if (e.target.files && e.target.files.length > 0) {
+            const selectedFile = e.target.files[0];
+            setImageUrl(URL.createObjectURL(selectedFile));
+            setFile(selectedFile);
+            // setFormData((prevState) => ({
+            //     ...prevState,
+            //     url: selectedFile,
+            // }));
         }
         console.log(formData);
     };
@@ -240,7 +267,7 @@ function Onboarding() {
                                         type="url"
                                         name="url"
                                         id="url"
-                                        value={formData.url}
+                                        value={imageUrl}
                                         placeholder="Profile image"
                                         required={true}
                                         onChange={handleChange}
@@ -257,7 +284,7 @@ function Onboarding() {
                                 )}
 
                                 <div className="img-container">
-                                    <img src={formData.url} alt="Picture preview" />
+                                    <img src={imageUrl} alt="Picture preview" />
                                 </div>
                             </section>
                         )}
@@ -285,7 +312,7 @@ function Onboarding() {
                                     type="url"
                                     name="url"
                                     id="url"
-                                    value={formData.url}
+                                    value={imageUrl}
                                     placeholder="Profile image"
                                     required={true}
                                     onChange={handleChange}
@@ -302,7 +329,7 @@ function Onboarding() {
                             )}
 
                             <div className="img-container">
-                                <img src={formData.url} alt="Picture preview" />
+                                <img src={imageUrl} alt="Picture preview" />
                             </div>
                         </section>
                     )}

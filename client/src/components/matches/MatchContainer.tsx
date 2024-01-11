@@ -44,7 +44,7 @@ function MatchContainer({user}: MatchContainerProps) {
             <header className="matches-header">
                 <section className="profile-container">
                     <Link className="link" to={`/profile/${user?.user_id}`}>
-                        <img src={user?.url} />
+                        <img src={`data:image/jpeg;base64,${user?.url}`} />
                     </Link>
                     <Link className="link" to={`/profile/${user?.user_id}`}>
                         <h2>

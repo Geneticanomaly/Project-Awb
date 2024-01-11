@@ -26,7 +26,11 @@ function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: Me
         <div className={messageClass}>
             <div className="message-info">
                 <img
-                    src={isCurrentUser ? currentUser?.url : otherUser?.url}
+                    src={
+                        isCurrentUser
+                            ? `data:image/jpeg;base64,${currentUser?.url}`
+                            : `data:image/jpeg;base64,${otherUser?.url}`
+                    }
                     className="message-profile-img"
                 />
                 <p>{time}</p>

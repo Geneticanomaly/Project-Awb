@@ -37,7 +37,7 @@ app.post('/register', registerUser);
 app.post('/login', loginUser);
 
 // Update a specific user
-app.put('/user', updateUser);
+app.post('/user', updateUser);
 
 // Get user based on a specific user ID
 app.get('/user/:userId', getUser);

@@ -44,7 +44,7 @@ function Profile() {
             <Navbar isInProfilePage={true} userId={userId} />
             <div className="profile-page-container">
                 <div className="profile-info-container">
-                    <img src={user?.url} />
+                    <img src={`data:image/jpeg;base64,${user?.url}`} />
                     <div className="profile-info">
                         <h2>Registered: {user?.registration_date.split('T')[0]}</h2>
                         <h2>{user?.email}</h2>

@@ -162,7 +162,10 @@ function Dashboard() {
                                 }
                             >
                                 <div
-                                    style={{backgroundImage: 'url(' + user.url + ')'}}
+                                    style={{
+                                        backgroundImage:
+                                            'url(' + `data:image/jpeg;base64,${user.url}` + ')',
+                                    }}
                                     className="card"
                                 >
                                     <h3>

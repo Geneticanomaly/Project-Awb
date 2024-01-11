@@ -23,10 +23,10 @@ function App() {
                     <Route path="/register" element={<Register />} />
                 </Routes>
                 <Routes>
-                    {cookies.AuthToken && <Route path="/onboarding" element={<Onboarding />} />}
+                    <Route path="/login" element={<Login />} />
                 </Routes>
                 <Routes>
-                    <Route path="/login" element={<Login />} />
+                    {cookies.AuthToken && <Route path="/onboarding" element={<Onboarding />} />}
                 </Routes>
                 <Routes>
                     {cookies.AuthToken && <Route path="/dashboard" element={<Dashboard />} />}

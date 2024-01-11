@@ -1,10 +1,13 @@
 import {Request, Response} from 'express';
 import {MongoClient} from 'mongodb';
+import multer from 'multer';
+
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({storage: storage});
 
 async function updateUser(req: Request, res: Response) {
     const client = new MongoClient(process.env.MONGO_URL as string);
-    console.log('UPDATED USER BODY:', req.body.formData);
-    const formData = req.body.formData;
+    const formData = req.body;
 
     try {
         // Connect to the database
@@ -14,29 +17,27 @@ async function updateUser(req: Request, res: Response) {
         // Get the database collection users
         const users = database.collection('users');
 
-        console.log(formData.user_id);
-
         // Create a set to be inserted into the database
         const updatedData = {
             $set: {
-                user_id: formData.user_id,
-                first_name: formData.first_name,
-                last_name: formData.last_name,
-                dob_day: formData.dob_day,
-                dob_month: formData.dob_month,
-                dob_year: formData.dob_year,
-                gender: formData.gender,
-                show_gender: formData.show_gender,
-                about: formData.about,
-                url: formData.url,
-                matches: formData.matches,
+                user_id: req.body.user_id,
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                dob_day: req.body.dob_day,
+                dob_month: req.body.dob_month,
+                dob_year: req.body.dob_year,
+                gender: req.body.gender,
+                show_gender: req.body.show_gender,
+                about: req.body.about,
+                url: req.file?.buffer.toString('base64'),
+                matches: [],
             },
         };
 
         // Update a user with the set data based on the provided user Id
         const updatedUser = await users.updateOne({user_id: formData.user_id}, updatedData);
 
-        console.log('User data updated', updatedUser);
+        // console.log('User data updated', updatedUser);
 
         return res.status(201).json({status: 201, updateUser: updatedUser});
     } finally {
@@ -45,4 +46,6 @@ async function updateUser(req: Request, res: Response) {
     }
 }
 
-export default updateUser;
+const uploadMiddleware = upload.single('file');
+export default (req: Request, res: Response) =>
+    uploadMiddleware(req, res, () => updateUser(req, res));
