@@ -49,37 +49,39 @@ function MobileMatchContainer() {
     );
 
     return (
-        <div className="mobile-match-container">
-            <MobileNav isInMatchesView={true} />
-            <section className="mobile-match-section">
-                <header className="matches-header">
-                    <section className="profile-container">
-                        <Link className="link" to={`/profile/${user?.user_id}`}>
-                            <img src={`data:image/jpeg;base64,${user?.url}`} />
-                        </Link>
-                        <Link className="link" to={`/profile/${user?.user_id}`}>
-                            <h2>
-                                {user?.first_name} {user?.last_name}
-                            </h2>
-                        </Link>
-                    </section>
-                    <section className="title">
-                        <h2>Matches</h2>
-                        <FaPeopleArrows className="header-icon" size={30} />
-                    </section>
-                </header>
-                <div className="matches-container">
-                    {filteredMatchedProfiles?.map((match, index) => (
-                        <MatchCard
-                            key={index}
-                            userId={match.user_id}
-                            name={match.first_name + ' ' + match.last_name}
-                            img={match.url}
-                        />
-                    ))}
-                </div>
-            </section>
-        </div>
+        <>
+            <div className="mobile-match-container">
+                <MobileNav isInMatchesView={true} />
+                <section className="mobile-match-section">
+                    <header className="matches-header">
+                        <section className="profile-container">
+                            <Link className="link" to={`/profile/${user?.user_id}`}>
+                                <img src={`data:image/jpeg;base64,${user?.url}`} />
+                            </Link>
+                            <Link className="link" to={`/profile/${user?.user_id}`}>
+                                <h2>
+                                    {user?.first_name} {user?.last_name}
+                                </h2>
+                            </Link>
+                        </section>
+                        <section className="title">
+                            <h2>Matches</h2>
+                            <FaPeopleArrows className="header-icon" size={30} />
+                        </section>
+                    </header>
+                    <div className="matches-container">
+                        {filteredMatchedProfiles?.map((match, index) => (
+                            <MatchCard
+                                key={index}
+                                userId={match.user_id}
+                                name={match.first_name + ' ' + match.last_name}
+                                img={match.url}
+                            />
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </>
     );
 }
 

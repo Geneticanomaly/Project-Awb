@@ -29,7 +29,11 @@ function MobileNav({isInMatchesView}: MobileNavProps) {
 
                 <img src={logo} className="mobile-nav-img" />
                 {isInMatchesView ? (
-                    <IoIosArrowBack size={30} onClick={returnToPreviousView} />
+                    <IoIosArrowBack
+                        size={30}
+                        onClick={returnToPreviousView}
+                        className="mobile-nav-back"
+                    />
                 ) : (
                     <Link to="/matches">
                         <IoMdChatboxes size={30} className="mobile-nav-matches" />
