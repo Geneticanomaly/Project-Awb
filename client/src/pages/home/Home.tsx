@@ -6,13 +6,21 @@ function Home() {
     return (
         <>
             <div className="home">
-                <img src={logo} />
-                <h2>Search something you never thought you needed.</h2>
-                <Link to="/register" className="primary-button link-button">
+                <img data-testid="home-logo" src={logo} />
+                <h2 data-testid="home-title">Search something you never thought you needed.</h2>
+                <Link
+                    to="/register"
+                    className="primary-button link-button"
+                    data-testid="home-register-btn"
+                >
                     Create account
                 </Link>
 
-                <Link to="/login" className="primary-button link-button">
+                <Link
+                    to="/login"
+                    className="primary-button link-button"
+                    data-testid="home-login-btn"
+                >
                     Login
                 </Link>
             </div>

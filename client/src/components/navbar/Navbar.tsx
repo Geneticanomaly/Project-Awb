@@ -25,7 +25,7 @@ function Navbar({isInProfilePage, userId}: NavbarProps) {
     };
 
     return (
-        <nav className="nav">
+        <nav className="nav" data-testid="navbar">
             {!isInProfilePage ? (
                 <div className="logo-container">
                     <img className="logo" src={logo_color} />

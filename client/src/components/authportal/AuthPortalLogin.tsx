@@ -30,8 +30,8 @@ function AuthPortalLogin() {
     };
 
     return (
-        <div className="auth-modal">
-            <Link to="/" className="close-icon">
+        <div className="auth-modal" data-testid="login-modal">
+            <Link to="/" className="close-icon" data-testid="login-close-btn">
                 ⓧ
             </Link>
             <div className="auth-container">
