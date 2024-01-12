@@ -38,7 +38,11 @@ function Navbar({isInProfilePage, userId}: NavbarProps) {
                         onClick={() => navigate(-1)}
                     />
                     {userId == cookies.UserId && (
-                        <button className="logout-btn" onClick={handleLogout}>
+                        <button
+                            className="logout-btn"
+                            onClick={handleLogout}
+                            data-testid="profile-logout"
+                        >
                             Logout
                         </button>
                     )}

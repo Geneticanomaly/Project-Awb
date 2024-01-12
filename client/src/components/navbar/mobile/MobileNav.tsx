@@ -36,7 +36,11 @@ function MobileNav({isInMatchesView}: MobileNavProps) {
                     />
                 ) : (
                     <Link to="/matches">
-                        <IoMdChatboxes size={30} className="mobile-nav-matches" />
+                        <IoMdChatboxes
+                            size={30}
+                            className="mobile-nav-matches"
+                            data-testid="view-matches"
+                        />
                     </Link>
                 )}
             </div>

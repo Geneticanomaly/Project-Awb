@@ -1,4 +1,4 @@
-describe('Home tests', () => {
+describe('home tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:5173/');
     });

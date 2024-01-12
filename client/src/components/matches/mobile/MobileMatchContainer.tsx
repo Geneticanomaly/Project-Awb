@@ -76,6 +76,7 @@ function MobileMatchContainer() {
                                 userId={match.user_id}
                                 name={match.first_name + ' ' + match.last_name}
                                 img={match.url}
+                                matchKey={index.toString()}
                             />
                         ))}
                     </div>

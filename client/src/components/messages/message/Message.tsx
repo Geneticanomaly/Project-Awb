@@ -24,7 +24,7 @@ function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: Me
     });
 
     return (
-        <div className={messageClass}>
+        <div className={messageClass} data-testid="message-item">
             <div className="message-info">
                 <Link
                     className="link"

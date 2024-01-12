@@ -26,6 +26,7 @@ function InputMessage({handleSendMessage}: InputMessageProps) {
         <div className="input-message">
             <HiOutlineMicrophone size={25} className="input-voice-icon" />
             <input
+                data-testid="input-msg"
                 type="text"
                 placeholder="Type something..."
                 value={messageContent}
@@ -36,7 +37,7 @@ function InputMessage({handleSendMessage}: InputMessageProps) {
                 <label htmlFor="file">
                     <CiImageOn size={25} />
                 </label>
-                <button className="send-button" onClick={handleMessageSend}>
+                <button className="send-button" onClick={handleMessageSend} data-testid="send-msg">
                     Send
                 </button>
             </div>

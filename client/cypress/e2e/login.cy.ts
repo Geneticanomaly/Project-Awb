@@ -1,4 +1,4 @@
-describe('Login tests', () => {
+describe('login tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:5173/login');
     });
@@ -12,7 +12,7 @@ describe('Login tests', () => {
         cy.get('[data-testid="login-form"]').find('input[type=submit]').click();
         cy.url().should('equal', 'http://localhost:5173/dashboard');
     });
-    it.only('Failed login attempt - Invalid email', () => {
+    it('Failed login attempt - Invalid email', () => {
         cy.contains('Invalid email address').should('not.exist');
         cy.get('[data-testid="login-form"]')
             .find('input[type=email]')
@@ -20,6 +20,8 @@ describe('Login tests', () => {
         cy.get('[data-testid="login-form"]').find('input[type=password]').type('123');
         cy.get('[data-testid="login-form"]').find('input[type=submit]').click();
         cy.contains('Invalid email address').should('exist');
+        cy.wait(5000); // Wait long enough for fetch requests to happen
+        cy.contains('Invalid email address').should('not.exist');
         cy.get('[data-testid="new-around-here"]').click();
         cy.url().should('equal', 'http://localhost:5173/register');
     });
@@ -31,5 +33,7 @@ describe('Login tests', () => {
         cy.get('[data-testid="login-form"]').find('input[type=password]').type('WrongPassword');
         cy.get('[data-testid="login-form"]').find('input[type=submit]').click();
         cy.contains('Incorrect password').should('exist');
+        cy.wait(5000); // Wait long enough for fetch requests to happen
+        cy.contains('Incorrect password').should('not.exist');
     });
 });

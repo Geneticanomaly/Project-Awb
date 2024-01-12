@@ -40,10 +40,14 @@ function MatchContainer({user}: MatchContainerProps) {
     // console.log('Current user', currentUser);
 
     return (
-        <div className="matches">
+        <div className="matches" data-testid="match-container">
             <header className="matches-header">
                 <section className="profile-container">
-                    <Link className="link" to={`/profile/${user?.user_id}`}>
+                    <Link
+                        className="link"
+                        to={`/profile/${user?.user_id}`}
+                        data-testid="profile-page-link"
+                    >
                         <img src={`data:image/jpeg;base64,${user?.url}`} />
                     </Link>
                     <Link className="link" to={`/profile/${user?.user_id}`}>
@@ -64,6 +68,7 @@ function MatchContainer({user}: MatchContainerProps) {
                         userId={match.user_id}
                         name={match.first_name + ' ' + match.last_name}
                         img={match.url}
+                        matchKey={index.toString()}
                     />
                 ))}
             </div>

@@ -53,7 +53,11 @@ function Profile() {
                 </div>
 
                 {user?.user_id === cookies.UserId && (
-                    <button className="profile-add-image" onClick={() => setShowModal(true)}>
+                    <button
+                        className="profile-add-image"
+                        onClick={() => setShowModal(true)}
+                        data-testid="profile-add-image"
+                    >
                         <div className="img-btn-container">
                             <FaFileUpload className="file-upload-image" />
                             Add images
