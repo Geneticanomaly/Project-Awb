@@ -64,3 +64,9 @@ background: linear-gradient(45deg, #333333, #dd1818);
     border: solid 2px rgb(121, 119, 119);
     margin: 6px;
 }
+
+.error-msg {
+    font-size: 12px;
+    color: #dd1818;
+    margin: auto;
+}

@@ -21,12 +21,27 @@ function AuthPortalLogin() {
             setCookie('UserId', response.id);
             setCookie('AuthToken', response.token);
 
+            if (response.message === 'Login failed, incorrect credentials') {
+                showError('Invalid email address');
+            } else if (response.message === 'Incorrect password') {
+                showError('Incorrect password');
+            }
+
             console.log('My Response:', response);
 
             if (response.status === 201) navigate('/dashboard');
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const showError = (message: string, timeout = 5000) => {
+        setError(message);
+
+        // Clear the error after the specified timeout
+        setTimeout(() => {
+            setError('');
+        }, timeout);
     };
 
     return (
@@ -40,7 +55,7 @@ function AuthPortalLogin() {
                     By clicking Submit, you agree to our terms. Learn how we process your data in
                     our Privacy Policy and Cookie Policy.
                 </span>
-                <form className="form" onSubmit={(e) => handleSubmit(e)}>
+                <form className="form" onSubmit={(e) => handleSubmit(e)} data-testid="login-form">
                     <input
                         id="email"
                         type="email"
@@ -57,13 +72,13 @@ function AuthPortalLogin() {
                         className="form-input"
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    {error && <p className="error-msg">{error}</p>}
                     <input type="submit" className="primary-button button" />
                 </form>
 
                 <div className="line" />
-                {/* <h2>Get chatting</h2> */}
                 <div className="link-container">
-                    <Link className="link" to="/register">
+                    <Link className="link" to="/register" data-testid="new-around-here">
                         <span>New around here? Sign up!</span>
                     </Link>
                     <span>Forgot password?</span>

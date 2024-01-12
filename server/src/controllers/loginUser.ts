@@ -43,7 +43,7 @@ async function loginUser(req: Request, res: Response) {
                     }
                 );
             } else {
-                res.status(403).json({message: 'Login failed'});
+                res.status(403).json({message: 'Incorrect password'});
             }
         });
     } finally {

@@ -18,14 +18,15 @@ function AuthPortalRegister() {
         e.preventDefault();
         try {
             if (password !== confirmPassword) {
-                console.log("Passwords don't match");
-                setError('Passwords need to match');
+                showError('Passwords do not match');
                 return;
             } else {
-                // api call
-                console.log(email, password, confirmPassword);
                 const response = await createUser(email, password);
-                console.log('My Response:', response);
+
+                if (response === 'Email already in use') {
+                    showError('Email already in use');
+                    return;
+                }
 
                 setCookie('UserId', response.user_id);
                 setCookie('AuthToken', response.token);
@@ -35,6 +36,15 @@ function AuthPortalRegister() {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const showError = (message: string, timeout = 5000) => {
+        setError(message);
+
+        // Clear the error after the specified timeout
+        setTimeout(() => {
+            setError('');
+        }, timeout);
     };
 
     return (
@@ -48,7 +58,11 @@ function AuthPortalRegister() {
                     By clicking Submit, you agree to our terms. Learn how we process your data in
                     our Privacy Policy and Cookie Policy.
                 </span>
-                <form className="form" onSubmit={(e) => handleSubmit(e)}>
+                <form
+                    className="form"
+                    onSubmit={(e) => handleSubmit(e)}
+                    data-testid="register-form"
+                >
                     <input
                         id="email"
                         type="email"
@@ -58,6 +72,7 @@ function AuthPortalRegister() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
+                        data-testid="password-first"
                         id="password"
                         type="password"
                         placeholder="Password..."
@@ -66,6 +81,7 @@ function AuthPortalRegister() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <input
+                        data-testid="password-confirm"
                         id="password-confirm"
                         type="password"
                         placeholder="Confirm Password..."
@@ -73,6 +89,7 @@ function AuthPortalRegister() {
                         className="form-input"
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+                    {error && <p className="error-msg">{error}</p>}
                     <input type="submit" className="primary-button button" />
                 </form>
 
