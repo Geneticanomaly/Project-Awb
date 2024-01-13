@@ -56,7 +56,11 @@ function MobileMatchContainer() {
                     <header className="matches-header">
                         <section className="profile-container">
                             <Link className="link" to={`/profile/${user?.user_id}`}>
-                                <img src={`data:image/jpeg;base64,${user?.url}`} />
+                                <img
+                                    src={`data:${
+                                        user?.url?.mimetype
+                                    };base64,${user?.url?.buffer?.toString()}`}
+                                />
                             </Link>
                             <Link className="link" to={`/profile/${user?.user_id}`}>
                                 <h2>

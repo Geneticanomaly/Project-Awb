@@ -22,7 +22,7 @@ describe('scenario tests', () => {
         cy.get('[data-testid="profile-logout"]').click();
         cy.url().should('equal', 'http://localhost:5173/');
     });
-    it.only('Ensure user information is displayed in correctly profile view', () => {
+    it('Ensure user information is displayed in correctly profile view', () => {
         TestingClass.login('thomaskaatranen@gmail.com', '123');
 
         cy.get('[data-testid="profile-page-link"]').click();
@@ -36,10 +36,7 @@ describe('scenario tests', () => {
 
             cy.get('.profile-info-container img')
                 .should('have.attr', 'src')
-                .and(
-                    'include',
-                    `data:${user?.url?.mimetype};base64,${user?.url?.buffer?.toString()}`
-                );
+                .and('include', `data:${user.url.mimetype};base64,${user.url.buffer.toString()}`);
             cy.get('.profile-info h2')
                 .eq(0)
                 .should('have.text', `Registered: ${user.registration_date.split('T')[0]}`);
@@ -48,11 +45,12 @@ describe('scenario tests', () => {
                 .eq(2)
                 .should('have.text', `${user.first_name} ${user.last_name}`);
 
-            cy.get('.about p').should('have.text', `${user?.about}`);
+            cy.get('.about p').should('have.text', `${user.about}`);
 
-            cy.intercept('GET', '**/userImages/**').as('getUserImagesRequest');
-            cy.wait('@getUserImagesRequest').then((data) => {
-                const images = data.response?.body;
+            cy.intercept('GET', `**/userImages/${user.user_id}`).as('getUserImagesRequest');
+            cy.wait('@getUserImagesRequest').then((imageData) => {
+                const images = imageData.response?.body;
+
                 if (images && images.length > 0) {
                     cy.get('.images-container img').should('have.length', images.length);
                 } else {
@@ -67,7 +65,7 @@ describe('scenario tests', () => {
         // Calls a class that handles login cypress code
         TestingClass.login('Marianne.Leipola@gmail.com', '123');
 
-        cy.get('[data-testid="chat-btn-1"]').click();
+        cy.get('[data-testid="chat-btn-0"]').click();
         cy.location('pathname').should('include', '/chat');
 
         cy.intercept('GET', '**/chat/**').as('getUsersChat');
@@ -81,7 +79,7 @@ describe('scenario tests', () => {
         // Calls a class that handles login cypress code
         TestingClass.login('Marianne.Leipola@gmail.com', '123');
 
-        cy.get('[data-testid="match-profile-1"]').click();
+        cy.get('[data-testid="match-profile-0"]').click();
 
         cy.intercept('GET', '**/user/**').as('getUserRequest');
         cy.wait('@getUserRequest');
