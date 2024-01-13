@@ -14,7 +14,7 @@ function MatchCard({name, img, userId, matchKey}: MatchProps) {
         <div className="match-card">
             <Link className="link" to={`/profile/${userId}`}>
                 <img
-                    src={`data:image/jpeg;base64,${img}`}
+                    src={`data:${img.mimetype};base64,${img.buffer?.toString()}`}
                     data-testid={`match-profile-${matchKey}`}
                 />
             </Link>

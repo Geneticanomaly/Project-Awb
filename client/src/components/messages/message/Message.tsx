@@ -33,8 +33,12 @@ function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: Me
                     <img
                         src={
                             isCurrentUser
-                                ? `data:image/jpeg;base64,${currentUser?.url}`
-                                : `data:image/jpeg;base64,${otherUser?.url}`
+                                ? `data:${
+                                      currentUser?.url?.mimetype
+                                  };base64,${currentUser?.url?.buffer?.toString()}`
+                                : `data:${
+                                      otherUser?.url?.mimetype
+                                  };base64,${otherUser?.url?.buffer?.toString()}`
                         }
                         className="message-profile-img"
                     />

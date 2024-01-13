@@ -164,7 +164,11 @@ function Dashboard() {
                                 <div
                                     style={{
                                         backgroundImage:
-                                            'url(' + `data:image/jpeg;base64,${user.url}` + ')',
+                                            'url(' +
+                                            `data:${
+                                                user?.url?.mimetype
+                                            };base64,${user?.url?.buffer?.toString()}` +
+                                            ')',
                                     }}
                                     className="card"
                                 >

@@ -22,8 +22,8 @@ describe('scenario tests', () => {
         cy.get('[data-testid="profile-logout"]').click();
         cy.url().should('equal', 'http://localhost:5173/');
     });
-    it('Ensure user information is displayed in correctly profile view', () => {
-        TestingClass.login('Marianne.Leipola@gmail.com', '123');
+    it.only('Ensure user information is displayed in correctly profile view', () => {
+        TestingClass.login('thomaskaatranen@gmail.com', '123');
 
         cy.get('[data-testid="profile-page-link"]').click();
 
@@ -36,7 +36,10 @@ describe('scenario tests', () => {
 
             cy.get('.profile-info-container img')
                 .should('have.attr', 'src')
-                .and('include', `data:image/jpeg;base64,${user.url}`);
+                .and(
+                    'include',
+                    `data:${user?.url?.mimetype};base64,${user?.url?.buffer?.toString()}`
+                );
             cy.get('.profile-info h2')
                 .eq(0)
                 .should('have.text', `Registered: ${user.registration_date.split('T')[0]}`);
@@ -47,13 +50,17 @@ describe('scenario tests', () => {
 
             cy.get('.about p').should('have.text', `${user?.about}`);
 
-            if (user?.images && user.images.length > 0) {
-                cy.get('.images-container img').should('have.length', user.images.length);
-            } else {
-                cy.get('.image-msg')
-                    .should('be.visible')
-                    .and('contain', 'This profile has no images...');
-            }
+            cy.intercept('GET', '**/userImages/**').as('getUserImagesRequest');
+            cy.wait('@getUserImagesRequest').then((data) => {
+                const images = data.response?.body;
+                if (images && images.length > 0) {
+                    cy.get('.images-container img').should('have.length', images.length);
+                } else {
+                    cy.get('.image-msg')
+                        .should('be.visible')
+                        .and('contain', 'This profile has no images...');
+                }
+            });
         });
     });
     it('User with a match can send a message and the message is found', () => {
