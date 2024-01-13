@@ -48,7 +48,11 @@ function MatchContainer({user}: MatchContainerProps) {
                         to={`/profile/${user?.user_id}`}
                         data-testid="profile-page-link"
                     >
-                        <img src={`data:image/jpeg;base64,${user?.url}`} />
+                        <img
+                            src={`data:${
+                                user?.url?.mimetype
+                            };base64,${user?.url?.buffer?.toString()}`}
+                        />
                     </Link>
                     <Link className="link" to={`/profile/${user?.user_id}`}>
                         <h2>

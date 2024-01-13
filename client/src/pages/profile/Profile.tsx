@@ -5,12 +5,14 @@ import {useParams} from 'react-router-dom';
 import './Profile.css';
 import {FaFileUpload} from 'react-icons/fa';
 import AddImageModal from '../../components/addImageModal/AddImageModal';
-import {User} from '../../../typings';
+import {ProfileImage, User} from '../../../typings';
 import Navbar from '../../components/navbar/Navbar';
 import {useNavigate} from 'react-router-dom';
+import {getUserImages} from '../../api/getUserImages';
 
 function Profile() {
     const [user, setUser] = useState<User>();
+    const [images, setImages] = useState<ProfileImage[]>([]);
     const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -30,21 +32,33 @@ function Profile() {
             }
         };
 
+        const fetchUserImages = async () => {
+            if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
+                navigate('/');
+            } else {
+                const response = await getUserImages(userId);
+                setImages(response);
+            }
+        };
+
         // Run the fetchUserData only when showModal is false
         if (!showModal) {
             fetchUserData();
+            fetchUserImages();
             console.log('Fetch user data based on id!');
         }
     }, [userId, showModal, cookies.AuthToken, navigate]);
 
-    console.log(user);
+    // console.log(user);
 
     return (
         <>
             <Navbar isInProfilePage={true} userId={userId} />
             <div className="profile-page-container">
-                <div className="profile-info-container">
-                    <img src={`data:image/jpeg;base64,${user?.url}`} />
+                <div className="profile-info-container" data-testid="profile-info-container">
+                    <img
+                        src={`data:${user?.url?.mimetype};base64,${user?.url?.buffer?.toString()}`}
+                    />
                     <div className="profile-info">
                         <h2>Registered: {user?.registration_date.split('T')[0]}</h2>
                         <h2>{user?.email}</h2>
@@ -70,12 +84,12 @@ function Profile() {
                     <p>{user?.about}</p>
                 </div>
                 <div className="line" />
-                {user?.images && user?.images?.length > 0 ? (
+                {images && images.length > 0 ? (
                     <section className="images-container">
-                        {user?.images?.map((image, index) => (
+                        {images.map((image, index) => (
                             <img
                                 key={index}
-                                src={`data:image/jpeg;base64,${image.image}`}
+                                src={`data:${image.mimetype};base64,${image.buffer?.toString()}`}
                                 alt={`Image ${index}`}
                             />
                         ))}

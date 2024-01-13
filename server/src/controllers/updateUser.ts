@@ -8,6 +8,7 @@ const upload = multer({storage: storage});
 async function updateUser(req: Request, res: Response) {
     const client = new MongoClient(process.env.MONGO_URL as string);
     const formData = req.body;
+    const file = req.file;
 
     try {
         // Connect to the database
@@ -16,6 +17,13 @@ async function updateUser(req: Request, res: Response) {
 
         // Get the database collection users
         const users = database.collection('users');
+
+        const image = {
+            name: file?.originalname,
+            encoding: file?.encoding,
+            mimetype: file?.mimetype,
+            buffer: file?.buffer,
+        };
 
         // Create a set to be inserted into the database
         const updatedData = {
@@ -29,7 +37,7 @@ async function updateUser(req: Request, res: Response) {
                 gender: req.body.gender,
                 show_gender: req.body.show_gender,
                 about: req.body.about,
-                url: req.file?.buffer.toString('base64'),
+                url: image,
                 matches: [],
             },
         };

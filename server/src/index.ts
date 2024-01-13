@@ -13,6 +13,7 @@ import addMatch from './controllers/addMatch';
 import addImage from './controllers/addImage';
 import getUsersChat from './controllers/getUsersChat';
 import addMessage from './controllers/addMessage';
+import getUserImages from './controllers/getUserImages';
 
 config();
 
@@ -53,6 +54,9 @@ app.get('/matchedUsers/:userIds', getMatchedUsers);
 
 // Add an image to the user's images array
 app.post('/profile/:userId/addImage', addImage);
+
+// Get all user images based on userId
+app.get('/userImages/:userId', getUserImages);
 
 // Get chat messages between two userIds
 app.get('/chat/:userId/:loggedUserId', getUsersChat);

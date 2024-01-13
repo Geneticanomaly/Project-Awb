@@ -1,10 +1,11 @@
 import {Link} from 'react-router-dom';
 import './MatchCard.css';
+import {ProfileImage} from '../../../typings';
 
 type MatchProps = {
     userId: string;
     name: string;
-    img: string;
+    img: ProfileImage;
     matchKey: string;
 };
 

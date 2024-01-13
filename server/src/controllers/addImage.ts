@@ -8,7 +8,7 @@ const upload = multer({storage: storage});
 async function addImage(req: Request, res: Response) {
     const client = new MongoClient(process.env.MONGO_URL as string);
     const userId = req.params.userId;
-    const image = req.file;
+    const file = req.file;
 
     try {
         // Connect to the database
@@ -16,17 +16,19 @@ async function addImage(req: Request, res: Response) {
         const database = client.db('app-data');
 
         // Get the database collection users
-        const users = database.collection('users');
+        const profile_images = database.collection('profile-images');
 
-        // Push the sent image to images array.
-        const updatedData = {
-            $push: {images: {image: image!.buffer.toString('base64')}},
+        const image = {
+            user_id: userId,
+            name: file?.originalname,
+            encoding: file?.encoding,
+            mimetype: file?.mimetype,
+            buffer: file?.buffer,
         };
 
-        // Update the user with a specific user ID
-        const updatedUser = await users.updateOne({user_id: userId}, updatedData);
+        const addedImage = await profile_images.insertOne(image);
 
-        return res.status(201).json(updatedUser);
+        return res.status(201).json(addedImage);
     } finally {
         // Close the connection to the client afterwards
         await client.close();

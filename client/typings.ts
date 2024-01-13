@@ -12,9 +12,8 @@ export type User = {
     last_name: string;
     matches: {user_id: string}[]; // An array of objects that have a user_id attribute
     show_gender: string;
-    url: string;
+    url: ProfileImage;
     registration_date: string;
-    images?: {image: string}[]; // An array of objects that have a image attribute
 };
 
 export type UserMessage = {
@@ -22,4 +21,12 @@ export type UserMessage = {
     to_userId: string;
     message: string;
     timestamp: string;
+};
+
+export type ProfileImage = {
+    user_id: string;
+    name: string;
+    encoding: string;
+    mimetype: string;
+    buffer: Buffer;
 };

@@ -20,7 +20,7 @@ describe('login tests', () => {
         cy.get('[data-testid="login-form"]').find('input[type=password]').type('123');
         cy.get('[data-testid="login-form"]').find('input[type=submit]').click();
         cy.contains('Invalid email address').should('exist');
-        cy.wait(5000); // Wait long enough for fetch requests to happen
+        cy.wait(5000);
         cy.contains('Invalid email address').should('not.exist');
         cy.get('[data-testid="new-around-here"]').click();
         cy.url().should('equal', 'http://localhost:5173/register');
@@ -33,7 +33,7 @@ describe('login tests', () => {
         cy.get('[data-testid="login-form"]').find('input[type=password]').type('WrongPassword');
         cy.get('[data-testid="login-form"]').find('input[type=submit]').click();
         cy.contains('Incorrect password').should('exist');
-        cy.wait(5000); // Wait long enough for fetch requests to happen
+        cy.wait(5000);
         cy.contains('Incorrect password').should('not.exist');
     });
 });
