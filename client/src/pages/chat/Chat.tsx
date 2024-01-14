@@ -19,13 +19,11 @@ function Chat() {
     const [currentUserMessages, setCurrentUserMessages] = useState<UserMessage[]>([]);
     const [otherUserMessages, setOtherUserMessages] = useState<UserMessage[]>([]);
     const [refreshMessages, setRefreshMessages] = useState(false);
-
+    const [cookies] = useCookies(['UserId', 'AuthToken']);
     const navigate = useNavigate();
 
     // Access the userId parameter from the URL
     const {userId} = useParams<{userId: string}>();
-
-    const [cookies] = useCookies(['UserId', 'AuthToken']);
 
     useEffect(() => {
         // Get the current user's information for message component

@@ -22,6 +22,18 @@ describe('scenario tests', () => {
         cy.get('[data-testid="profile-logout"]').click();
         cy.url().should('equal', 'http://localhost:5173/');
     });
+    it('User can check another users profile', () => {
+        // Calls a class that handles login cypress code
+        TestingClass.login('Marianne.Leipola@gmail.com', '123');
+
+        cy.get('[data-testid="match-profile-0"]').click();
+
+        cy.intercept('GET', '**/user/**').as('getUserRequest');
+        cy.wait('@getUserRequest');
+
+        cy.get('[data-testid="profile-logout"]').should('not.exist');
+        cy.get('[data-testid="profile-add-image"]').should('not.exist');
+    });
     it('Ensure user information is displayed in correctly profile view', () => {
         TestingClass.login('thomaskaatranen@gmail.com', '123');
 
@@ -74,17 +86,5 @@ describe('scenario tests', () => {
         cy.get('[data-testid="input-msg"]').type('This is a Cypress test!');
         cy.get('[data-testid="send-msg"]').click();
         cy.get('.messages [data-testid="message-item"]:last .sent-message').should('exist');
-    });
-    it('User can check another users profile', () => {
-        // Calls a class that handles login cypress code
-        TestingClass.login('Marianne.Leipola@gmail.com', '123');
-
-        cy.get('[data-testid="match-profile-0"]').click();
-
-        cy.intercept('GET', '**/user/**').as('getUserRequest');
-        cy.wait('@getUserRequest');
-
-        cy.get('[data-testid="profile-logout"]').should('not.exist');
-        cy.get('[data-testid="profile-add-image"]').should('not.exist');
     });
 });

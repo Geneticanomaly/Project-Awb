@@ -15,6 +15,7 @@ function Profile() {
     const [images, setImages] = useState<ProfileImage[]>([]);
     const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
@@ -22,34 +23,42 @@ function Profile() {
     const {userId} = useParams<{userId: string}>();
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            // If AuthToken does not exist or is undefined restrict access
-            if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
-                navigate('/');
-            } else {
-                const response = await getUser(userId);
-                setUser(response);
+        const fetchData = async () => {
+            try {
+                // If AuthToken does not exist or is undefined, restrict access
+                if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
+                    navigate('/');
+                    return;
+                }
+
+                const [userData, userImages] = await Promise.all([
+                    getUser(userId),
+                    getUserImages(userId),
+                ]);
+
+                setUser(userData);
+                setImages(userImages);
+            } catch (error) {
+                console.error('Error fetching Profile data:', error);
+            } finally {
+                setLoading(false); // Set loading to false once data is fetched
             }
         };
 
-        const fetchUserImages = async () => {
-            if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
-                navigate('/');
-            } else {
-                const response = await getUserImages(userId);
-                setImages(response);
-            }
-        };
-
-        // Run the fetchUserData only when showModal is false
+        // Run the fetchData only when showModal is false
         if (!showModal) {
-            fetchUserData();
-            fetchUserImages();
-            console.log('Fetch user data based on id!');
+            fetchData();
         }
     }, [userId, showModal, cookies.AuthToken, navigate]);
 
-    // console.log(user);
+    // Render loading indicator or return null for TinderCard components during loading
+    if (loading) {
+        // If AuthToken does not exist or is undefined restrict access
+        if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
+            navigate('/');
+        }
+        return <p>Loading...</p>;
+    }
 
     return (
         <>

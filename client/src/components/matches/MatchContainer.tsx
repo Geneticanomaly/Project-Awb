@@ -13,18 +13,15 @@ type MatchContainerProps = {
 function MatchContainer({user}: MatchContainerProps) {
     const [matchedUsers, setMatchedUsers] = useState<User[]>([]);
 
-    // Wrapping this in useMemo disabled an infinite loop with the useEffect hook
     const matchedUserIds = useMemo(() => {
         return user?.matches?.map(({user_id}) => user_id) || [];
     }, [user]);
 
-    /* const matchedUserIds = user?.matches?.map(({user_id}) => user_id); */
-
     useEffect(() => {
         const fetchMatchedUsers = async () => {
             try {
-                const matchedUsers = await getMatchedUsers(matchedUserIds);
-                setMatchedUsers(matchedUsers);
+                const fetchedMatchedUsers = await getMatchedUsers(matchedUserIds);
+                setMatchedUsers(fetchedMatchedUsers);
             } catch (error) {
                 console.error('Error fetching MatchContainer data:', error);
             }
@@ -36,8 +33,6 @@ function MatchContainer({user}: MatchContainerProps) {
         (matchedUsers) =>
             matchedUsers.matches.filter((profile) => profile.user_id == user?.user_id).length > 0
     );
-
-    // console.log('Current user', currentUser);
 
     return (
         <div className="matches" data-testid="match-container">
