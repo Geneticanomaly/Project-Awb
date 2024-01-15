@@ -67,6 +67,9 @@ function MatchContainer({user}: MatchContainerProps) {
                         userId={match.user_id}
                         name={match.first_name + ' ' + match.last_name}
                         img={match.url}
+                        dob_day={match.dob_day}
+                        dob_month={match.dob_month}
+                        dob_year={match.dob_year}
                         matchKey={index.toString()}
                     />
                 ))}

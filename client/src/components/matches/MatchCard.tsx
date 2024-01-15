@@ -1,15 +1,21 @@
 import {Link} from 'react-router-dom';
 import './MatchCard.css';
 import {ProfileImage} from '../../../typings';
+import {calculateAge} from '../../helperFunctions';
 
 type MatchProps = {
     userId: string;
     name: string;
     img: ProfileImage;
+    dob_day: string;
+    dob_month: string;
+    dob_year: string;
     matchKey: string;
 };
 
-function MatchCard({name, img, userId, matchKey}: MatchProps) {
+function MatchCard({name, img, userId, dob_day, dob_month, dob_year, matchKey}: MatchProps) {
+    const age = calculateAge(parseInt(dob_day), parseInt(dob_month), parseInt(dob_year));
+
     return (
         <div className="match-card">
             <Link className="link" to={`/profile/${userId}`}>
@@ -20,7 +26,7 @@ function MatchCard({name, img, userId, matchKey}: MatchProps) {
             </Link>
 
             <div className="info-container">
-                <p>Something</p>
+                <p>{age} Years old</p>
                 <p>{name}</p>
             </div>
 

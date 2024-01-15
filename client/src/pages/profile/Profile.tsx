@@ -9,10 +9,12 @@ import {ProfileImage, User} from '../../../typings';
 import Navbar from '../../components/navbar/Navbar';
 import {useNavigate} from 'react-router-dom';
 import {getUserImages} from '../../api/getUserImages';
+import {calculateAge} from '../../helperFunctions';
 
 function Profile() {
     const [user, setUser] = useState<User>();
     const [images, setImages] = useState<ProfileImage[]>([]);
+    const [age, setAge] = useState<string>('');
     const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
@@ -38,6 +40,13 @@ function Profile() {
 
                 setUser(userData);
                 setImages(userImages);
+
+                const currentAge = calculateAge(
+                    parseInt(userData.dob_day),
+                    parseInt(userData.dob_month),
+                    parseInt(userData.dob_year)
+                );
+                setAge(currentAge.toString());
             } catch (error) {
                 console.error('Error fetching Profile data:', error);
             } finally {
@@ -70,6 +79,7 @@ function Profile() {
                         <h2>Registered: {user?.registration_date.split('T')[0]}</h2>
                         <h2>{user?.email}</h2>
                         <h2>{user?.first_name + ' ' + user?.last_name}</h2>
+                        <h2>{age} Years old</h2>
                     </div>
                 </div>
 
