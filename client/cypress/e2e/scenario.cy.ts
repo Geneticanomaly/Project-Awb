@@ -34,7 +34,7 @@ describe('scenario tests', () => {
         cy.get('[data-testid="profile-logout"]').should('not.exist');
         cy.get('[data-testid="profile-add-image"]').should('not.exist');
     });
-    it('Ensure user information is displayed in correctly profile view', () => {
+    it.only('Ensure user information is displayed in correctly profile view', () => {
         TestingClass.login('thomaskaatranen@gmail.com', '123');
 
         cy.get('[data-testid="profile-page-link"]').click();
@@ -45,19 +45,6 @@ describe('scenario tests', () => {
         cy.wait('@getUserRequest').then((data) => {
             // Access the response body or any other information
             const user = data.response?.body;
-
-            cy.get('.profile-info-container img')
-                .should('have.attr', 'src')
-                .and('include', `data:${user.url.mimetype};base64,${user.url.buffer.toString()}`);
-            cy.get('.profile-info h2')
-                .eq(0)
-                .should('have.text', `Registered: ${user.registration_date.split('T')[0]}`);
-            cy.get('.profile-info h2').eq(1).should('have.text', user.email);
-            cy.get('.profile-info h2')
-                .eq(2)
-                .should('have.text', `${user.first_name} ${user.last_name}`);
-
-            cy.get('.about p').should('have.text', `${user.about}`);
 
             cy.intercept('GET', `**/userImages/${user.user_id}`).as('getUserImagesRequest');
             cy.wait('@getUserImagesRequest').then((imageData) => {
@@ -71,6 +58,19 @@ describe('scenario tests', () => {
                         .and('contain', 'This profile has no images...');
                 }
             });
+
+            cy.get('.profile-info-container img')
+                .should('have.attr', 'src')
+                .and('include', `data:${user.url.mimetype};base64,${user.url.buffer.toString()}`);
+            cy.get('.profile-info h2')
+                .eq(0)
+                .should('have.text', `Registered: ${user.registration_date.split('T')[0]}`);
+            cy.get('.profile-info h2').eq(1).should('have.text', user.email);
+            cy.get('.profile-info h2')
+                .eq(2)
+                .should('have.text', `${user.first_name} ${user.last_name}`);
+
+            cy.get('.about p').should('have.text', `${user.about}`);
         });
     });
     it('User with a match can send a message and the message is found', () => {

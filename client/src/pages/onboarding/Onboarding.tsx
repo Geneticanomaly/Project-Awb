@@ -34,23 +34,14 @@ function Onboarding() {
         const formDataSchema = new FormData();
 
         formDataSchema.append('user_id', formData.user_id);
-
         formDataSchema.append('first_name', formData.first_name);
-
         formDataSchema.append('last_name', formData.last_name);
-
         formDataSchema.append('dob_day', formData.dob_day);
-
         formDataSchema.append('dob_month', formData.dob_month);
-
         formDataSchema.append('dob_year', formData.dob_year);
-
         formDataSchema.append('gender', formData.gender);
-
         formDataSchema.append('show_gender', formData.show_gender);
-
         formDataSchema.append('about', formData.about);
-
         if (file) {
             formDataSchema.append('file', file);
         }
@@ -82,7 +73,7 @@ function Onboarding() {
         console.log(formData);
     };
 
-    // Used for displaying the second section in the right place - Profile picture
+    // Used for displaying the second <section> in the right place - Profile picture
     // If windows size is smaller than 570px display everything in a column instead
     useEffect(() => {
         // Update the window width when the window is resized

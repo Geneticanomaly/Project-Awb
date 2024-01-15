@@ -15,7 +15,7 @@ function Profile() {
     const [images, setImages] = useState<ProfileImage[]>([]);
     const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [showModal, setShowModal] = useState<boolean>(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const navigate = useNavigate();
 
@@ -65,9 +65,7 @@ function Profile() {
             <Navbar isInProfilePage={true} userId={userId} />
             <div className="profile-page-container">
                 <div className="profile-info-container" data-testid="profile-info-container">
-                    <img
-                        src={`data:${user?.url?.mimetype};base64,${user?.url?.buffer?.toString()}`}
-                    />
+                    <img src={`data:${user?.url.mimetype};base64,${user?.url.buffer.toString()}`} />
                     <div className="profile-info">
                         <h2>Registered: {user?.registration_date.split('T')[0]}</h2>
                         <h2>{user?.email}</h2>

@@ -20,7 +20,7 @@ function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: Me
     const time = localTime.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
-        hour12: false,
+        hour12: true,
     });
 
     return (
