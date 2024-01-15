@@ -74,7 +74,6 @@ function Dashboard() {
                 // Set it as the logged in user's current matches
                 if (!userPrevMatches || userPrevMatches.length == 0) {
                     setUserPrevMatches(newUser.matches);
-                    console.log(newUser.matches);
                 }
 
                 // Get users by gender

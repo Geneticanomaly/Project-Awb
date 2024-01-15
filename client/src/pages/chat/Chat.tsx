@@ -20,6 +20,7 @@ function Chat() {
     const [otherUserMessages, setOtherUserMessages] = useState<UserMessage[]>([]);
     const [refreshMessages, setRefreshMessages] = useState(false);
     const [cookies] = useCookies(['UserId', 'AuthToken']);
+    const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
 
     // Access the userId parameter from the URL
@@ -28,34 +29,62 @@ function Chat() {
     useEffect(() => {
         // Get the current user's information for message component
         const getCurrentUser = async () => {
-            const response = await getUser(cookies.UserId);
-            setCurrentUser(response);
+            try {
+                const response = await getUser(cookies.UserId);
+                setCurrentUser(response);
+            } catch (error) {
+                console.error('Error fetching current user data', error);
+            }
         };
+
         const getOtherUser = async () => {
-            // Get the other user's information for header and message component
-            const response = await getUser(userId);
-            setOtherUser(response);
+            try {
+                // Get the other user's information for header and message component
+                const response = await getUser(userId);
+                setOtherUser(response);
+            } catch (error) {
+                console.error('Error fetching other user data', error);
+            }
+        };
+
+        const fetchData = async () => {
+            try {
+                await getCurrentUser();
+                await getOtherUser();
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data', error);
+                setLoading(false); // Handle loading state in case of an error
+            }
         };
 
         // If AuthToken does not exist or is undefined restrict access
         if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
             navigate('/');
         } else {
-            getCurrentUser();
-            getOtherUser();
+            fetchData();
         }
     }, [cookies.AuthToken, cookies.UserId, navigate, userId]);
 
     useEffect(() => {
         const getCurrentUserMessages = async () => {
-            // Get the logged in user's chat messages
-            const response = await getUsersChat(userId, cookies.UserId);
-            setCurrentUserMessages(response);
+            try {
+                // Get the logged in user's chat messages
+                const response = await getUsersChat(userId, cookies.UserId);
+                setCurrentUserMessages(response);
+            } catch (error) {
+                console.error('Error fetching current user messages', error);
+            }
         };
+
         const getOtherUserMessages = async () => {
-            // Get the other user's chat messages
-            const response = await getUsersChat(cookies.UserId, userId);
-            setOtherUserMessages(response);
+            try {
+                // Get the other user's chat messages
+                const response = await getUsersChat(cookies.UserId, userId);
+                setOtherUserMessages(response);
+            } catch (error) {
+                console.error('Error fetching other user messages', error);
+            }
         };
 
         getCurrentUserMessages();
@@ -68,6 +97,14 @@ function Chat() {
         setRefreshMessages((prev) => !prev);
     };
 
+    if (loading) {
+        // If AuthToken does not exist or is undefined restrict access
+        if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
+            navigate('/');
+        }
+        return <p>Loading...</p>;
+    }
+
     return (
         <>
             <div className="chat-background"></div>
@@ -77,8 +114,8 @@ function Chat() {
                         <Link className="link" to={`/profile/${userId}`}>
                             <img
                                 src={`data:${
-                                    otherUser?.url?.mimetype
-                                };base64,${otherUser?.url?.buffer?.toString()}`}
+                                    otherUser?.url.mimetype
+                                };base64,${otherUser?.url.buffer.toString()}`}
                                 className="chat-header-img"
                             />
                         </Link>

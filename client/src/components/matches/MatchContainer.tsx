@@ -23,7 +23,7 @@ function MatchContainer({user}: MatchContainerProps) {
                 const fetchedMatchedUsers = await getMatchedUsers(matchedUserIds);
                 setMatchedUsers(fetchedMatchedUsers);
             } catch (error) {
-                console.error('Error fetching MatchContainer data:', error);
+                console.error('Error fetching matched users data:', error);
             }
         };
         fetchMatchedUsers();

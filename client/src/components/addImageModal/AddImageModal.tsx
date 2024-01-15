@@ -28,8 +28,13 @@ function AddImageModal({userId, setShowModal}: AddImageModalProps) {
         if (file) {
             formData.append('file', file);
             console.log('FormData:', formData);
-            const response = await addImage(userId, formData);
-            console.log('Response:', response);
+
+            try {
+                const response = await addImage(userId, formData);
+                console.log('Response:', response);
+            } catch (error) {
+                console.error('Error occured while uploading an image', error);
+            }
         }
         setShowModal(false);
     };

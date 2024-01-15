@@ -22,9 +22,12 @@ function MobileMatchContainer() {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            const response = await getUser(cookies.UserId);
-            console.log(response);
-            setUser(response);
+            try {
+                const response = await getUser(cookies.UserId);
+                setUser(response);
+            } catch (error) {
+                console.error('Error fetching user data', error);
+            }
         };
         if (!user) {
             fetchUserData();
@@ -37,7 +40,7 @@ function MobileMatchContainer() {
                 const matchedUsers = await getMatchedUsers(matchedUserIds);
                 setMatchedUsers(matchedUsers);
             } catch (error) {
-                console.error('Error fetching MatchContainer data:', error);
+                console.error('Error fetching matched users data:', error);
             }
         };
         fetchMatchedUsers();
@@ -80,6 +83,9 @@ function MobileMatchContainer() {
                                 userId={match.user_id}
                                 name={match.first_name + ' ' + match.last_name}
                                 img={match.url}
+                                dob_day={match.dob_day}
+                                dob_month={match.dob_month}
+                                dob_year={match.dob_year}
                                 matchKey={index.toString()}
                             />
                         ))}

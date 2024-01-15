@@ -31,10 +31,11 @@ function AuthPortalLogin() {
 
             if (response.status === 201) navigate('/dashboard');
         } catch (error) {
-            console.log(error);
+            console.error('Error occured while logging in user', error);
         }
     };
 
+    // Display the error message for 5 seconds
     const showError = (message: string, timeout = 5000) => {
         setError(message);
 

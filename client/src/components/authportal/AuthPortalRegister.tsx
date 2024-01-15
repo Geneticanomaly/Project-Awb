@@ -17,6 +17,7 @@ function AuthPortalRegister() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            // Check wether given password match
             if (password !== confirmPassword) {
                 showError('Passwords do not match');
                 return;
@@ -34,10 +35,11 @@ function AuthPortalRegister() {
                 if (response.status === 201) navigate('/onboarding');
             }
         } catch (error) {
-            console.log(error);
+            console.error('Error occured while registering user', error);
         }
     };
 
+    // Display the error message for 5 seconds
     const showError = (message: string, timeout = 5000) => {
         setError(message);
 
