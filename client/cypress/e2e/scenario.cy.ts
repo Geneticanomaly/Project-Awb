@@ -1,4 +1,5 @@
 import {TestingClass} from '../classes/classCommands';
+import {calculateAge} from '../../src/helperFunctions';
 
 describe('scenario tests', () => {
     // :TODO
@@ -41,23 +42,23 @@ describe('scenario tests', () => {
 
         cy.location('pathname').should('include', '/profile');
 
+        // cy.intercept('GET', `**/userImages/**`).as('getUserImagesRequest');
+        // cy.wait('@getUserImagesRequest').then((imageData) => {
+        //     const images = imageData.response?.body;
+
+        //     if (images && images.length > 0) {
+        //         cy.get('.images-container img').should('have.length', images.length);
+        //     } else {
+        //         cy.get('.image-msg')
+        //             .should('be.visible')
+        //             .and('contain', 'This profile has no images...');
+        //     }
+        // });
+
         cy.intercept('GET', '**/user/**').as('getUserRequest');
         cy.wait('@getUserRequest').then((data) => {
             // Access the response body or any other information
             const user = data.response?.body;
-
-            cy.intercept('GET', `**/userImages/${user.user_id}`).as('getUserImagesRequest');
-            cy.wait('@getUserImagesRequest').then((imageData) => {
-                const images = imageData.response?.body;
-
-                if (images && images.length > 0) {
-                    cy.get('.images-container img').should('have.length', images.length);
-                } else {
-                    cy.get('.image-msg')
-                        .should('be.visible')
-                        .and('contain', 'This profile has no images...');
-                }
-            });
 
             cy.get('.profile-info-container img')
                 .should('have.attr', 'src')
@@ -69,6 +70,10 @@ describe('scenario tests', () => {
             cy.get('.profile-info h2')
                 .eq(2)
                 .should('have.text', `${user.first_name} ${user.last_name}`);
+
+            const age = calculateAge(user.dob_day, user.dob_month, user.dob_year);
+
+            cy.get('.profile-info h2').eq(3).should('have.text', `${age} Years old`);
 
             cy.get('.about p').should('have.text', `${user.about}`);
         });

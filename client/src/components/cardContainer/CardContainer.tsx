@@ -22,6 +22,8 @@ function CardContainer({
 }: CardContainerProps) {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
+    const pixelAmount: number = 500;
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     // used for outOfFrame closure
     const currentIndexRef = useRef<number>(currentIndex);
@@ -75,10 +77,11 @@ function CardContainer({
         }
     };
 
-    //
+    // Get the user's matched user ids
     const matchedUserIds = user?.matches.map(({user_id}) => user_id).concat(cookiesUserId);
 
-    // Filter the users
+    // Create a new array that has the correct gendered users
+    // The array only includes users that are not in the current user's matches array.
     const filteredGenderedUsers = usersByGender?.filter(
         (user) => !matchedUserIds?.includes(user.user_id)
     );
@@ -89,9 +92,28 @@ function CardContainer({
         }
     }, [filteredGenderedUsers]);
 
+    useEffect(() => {
+        // Disable overflow when the Dashboard page mounts
+        document.body.classList.add('body-overflow-hidden');
+
+        // Update the window width when the window is resized
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        // Attach the event listener
+        window.addEventListener('resize', handleResize);
+
+        // Clean up the event listener on component unmount
+        return () => {
+            document.body.classList.remove('body-overflow-hidden');
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
         <div className="card-container">
-            {/* {windowWidth < pixelAmount && <p>Swipe away!</p>} */}
+            {windowWidth < pixelAmount && <p>Swipe away!</p>}
             {filteredGenderedUsers?.map((user, index) => (
                 <TinderCard
                     ref={childRefs[index]}

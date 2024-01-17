@@ -33,6 +33,7 @@ function Onboarding() {
         console.log('Submitted', formData);
         const formDataSchema = new FormData();
 
+        // Add given data to FormData
         formDataSchema.append('user_id', formData.user_id);
         formDataSchema.append('first_name', formData.first_name);
         formDataSchema.append('last_name', formData.last_name);

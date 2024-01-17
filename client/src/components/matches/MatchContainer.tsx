@@ -20,6 +20,7 @@ function MatchContainer({user}: MatchContainerProps) {
     useEffect(() => {
         const fetchMatchedUsers = async () => {
             try {
+                // Call a GET request that fetches the user's matched users (liked users)
                 const fetchedMatchedUsers = await getMatchedUsers(matchedUserIds);
                 setMatchedUsers(fetchedMatchedUsers);
             } catch (error) {
@@ -29,6 +30,8 @@ function MatchContainer({user}: MatchContainerProps) {
         fetchMatchedUsers();
     }, [matchedUserIds]);
 
+    // Filter the matchedUsers state
+    // Create a new array to only include users that have like each other.
     const filteredMatchedProfiles = matchedUsers?.filter(
         (matchedUsers) =>
             matchedUsers.matches.filter((profile) => profile.user_id == user?.user_id).length > 0
@@ -44,9 +47,7 @@ function MatchContainer({user}: MatchContainerProps) {
                         data-testid="profile-page-link"
                     >
                         <img
-                            src={`data:${
-                                user?.url?.mimetype
-                            };base64,${user?.url?.buffer?.toString()}`}
+                            src={`data:${user?.url.mimetype};base64,${user?.url.buffer.toString()}`}
                         />
                     </Link>
                     <Link className="link" to={`/profile/${user?.user_id}`}>
@@ -62,16 +63,7 @@ function MatchContainer({user}: MatchContainerProps) {
             </header>
             <div className="matches-container">
                 {filteredMatchedProfiles?.map((match, index) => (
-                    <MatchCard
-                        key={index}
-                        userId={match.user_id}
-                        name={match.first_name + ' ' + match.last_name}
-                        img={match.url}
-                        dob_day={match.dob_day}
-                        dob_month={match.dob_month}
-                        dob_year={match.dob_year}
-                        matchKey={index.toString()}
-                    />
+                    <MatchCard key={index} match={match} matchKey={index.toString()} />
                 ))}
             </div>
         </div>

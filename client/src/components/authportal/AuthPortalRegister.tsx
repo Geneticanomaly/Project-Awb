@@ -17,7 +17,7 @@ function AuthPortalRegister() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            // Check wether given password match
+            // Check whether given password match
             if (password !== confirmPassword) {
                 showError('Passwords do not match');
                 return;
@@ -29,6 +29,7 @@ function AuthPortalRegister() {
                     return;
                 }
 
+                // Set cookies
                 setCookie('UserId', response.user_id);
                 setCookie('AuthToken', response.token);
 

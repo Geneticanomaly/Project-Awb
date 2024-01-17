@@ -23,6 +23,7 @@ function MobileMatchContainer() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
+                // Call a GET request for fetching the user
                 const response = await getUser(cookies.UserId);
                 setUser(response);
             } catch (error) {
@@ -37,6 +38,7 @@ function MobileMatchContainer() {
     useEffect(() => {
         const fetchMatchedUsers = async () => {
             try {
+                // Call a GET request for fetching the user's matches (liked users)
                 const matchedUsers = await getMatchedUsers(matchedUserIds);
                 setMatchedUsers(matchedUsers);
             } catch (error) {
@@ -46,6 +48,8 @@ function MobileMatchContainer() {
         fetchMatchedUsers();
     }, [matchedUserIds]);
 
+    // Filter the matchedUsers state
+    // Create a new array to only include users that have like each other.
     const filteredMatchedProfiles = matchedUsers?.filter(
         (matchedUsers) =>
             matchedUsers.matches.filter((profile) => profile.user_id == user?.user_id).length > 0
@@ -78,16 +82,7 @@ function MobileMatchContainer() {
                     </header>
                     <div className="matches-container">
                         {filteredMatchedProfiles?.map((match, index) => (
-                            <MatchCard
-                                key={index}
-                                userId={match.user_id}
-                                name={match.first_name + ' ' + match.last_name}
-                                img={match.url}
-                                dob_day={match.dob_day}
-                                dob_month={match.dob_month}
-                                dob_year={match.dob_year}
-                                matchKey={index.toString()}
-                            />
+                            <MatchCard key={index} match={match} matchKey={index.toString()} />
                         ))}
                     </div>
                 </section>

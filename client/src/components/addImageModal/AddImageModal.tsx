@@ -14,6 +14,7 @@ function AddImageModal({userId, setShowModal}: AddImageModalProps) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const selectedFile = e.target.files[0];
+            // Create an objectURl to display the image in the modal
             setImageUrl(URL.createObjectURL(selectedFile));
             setFile(selectedFile);
         }
@@ -25,11 +26,14 @@ function AddImageModal({userId, setShowModal}: AddImageModalProps) {
 
     const uploadUserImage = async () => {
         const formData = new FormData();
+
+        // If file is given add it to the FormData
         if (file) {
             formData.append('file', file);
             console.log('FormData:', formData);
 
             try {
+                // Call a POST request for adding the image to the user profile
                 const response = await addImage(userId, formData);
                 console.log('Response:', response);
             } catch (error) {

@@ -1,36 +1,41 @@
 import {Link} from 'react-router-dom';
 import './MatchCard.css';
-import {ProfileImage} from '../../../typings';
+import {User} from '../../../typings';
 import {calculateAge} from '../../helperFunctions';
 
 type MatchProps = {
-    userId: string;
-    name: string;
-    img: ProfileImage;
-    dob_day: string;
-    dob_month: string;
-    dob_year: string;
+    match: User;
     matchKey: string;
 };
 
-function MatchCard({name, img, userId, dob_day, dob_month, dob_year, matchKey}: MatchProps) {
-    const age = calculateAge(parseInt(dob_day), parseInt(dob_month), parseInt(dob_year));
+function MatchCard({match, matchKey}: MatchProps) {
+    const age = calculateAge(
+        parseInt(match.dob_day),
+        parseInt(match.dob_month),
+        parseInt(match.dob_year)
+    );
 
     return (
         <div className="match-card">
-            <Link className="link" to={`/profile/${userId}`}>
+            <Link className="link" to={`/profile/${match.user_id}`}>
                 <img
-                    src={`data:${img.mimetype};base64,${img.buffer?.toString()}`}
+                    src={`data:${match.url.mimetype};base64,${match.url.buffer.toString()}`}
                     data-testid={`match-profile-${matchKey}`}
                 />
             </Link>
 
             <div className="info-container">
                 <p>{age} Years old</p>
-                <p>{name}</p>
+                <p>
+                    {match.first_name} {match.last_name}
+                </p>
             </div>
 
-            <Link className="btn-link" to={`/chat/${userId}`} data-testid={`chat-btn-${matchKey}`}>
+            <Link
+                className="btn-link"
+                to={`/chat/${match.user_id}`}
+                data-testid={`chat-btn-${matchKey}`}
+            >
                 <button>Chat</button>
             </Link>
         </div>
