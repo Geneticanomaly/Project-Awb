@@ -46,12 +46,7 @@ function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: Me
                 <p>{time}</p>
             </div>
             <div className="message-content">
-                {isStringMessage ? (
-                    <p className="sent-message">{message}</p>
-                ) : (
-                    <img src={message} className="message-content-img" />
-                )}
-                {/* <img src="https://i.imgur.com/Q9WPlWA.jpeg" className="message-content-img" /> */}
+                {isStringMessage && <p className="sent-message">{message}</p>}
             </div>
         </div>
     );

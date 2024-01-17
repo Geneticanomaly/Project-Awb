@@ -8,7 +8,7 @@ type InputMessageProps = {
 };
 
 function InputMessage({handleSendMessage}: InputMessageProps) {
-    const [messageContent, setMessageContent] = useState<string | undefined>();
+    const [messageContent, setMessageContent] = useState<string>('');
 
     // Get current Finnish time
     const currentDate = new Date();
@@ -22,6 +22,14 @@ function InputMessage({handleSendMessage}: InputMessageProps) {
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        // Allow user to send a message when the Enter key is pressed
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleMessageSend();
+        }
+    };
+
     return (
         <div className="input-message">
             <HiOutlineMicrophone size={25} className="input-voice-icon" />
@@ -31,6 +39,7 @@ function InputMessage({handleSendMessage}: InputMessageProps) {
                 placeholder="Type something..."
                 value={messageContent}
                 onChange={(e) => setMessageContent(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <div className="send">
                 <input type="file" style={{display: 'none'}} id="file" />
