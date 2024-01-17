@@ -11,6 +11,7 @@ import {useNavigate} from 'react-router-dom';
 import {getUserImages} from '../../api/getUserImages';
 import {calculateAge} from '../../helperFunctions';
 import {TbEdit} from 'react-icons/tb';
+import EditProfileModal from '../../components/editProfileModal/EditModal';
 
 function Profile() {
     const [user, setUser] = useState<User>();
@@ -18,6 +19,7 @@ function Profile() {
     const [age, setAge] = useState<string>('');
     const [cookies] = useCookies(['UserId', 'AuthToken']);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
 
     const navigate = useNavigate();
@@ -86,9 +88,12 @@ function Profile() {
 
                 {user?.user_id === cookies.UserId && (
                     <section className="profile-functions">
-                        <button className="profile-btn-function">
+                        <button
+                            className="profile-btn-function"
+                            onClick={() => setShowEditModal(true)}
+                        >
                             <div className="profile-btn-container">
-                                <TbEdit className="edit-profile-info" size={20} />
+                                <TbEdit className="edit-profile-info" />
                                 Edit Profile
                             </div>
                         </button>
@@ -124,6 +129,9 @@ function Profile() {
                     <p className="image-msg">This profile has no images...</p>
                 )}
                 {showModal && <AddImageModal userId={user?.user_id} setShowModal={setShowModal} />}
+                {showEditModal && (
+                    <EditProfileModal user={user} setShowEditModal={setShowEditModal} />
+                )}
             </div>
         </>
     );

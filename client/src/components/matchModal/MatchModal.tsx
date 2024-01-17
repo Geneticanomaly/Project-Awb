@@ -17,8 +17,8 @@ function MatchModal({setShowMatchModal, matchedUser}: MatchModalProps) {
 
     return (
         <>
-            <div className="match-modal-background" onClick={() => setShowMatchModal(false)}></div>
-            <div className="match-modal">
+            <div className="modal-background" onClick={() => setShowMatchModal(false)}></div>
+            <div className="modal">
                 <div className="match-modal-container">
                     <h2>You have a new match!</h2>
                     {matchedUser?.first_name} {matchedUser?.last_name}

@@ -30,12 +30,18 @@ function Dashboard() {
         let isNewUser = false;
         let userId = '';
 
+        console.log('Prev matches', userPrevMatches);
+        console.log('Current matches', newUserData);
+
         for (const match of newUserData!.matches) {
             const matchUserId = match.user_id;
+
+            console.log('AM I HERE');
 
             // Check if matchUserId is not in the userPrevMatches
             // If it is, it means new user was found
             if (!userPrevMatches?.some((prevMatch) => prevMatch.user_id === matchUserId)) {
+                console.log('AM I HERE???');
                 // New user was found
                 isNewUser = true;
                 // Get the newly found userId
@@ -46,6 +52,7 @@ function Dashboard() {
         if (isNewUser) {
             const newMatchedUser = await getUser(userId);
             setMatchedUser(newMatchedUser);
+            console.log('AM I HERE 1');
 
             // Check if logged in user is in new user's matches
             const isCurrentUserMatched = newMatchedUser.matches.some(
@@ -54,6 +61,7 @@ function Dashboard() {
 
             // If logged in user is in the other user's matches show a pop up.
             if (isCurrentUserMatched) {
+                console.log('AM I HERE 2');
                 setShowMatchModal(true);
             } else {
                 console.log('Current user is not in the matches');

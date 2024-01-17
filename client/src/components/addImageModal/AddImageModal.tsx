@@ -45,9 +45,9 @@ function AddImageModal({userId, setShowModal}: AddImageModalProps) {
 
     return (
         <>
-            <div className="image-modal-background" onClick={() => setShowModal(false)}></div>
-            <div className="image-modal">
-                <button className="image-close-icon" onClick={() => setShowModal(false)}>
+            <div className="modal-background" onClick={() => setShowModal(false)}></div>
+            <div className="modal">
+                <button className="modal-close-icon" onClick={() => setShowModal(false)}>
                     ⓧ
                 </button>
                 Add Images to your profile

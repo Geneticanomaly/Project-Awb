@@ -22,10 +22,6 @@
     margin-top: 4px;
 }
 
-/* .add-profile-image {
-    align-items: center;
-} */
-
 .onboarding label {
     font-weight: 500;
     margin-right: auto;
@@ -52,7 +48,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* gap: 10px; */
 }
 
 .input-container input[type='number'] {
