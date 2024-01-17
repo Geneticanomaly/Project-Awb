@@ -45,8 +45,6 @@ async function updateUser(req: Request, res: Response) {
         // Update a user with the set data based on the provided user Id
         const updatedUser = await users.updateOne({user_id: formData.user_id}, updatedData);
 
-        // console.log('User data updated', updatedUser);
-
         return res.status(201).json({status: 201, updateUser: updatedUser});
     } finally {
         // Close the connection to the client afterwards

@@ -33,7 +33,7 @@ function Messages({currentUser, otherUser, currentUserMessages, otherUserMessage
 
     useEffect(() => {
         scrollToLastMessage();
-    }, [allMessages]); // Trigger the useEffect whenever the messages change
+    }, [allMessages]);
 
     // Sort the messages by time
     const sortedMessages = allMessages.sort(

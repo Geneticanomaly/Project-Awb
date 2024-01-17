@@ -10,6 +10,7 @@ import Navbar from '../../components/navbar/Navbar';
 import {useNavigate} from 'react-router-dom';
 import {getUserImages} from '../../api/getUserImages';
 import {calculateAge} from '../../helperFunctions';
+import {TbEdit} from 'react-icons/tb';
 
 function Profile() {
     const [user, setUser] = useState<User>();
@@ -84,16 +85,24 @@ function Profile() {
                 </div>
 
                 {user?.user_id === cookies.UserId && (
-                    <button
-                        className="profile-add-image"
-                        onClick={() => setShowModal(true)}
-                        data-testid="profile-add-image"
-                    >
-                        <div className="img-btn-container">
-                            <FaFileUpload className="file-upload-image" />
-                            Add images
-                        </div>
-                    </button>
+                    <section className="profile-functions">
+                        <button className="profile-btn-function">
+                            <div className="profile-btn-container">
+                                <TbEdit className="edit-profile-info" size={20} />
+                                Edit Profile
+                            </div>
+                        </button>
+                        <button
+                            className="profile-btn-function"
+                            onClick={() => setShowModal(true)}
+                            data-testid="profile-add-image"
+                        >
+                            <div className="profile-btn-container">
+                                <FaFileUpload className="file-upload-image" />
+                                Add images
+                            </div>
+                        </button>
+                    </section>
                 )}
 
                 <div className="about">

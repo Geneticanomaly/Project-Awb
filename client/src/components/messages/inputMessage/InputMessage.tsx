@@ -16,6 +16,7 @@ function InputMessage({handleSendMessage}: InputMessageProps) {
     const formattedDate = currentTime.toISOString();
 
     const handleMessageSend = async () => {
+        // Check that the message is not empty
         if (messageContent) {
             await handleSendMessage(messageContent, formattedDate);
             setMessageContent('');

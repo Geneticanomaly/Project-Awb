@@ -35,10 +35,15 @@
     text-decoration: none;
 }
 
-.profile-add-image {
+.profile-functions {
     position: absolute;
-    top: 5%;
+    top: 10%;
     right: 5%;
+    display: flex;
+    gap: 10px;
+}
+
+.profile-btn-function {
     border: 1px solid white;
     border-radius: 30px;
     padding: 8px 12px;
@@ -46,17 +51,16 @@
     background-color: rgb(255, 72, 102);
     color: white;
     transition: 200ms ease;
-    margin-top: 50px;
 }
 
-.profile-add-image:hover {
+.profile-btn-function:hover {
     border: 1px solid rgb(255, 72, 102);
     background-color: white;
     color: rgb(255, 72, 102);
     transition: 200ms ease;
 }
 
-.img-btn-container {
+.profile-btn-container {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -162,14 +166,21 @@
     .about {
         margin-left: 5%;
     }
-    .profile-add-image {
+    .profile-btn-function {
         padding: 7px;
+        border-radius: 1rem;
+        min-width: 45px;
     }
-    .file-upload-image {
+    .edit-profile-info {
         margin-left: 6px;
+        width: 20px;
         height: 1.5em;
     }
-    .profile-add-image:nth-child(2) {
+    .file-upload-image {
+        margin-left: 8px;
+        height: 1.5em;
+    }
+    .profile-btn-function {
         text-indent: -9999px;
     }
     .images-container {
