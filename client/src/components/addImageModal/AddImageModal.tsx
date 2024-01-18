@@ -53,6 +53,7 @@ function AddImageModal({userId, setShowModal}: AddImageModalProps) {
                 Add Images to your profile
                 <div className="image-modal-container">
                     <input
+                        id="add-image"
                         type="file"
                         className="custom-file-input"
                         onChange={(e) => handleChange(e)}

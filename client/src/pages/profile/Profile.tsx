@@ -36,14 +36,13 @@ function Profile() {
                     return;
                 }
 
-                const [userData, userImages] = await Promise.all([
-                    getUser(userId),
-                    getUserImages(userId),
-                ]);
-
+                const userData = await getUser(userId);
                 setUser(userData);
+
+                const userImages = await getUserImages(userId);
                 setImages(userImages);
 
+                // Get the current age of the user
                 const currentAge = calculateAge(
                     parseInt(userData.dob_day),
                     parseInt(userData.dob_month),
@@ -91,6 +90,7 @@ function Profile() {
                         <button
                             className="profile-btn-function"
                             onClick={() => setShowEditModal(true)}
+                            data-testid="profile-edit-info"
                         >
                             <div className="profile-btn-container">
                                 <TbEdit className="edit-profile-info" />

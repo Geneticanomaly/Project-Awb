@@ -51,6 +51,7 @@ function EditModal({user, setShowEditModal}: EditModalProps) {
                 <form className="edit-modal-form" onSubmit={(e) => handleSubmit(e)}>
                     <label htmlFor="first_name">First name</label>
                     <input
+                        id="first_name"
                         type="text"
                         name="first_name"
                         value={formData.first_name}
@@ -60,6 +61,7 @@ function EditModal({user, setShowEditModal}: EditModalProps) {
                     />
                     <label htmlFor="last_name">Last name</label>
                     <input
+                        id="last_name"
                         type="text"
                         name="last_name"
                         value={formData.last_name}
@@ -69,6 +71,7 @@ function EditModal({user, setShowEditModal}: EditModalProps) {
                     />
                     <label htmlFor="about">About</label>
                     <textarea
+                        id="about"
                         name="about"
                         value={formData.about}
                         rows={8}
@@ -76,7 +79,7 @@ function EditModal({user, setShowEditModal}: EditModalProps) {
                         onChange={(e) => handleChange(e)}
                         required={true}
                     ></textarea>
-                    <input type="submit" value={'Save Changes'} />
+                    <input id="submit" type="submit" value={'Save Changes'} />
                 </form>
             </div>
         </>
