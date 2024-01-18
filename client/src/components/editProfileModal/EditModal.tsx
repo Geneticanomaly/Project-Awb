@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import './EditModal.css';
 import {User} from '../../../typings';
+import {editProfileInfo} from '../../api/editProfileInfo';
 
 type EditModalProps = {
     user: User | undefined;
@@ -18,16 +19,24 @@ function EditModal({user, setShowEditModal}: EditModalProps) {
         e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
     ) => {
         e.preventDefault();
+        // Set the formData state.
+        // By acquiring the previous state and only editing a specific target by name
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value,
         }));
-        console.log(formData);
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('I WAS HERE!');
+        // Call a PUT request for editing user profile
+        await editProfileInfo(
+            user?.user_id,
+            formData.first_name,
+            formData.last_name,
+            formData.about
+        );
+        // Close the modal
         setShowEditModal(false);
     };
 
@@ -47,6 +56,7 @@ function EditModal({user, setShowEditModal}: EditModalProps) {
                         value={formData.first_name}
                         placeholder="First name"
                         onChange={(e) => handleChange(e)}
+                        required={true}
                     />
                     <label htmlFor="last_name">Last name</label>
                     <input
@@ -55,6 +65,7 @@ function EditModal({user, setShowEditModal}: EditModalProps) {
                         value={formData.last_name}
                         placeholder="Last name"
                         onChange={(e) => handleChange(e)}
+                        required={true}
                     />
                     <label htmlFor="about">About</label>
                     <textarea
@@ -63,6 +74,7 @@ function EditModal({user, setShowEditModal}: EditModalProps) {
                         rows={8}
                         placeholder="Tell about yourself..."
                         onChange={(e) => handleChange(e)}
+                        required={true}
                     ></textarea>
                     <input type="submit" value={'Save Changes'} />
                 </form>

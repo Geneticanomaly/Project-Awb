@@ -57,11 +57,11 @@ function Profile() {
             }
         };
 
-        // Run the fetchData only when showModal is false
-        if (!showModal) {
+        // Run the fetchData only when either modal is false
+        if (!showModal && !showEditModal) {
             fetchData();
         }
-    }, [userId, showModal, cookies.AuthToken, navigate]);
+    }, [userId, showModal, cookies.AuthToken, navigate, showEditModal]);
 
     // Render loading indicator or return null for TinderCard components during loading
     if (loading) {

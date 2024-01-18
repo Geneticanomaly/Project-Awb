@@ -14,6 +14,7 @@ import addImage from './controllers/addImage';
 import getUsersChat from './controllers/getUsersChat';
 import addMessage from './controllers/addMessage';
 import getUserImages from './controllers/getUserImages';
+import editProfileInfo from './controllers/editProfileInfo';
 
 config();
 
@@ -54,6 +55,9 @@ app.get('/matchedUsers/:userIds', getMatchedUsers);
 
 // Add an image to the user's images array
 app.post('/profile/:userId/addImage', addImage);
+
+// Edit user information
+app.put('/profile/:userId/editProfileInfo', editProfileInfo);
 
 // Get all user images based on userId
 app.get('/userImages/:userId', getUserImages);
