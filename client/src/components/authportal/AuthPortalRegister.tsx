@@ -61,11 +61,7 @@ function AuthPortalRegister() {
                     By clicking Submit, you agree to our terms. Learn how we process your data in
                     our Privacy Policy and Cookie Policy.
                 </span>
-                <form
-                    className="form"
-                    onSubmit={(e) => handleSubmit(e)}
-                    data-testid="register-form"
-                >
+                <form className="form" onSubmit={(e) => handleSubmit(e)}>
                     <input
                         id="email"
                         type="email"
@@ -75,7 +71,6 @@ function AuthPortalRegister() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
-                        data-testid="password-first"
                         id="password"
                         type="password"
                         placeholder="Password..."
@@ -84,7 +79,6 @@ function AuthPortalRegister() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <input
-                        data-testid="password-confirm"
                         id="password-confirm"
                         type="password"
                         placeholder="Confirm Password..."

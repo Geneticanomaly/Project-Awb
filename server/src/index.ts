@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import {config} from 'dotenv';
 import cors from 'cors';
 import registerUser from './controllers/registerUser';
-import getUsers from './controllers/getUsers';
 import loginUser from './controllers/loginUser';
 import updateUser from './controllers/updateUser';
 import getUser from './controllers/getUser';
@@ -67,9 +66,6 @@ app.get('/chat/:userId/:loggedUserId', getUsersChat);
 
 // Add a new message to the database
 app.post('/chat/addMessage', addMessage);
-
-// Fetch all users
-app.get('/users', getUsers);
 
 mongoose.connect(process.env.MONGO_URL ?? '').then(() => {
     app.listen(port, () => console.log('listening on port ' + port));

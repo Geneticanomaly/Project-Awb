@@ -6,9 +6,7 @@ describe('scenario tests', () => {
         // Calls a class that handles login cypress code
         TestingClass.login('Marianne.Leipola@gmail.com', '123');
 
-        // Wait long enough for fetch requests to happen
         cy.get('[data-testid="profile-page-link"]').click();
-        // Wait long enough for fetch requests to happen
         cy.location('pathname').should('include', '/profile');
 
         cy.intercept('GET', '**/user/**').as('getUserRequest');
@@ -31,7 +29,7 @@ describe('scenario tests', () => {
         cy.get('[data-testid="profile-logout"]').should('not.exist');
         cy.get('[data-testid="profile-add-image"]').should('not.exist');
     });
-    it('Ensure user information is displayed in correctly profile view', () => {
+    it('Ensure user information is displayed correctly in profile view', () => {
         TestingClass.login('thomaskaatranen@gmail.com', '123');
 
         cy.get('[data-testid="profile-page-link"]').click();
@@ -40,6 +38,7 @@ describe('scenario tests', () => {
 
         cy.intercept('GET', `**/userImages/**`).as('getUserImagesRequest');
         cy.wait('@getUserImagesRequest').then((imageData) => {
+            // Access the response body
             const images = imageData.response?.body;
 
             if (images && images.length > 0) {
@@ -116,7 +115,7 @@ describe('scenario tests', () => {
                     .should('be.greaterThan', imagesContainerLength);
             });
     });
-    it.only('User can edit their own information', () => {
+    it('User can edit their own information', () => {
         // Calls a class that handles login cypress code
         TestingClass.login('thomaskaatranen@gmail.com', '123');
 

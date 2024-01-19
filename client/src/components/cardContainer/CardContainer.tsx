@@ -6,6 +6,7 @@ import {User} from '../../../typings';
 import React from 'react';
 import {addMatch} from '../../api/addMatch';
 import '../../pages/dashboard/Dashboard.css';
+import {calculateAge} from '../../helperFunctions';
 
 type CardContainerProps = {
     user: User | undefined;
@@ -90,7 +91,7 @@ function CardContainer({
         if (filteredGenderedUsers) {
             setCurrentIndex(filteredGenderedUsers.length - 1);
         }
-    }, [filteredGenderedUsers]);
+    }, [filteredGenderedUsers, user]);
 
     useEffect(() => {
         // Disable overflow when the Dashboard page mounts
@@ -134,8 +135,14 @@ function CardContainer({
                         className="card"
                     >
                         <h3>
-                            {user.first_name} {user.last_name}
+                            {user.first_name} {user.last_name},{' '}
+                            {calculateAge(
+                                parseInt(user.dob_day),
+                                parseInt(user.dob_month),
+                                parseInt(user.dob_year)
+                            )}
                         </h3>
+                        <p>{user.about}</p>
                     </div>
                 </TinderCard>
             ))}
