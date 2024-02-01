@@ -30,19 +30,13 @@ function Onboarding() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Submitted', formData);
         const formDataSchema = new FormData();
 
-        // Add given data to FormData
-        formDataSchema.append('user_id', formData.user_id);
-        formDataSchema.append('first_name', formData.first_name);
-        formDataSchema.append('last_name', formData.last_name);
-        formDataSchema.append('dob_day', formData.dob_day);
-        formDataSchema.append('dob_month', formData.dob_month);
-        formDataSchema.append('dob_year', formData.dob_year);
-        formDataSchema.append('gender', formData.gender);
-        formDataSchema.append('show_gender', formData.show_gender);
-        formDataSchema.append('about', formData.about);
+        // Add each entry of the formData state into a FormData interface
+        Object.entries(formData).map((element: string[]) => {
+            formDataSchema.append(element[0], element[1]);
+        });
+
         if (file) {
             formDataSchema.append('file', file);
         }
