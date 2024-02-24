@@ -12,6 +12,7 @@ import {getUserImages} from '../../api/getUserImages';
 import {calculateAge} from '../../helperFunctions';
 import {TbEdit} from 'react-icons/tb';
 import EditProfileModal from '../../components/editProfileModal/EditModal';
+import LoadingSpinner from '../../components/spinner/LoadingSpinner';
 
 function Profile() {
     const [user, setUser] = useState<User>();
@@ -68,7 +69,7 @@ function Profile() {
         if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
             navigate('/');
         }
-        return <p>Loading...</p>;
+        return <LoadingSpinner />;
     }
 
     return (
@@ -129,9 +130,7 @@ function Profile() {
                     <p className="image-msg">This profile has no images...</p>
                 )}
                 {showModal && <AddImageModal userId={user?.user_id} setShowModal={setShowModal} />}
-                {showEditModal && (
-                    <EditProfileModal user={user} setShowEditModal={setShowEditModal} />
-                )}
+                {showEditModal && <EditProfileModal user={user} setShowEditModal={setShowEditModal} />}
             </div>
         </>
     );

@@ -9,6 +9,7 @@ import {User} from '../../../typings';
 import {useNavigate} from 'react-router-dom';
 import CardContainer from '../../components/cardContainer/CardContainer';
 import MatchModal from '../../components/matchModal/MatchModal';
+import LoadingSpinner from '../../components/spinner/LoadingSpinner';
 
 function Dashboard() {
     const [user, setUser] = useState<User>();
@@ -36,12 +37,9 @@ function Dashboard() {
         for (const match of newUserData!.matches) {
             const matchUserId = match.user_id;
 
-            console.log('AM I HERE');
-
             // Check if matchUserId is not in the userPrevMatches
             // If it is, it means new user was found
             if (!userPrevMatches?.some((prevMatch) => prevMatch.user_id === matchUserId)) {
-                console.log('AM I HERE???');
                 // New user was found
                 isNewUser = true;
                 // Get the newly found userId
@@ -55,13 +53,10 @@ function Dashboard() {
             console.log('AM I HERE 1');
 
             // Check if logged in user is in new user's matches
-            const isCurrentUserMatched = newMatchedUser.matches.some(
-                (match) => match.user_id === cookies.UserId
-            );
+            const isCurrentUserMatched = newMatchedUser.matches.some((match) => match.user_id === cookies.UserId);
 
             // If logged in user is in the other user's matches show a pop up.
             if (isCurrentUserMatched) {
-                console.log('AM I HERE 2');
                 setShowMatchModal(true);
             } else {
                 console.log('Current user is not in the matches');
@@ -136,7 +131,7 @@ function Dashboard() {
         if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
             navigate('/');
         }
-        return <p>Loading...</p>;
+        return <LoadingSpinner />;
     }
 
     return (
@@ -153,9 +148,7 @@ function Dashboard() {
                     />
                 </div>
             </div>
-            {showMatchModal && (
-                <MatchModal setShowMatchModal={setShowMatchModal} matchedUser={matchedUser} />
-            )}
+            {showMatchModal && <MatchModal setShowMatchModal={setShowMatchModal} matchedUser={matchedUser} />}
         </div>
     );
 }

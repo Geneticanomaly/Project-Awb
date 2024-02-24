@@ -12,6 +12,7 @@ import {User, UserMessage} from '../../../typings';
 import {addMessage} from '../../api/addMessage';
 import {getUser} from '../../api/getUser';
 import {useNavigate} from 'react-router-dom';
+import LoadingSpinner from '../../components/spinner/LoadingSpinner';
 
 function Chat() {
     const [currentUser, setCurrentUser] = useState<User>();
@@ -102,7 +103,7 @@ function Chat() {
         if (cookies.AuthToken === 'undefined' || !cookies.AuthToken) {
             navigate('/');
         }
-        return <p>Loading...</p>;
+        return <LoadingSpinner />;
     }
 
     return (
@@ -113,9 +114,7 @@ function Chat() {
                     <div className="chat-header-profile">
                         <Link className="link" to={`/profile/${userId}`}>
                             <img
-                                src={`data:${
-                                    otherUser?.url.mimetype
-                                };base64,${otherUser?.url.buffer.toString()}`}
+                                src={`data:${otherUser?.url.mimetype};base64,${otherUser?.url.buffer.toString()}`}
                                 className="chat-header-img"
                             />
                         </Link>
