@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import './MatchCard.css';
 import {User} from '../../../typings';
 import {calculateAge} from '../../helperFunctions';
@@ -9,11 +9,9 @@ type MatchProps = {
 };
 
 function MatchCard({match, matchKey}: MatchProps) {
-    const age = calculateAge(
-        parseInt(match.dob_day),
-        parseInt(match.dob_month),
-        parseInt(match.dob_year)
-    );
+    const age = calculateAge(parseInt(match.dob_day), parseInt(match.dob_month), parseInt(match.dob_year));
+
+    const navigate = useNavigate();
 
     return (
         <div className="match-card">
@@ -26,16 +24,12 @@ function MatchCard({match, matchKey}: MatchProps) {
 
             <div className="info-container">
                 <p>{age} Years old</p>
-                <p>
+                <p onClick={() => navigate(`/profile/${match.user_id}`)}>
                     {match.first_name} {match.last_name}
                 </p>
             </div>
 
-            <Link
-                className="btn-link"
-                to={`/chat/${match.user_id}`}
-                data-testid={`chat-btn-${matchKey}`}
-            >
+            <Link className="btn-link" to={`/chat/${match.user_id}`} data-testid={`chat-btn-${matchKey}`}>
                 <button>Chat</button>
             </Link>
         </div>
