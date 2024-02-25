@@ -18,6 +18,8 @@ function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: Me
     const localTime = new Date(dateTime.getTime() + dateTime.getTimezoneOffset() * 60000);
 
     const time = localTime.toLocaleTimeString([], {
+        month: '2-digit',
+        day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
         hour12: true,
@@ -26,28 +28,19 @@ function Message({message, timestamp, currentUser, otherUser, isCurrentUser}: Me
     return (
         <div className={messageClass} data-testid="message-item">
             <div className="message-info">
-                <Link
-                    className="link"
-                    to={`/profile/${isCurrentUser ? currentUser?.user_id : otherUser?.user_id}`}
-                >
+                <Link className="link" to={`/profile/${isCurrentUser ? currentUser?.user_id : otherUser?.user_id}`}>
                     <img
                         src={
                             isCurrentUser
-                                ? `data:${
-                                      currentUser?.url?.mimetype
-                                  };base64,${currentUser?.url?.buffer?.toString()}`
-                                : `data:${
-                                      otherUser?.url?.mimetype
-                                  };base64,${otherUser?.url?.buffer?.toString()}`
+                                ? `data:${currentUser?.url?.mimetype};base64,${currentUser?.url?.buffer?.toString()}`
+                                : `data:${otherUser?.url?.mimetype};base64,${otherUser?.url?.buffer?.toString()}`
                         }
                         className="message-profile-img"
                     />
                 </Link>
                 <p>{time}</p>
             </div>
-            <div className="message-content">
-                {isStringMessage && <p className="sent-message">{message}</p>}
-            </div>
+            <div className="message-content">{isStringMessage && <p className="sent-message">{message}</p>}</div>
         </div>
     );
 }
