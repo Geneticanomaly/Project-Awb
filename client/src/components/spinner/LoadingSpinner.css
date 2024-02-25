@@ -3,10 +3,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
 }
 
 .spinner-body h2 {
+    margin-top: 100px;
     text-decoration: underline;
     color: #d0021b;
 }
