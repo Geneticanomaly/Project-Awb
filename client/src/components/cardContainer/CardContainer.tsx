@@ -1,6 +1,4 @@
 import TinderCard from 'react-tinder-card';
-import {IoMdClose} from 'react-icons/io';
-import {FaHeart} from 'react-icons/fa';
 import {useState, useEffect, useMemo, useRef} from 'react';
 import {User} from '../../../typings';
 import React from 'react';
@@ -15,12 +13,7 @@ type CardContainerProps = {
     setReloadMatchContainer: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function CardContainer({
-    user,
-    usersByGender,
-    cookiesUserId,
-    setReloadMatchContainer,
-}: CardContainerProps) {
+function CardContainer({user, usersByGender, cookiesUserId, setReloadMatchContainer}: CardContainerProps) {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [lastDirection, setLastDirection] = useState<string | undefined>();
     const pixelAmount: number = 500;
@@ -42,8 +35,6 @@ function CardContainer({
         setCurrentIndex(val);
         currentIndexRef.current = val;
     };
-
-    const canSwipe = currentIndex >= 0;
 
     const updateMatches = async (matchedUserId: string) => {
         addMatch(cookiesUserId, matchedUserId);
@@ -67,25 +58,12 @@ function CardContainer({
         currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
     };
 
-    const swipe = async (dir: string) => {
-        console.log('currentIndex:', currentIndex);
-        console.log('canSwipe:', canSwipe);
-        console.log('filteredGenderedUsers:', filteredGenderedUsers);
-
-        if (canSwipe && currentIndex < filteredGenderedUsers.length) {
-            console.log('Swiped to the ' + dir);
-            await childRefs[currentIndex].current.swipe(dir);
-        }
-    };
-
     // Get the user's matched user ids
     const matchedUserIds = user?.matches.map(({user_id}) => user_id).concat(cookiesUserId);
 
     // Create a new array that has the correct gendered users
     // The array only includes users that are not in the current user's matches array.
-    const filteredGenderedUsers = usersByGender?.filter(
-        (user) => !matchedUserIds?.includes(user.user_id)
-    );
+    const filteredGenderedUsers = usersByGender?.filter((user) => !matchedUserIds?.includes(user.user_id));
 
     useEffect(() => {
         if (filteredGenderedUsers) {
@@ -126,37 +104,19 @@ function CardContainer({
                     <div
                         style={{
                             backgroundImage:
-                                'url(' +
-                                `data:${
-                                    user?.url?.mimetype
-                                };base64,${user?.url?.buffer?.toString()}` +
-                                ')',
+                                'url(' + `data:${user?.url?.mimetype};base64,${user?.url?.buffer?.toString()}` + ')',
                         }}
                         className="card"
                     >
                         <h3>
                             {user.first_name} {user.last_name},{' '}
-                            {calculateAge(
-                                parseInt(user.dob_day),
-                                parseInt(user.dob_month),
-                                parseInt(user.dob_year)
-                            )}
+                            {calculateAge(parseInt(user.dob_day), parseInt(user.dob_month), parseInt(user.dob_year))}
                         </h3>
                         <p>{user.about}</p>
                     </div>
                 </TinderCard>
             ))}
-            <div className="button-container">
-                <button onClick={() => swipe('left')}>
-                    <IoMdClose className="button-icon" size={30} color="rgb(219, 54, 54)" />
-                </button>
-                <button onClick={() => swipe('right')}>
-                    <FaHeart className="button-icon" size={25} color="rgb(95, 218, 95)" />
-                </button>
-            </div>
-            <div className="swipe-info">
-                {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}
-            </div>
+            <div className="swipe-info">{lastDirection ? <p>You swiped {lastDirection}</p> : <p />}</div>
         </div>
     );
 }

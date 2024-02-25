@@ -191,18 +191,6 @@ function Onboarding() {
                                 onChange={handleChange}
                             />
                             <label htmlFor="show_woman">Woman</label>
-
-                            <input
-                                className="show-me"
-                                type="radio"
-                                id="show_everyone"
-                                name="show_gender"
-                                value="everyone"
-                                required={true}
-                                checked={formData.show_gender === 'everyone'}
-                                onChange={handleChange}
-                            />
-                            <label htmlFor="show_everyone">Everyone</label>
                         </div>
                         <label htmlFor="about" className="about">
                             About
