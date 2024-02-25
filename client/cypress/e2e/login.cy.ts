@@ -4,9 +4,7 @@ describe('login tests', () => {
     });
     it('Successful login attempt', () => {
         cy.contains('Login');
-        cy.get('[data-testid="login-form"]')
-            .find('input[type=email]')
-            .type('Marianne.Leipola@gmail.com');
+        cy.get('[data-testid="login-form"]').find('input[type=email]').type('marianne.leipola@gmail.com');
 
         cy.get('[data-testid="login-form"]').find('input[type=password]').type('123');
         cy.get('[data-testid="login-form"]').find('input[type=submit]').click();
@@ -14,9 +12,7 @@ describe('login tests', () => {
     });
     it('Failed login attempt - Invalid email', () => {
         cy.contains('Invalid email address').should('not.exist');
-        cy.get('[data-testid="login-form"]')
-            .find('input[type=email]')
-            .type('wrong.email@gmail.com');
+        cy.get('[data-testid="login-form"]').find('input[type=email]').type('wrong.email@gmail.com');
         cy.get('[data-testid="login-form"]').find('input[type=password]').type('123');
         cy.get('[data-testid="login-form"]').find('input[type=submit]').click();
 
@@ -29,9 +25,7 @@ describe('login tests', () => {
     });
     it('Failed login attempt - Incorrect password', () => {
         cy.contains('Incorrect password').should('not.exist');
-        cy.get('[data-testid="login-form"]')
-            .find('input[type=email]')
-            .type('Marianne.Leipola@gmail.com');
+        cy.get('[data-testid="login-form"]').find('input[type=email]').type('marianne.leipola@gmail.com');
         cy.get('[data-testid="login-form"]').find('input[type=password]').type('WrongPassword');
         cy.get('[data-testid="login-form"]').find('input[type=submit]').click();
 

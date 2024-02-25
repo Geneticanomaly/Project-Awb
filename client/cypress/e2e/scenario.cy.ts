@@ -4,7 +4,7 @@ import {calculateAge} from '../../src/helperFunctions';
 describe('scenario tests', () => {
     it('User logs in and logs out', () => {
         // Calls a class that handles login cypress code
-        TestingClass.login('Marianne.Leipola@gmail.com', '123');
+        TestingClass.login('marianne.leipola@gmail.com', '123');
 
         cy.get('[data-testid="profile-page-link"]').click();
         cy.location('pathname').should('include', '/profile');
@@ -19,7 +19,7 @@ describe('scenario tests', () => {
     });
     it('User can check another users profile', () => {
         // Calls a class that handles login cypress code
-        TestingClass.login('Marianne.Leipola@gmail.com', '123');
+        TestingClass.login('marianne.leipola@gmail.com', '123');
 
         cy.get('[data-testid="match-profile-0"]').click();
 
@@ -44,9 +44,7 @@ describe('scenario tests', () => {
             if (images && images.length > 0) {
                 cy.get('.images-container img').should('have.length', images.length);
             } else {
-                cy.get('.image-msg')
-                    .should('be.visible')
-                    .and('contain', 'This profile has no images...');
+                cy.get('.image-msg').should('be.visible').and('contain', 'This profile has no images...');
             }
         });
 
@@ -62,9 +60,7 @@ describe('scenario tests', () => {
                 .eq(0)
                 .should('have.text', `Registered: ${user.registration_date.split('T')[0]}`);
             cy.get('.profile-info h2').eq(1).should('have.text', user.email);
-            cy.get('.profile-info h2')
-                .eq(2)
-                .should('have.text', `${user.first_name} ${user.last_name}`);
+            cy.get('.profile-info h2').eq(2).should('have.text', `${user.first_name} ${user.last_name}`);
 
             const age = calculateAge(user.dob_day, user.dob_month, user.dob_year);
 
@@ -75,7 +71,7 @@ describe('scenario tests', () => {
     });
     it('User with a match can send a message and the message is found', () => {
         // Calls a class that handles login cypress code
-        TestingClass.login('Marianne.Leipola@gmail.com', '123');
+        TestingClass.login('marianne.leipola@gmail.com', '123');
 
         cy.get('[data-testid="chat-btn-0"]').click();
         cy.location('pathname').should('include', '/chat');
@@ -109,10 +105,7 @@ describe('scenario tests', () => {
                 cy.get('.upload-image').click();
 
                 // Check if the amount of elements has increased after adding an image
-                cy.get('.images-container')
-                    .find('img')
-                    .its('length')
-                    .should('be.greaterThan', imagesContainerLength);
+                cy.get('.images-container').find('img').its('length').should('be.greaterThan', imagesContainerLength);
             });
     });
     it('User can edit their own information', () => {
@@ -125,17 +118,11 @@ describe('scenario tests', () => {
 
         cy.get('#first_name').should('exist').clear().type('Thomas');
         cy.get('#last_name').should('exist').clear().type('Kaatranen');
-        cy.get('#about')
-            .should('exist')
-            .clear()
-            .type('Hey, I am the creator of this amazing application.');
+        cy.get('#about').should('exist').clear().type('Hey, I am the creator of this amazing application.');
 
         cy.get('#submit').should('exist').click();
 
         cy.get('.profile-info h2:nth-child(3)').should('have.text', 'Thomas Kaatranen');
-        cy.get('.about p').should(
-            'have.text',
-            'Hey, I am the creator of this amazing application.'
-        );
+        cy.get('.about p').should('have.text', 'Hey, I am the creator of this amazing application.');
     });
 });

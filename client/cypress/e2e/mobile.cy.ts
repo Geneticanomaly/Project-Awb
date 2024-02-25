@@ -3,12 +3,12 @@ import {TestingClass} from '../classes/classCommands';
 describe('mobile view tests', () => {
     it('MatchContainer component should not exist in mobile Dashboard view', () => {
         cy.viewport(390, 844);
-        TestingClass.mobileLogin('Marianne.Leipola@gmail.com', '123');
+        TestingClass.mobileLogin('marianne.leipola@gmail.com', '123');
         cy.get('[data-testid="match-container"]').should('not.exist');
     });
     it('User can see matches in mobile view from /matches route', () => {
         cy.viewport(390, 844);
-        TestingClass.mobileLogin('Marianne.Leipola@gmail.com', '123');
+        TestingClass.mobileLogin('marianne.leipola@gmail.com', '123');
         cy.get('[data-testid="view-matches"]').should('exist').should('be.visible').click();
         cy.url().should('equal', 'http://localhost:5173/matches');
 
